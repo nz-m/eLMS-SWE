@@ -11,7 +11,7 @@ git clone https://github.com/nz-m/eLMS-SWE.git
 2. Create a virtual environment
 
 ```bash
-python -m venv venv
+python -m venv env
 ```
 
 ```bash
