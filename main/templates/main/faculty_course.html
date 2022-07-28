@@ -1,0 +1,117 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="site-section">
+
+<div class="container d-flex flex-wrap flex-column">
+   <!-- course name starts -->
+   <div class="course-section p-3 m-3  d-flex justify-content-between align-items-center">
+      <h3 class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
+      
+   </div>
+   <!-- course name ends -->
+   <!-- announcement section starts -->
+   <div class="course-section p-3 m-3 ">
+      <div class="d-flex justify-content-between">
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><span style="margin-right: 0.6rem;"></span>Announcement
+         </h4>
+         <a class=" -sm -outline-success rounded" style="height:2rem"
+            href="{% url 'addAnnouncement' course.code  %}">Create</a>
+      </div>
+      <div>
+         {% for announcement in announcements %}
+         <!-- individual announcement starts -->
+         <hr>
+         <h4>{{announcement.title}}</h4>
+         <div class="fs-6 text-break">{{announcement.description}}</div>
+         <div class="announcement-cont d-flex justify-content-between">
+            <div>
+               <a
+                  href="{% url 'deleteAnnouncement' course.code announcement.id %}">Delete</a>
+             
+               <a class=" -sm px-3"
+                  href="{% url 'editAnnouncement' course.code announcement.id %}">Edit</a>
+            </div>
+            <div class="add-announcement" style="color:grey;">
+               {{announcement.datetime}}
+            </div>
+         </div>
+         <hr>
+         <!-- individual announcement ends-->
+         {% empty %}
+         <hr>
+         <h6 style="text-align:center">No announcements given yet</h6>
+         <hr>
+         {% endfor %}
+      </div>
+   </div>
+   <!-- announcement section ends -->
+   <!-- assignment section starts -->
+   <div class="course-section p-3 m-3 ">
+      <div class="d-flex flex-row justify-content-between edit">
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"></span>Assignment</h4>
+         <a class=" -sm -outline-success rounded" style="height:2rem"
+            href="{% url 'addAssignment' course.code %}">Create</a>
+      </div>
+      <div class="add-announcement">
+         {% for assignment in assignments %}
+         <!-- individual assignment starts -->
+         <hr>
+         <a class="text-bold fs-5" href="#">
+         {{assignment.title}}</a>
+         <div class="d-flex justify-content-between mt-3">
+            <div class="text-muted">
+               <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
+            </div>
+            <div class="fs-6" style="color:grey;">
+               {{assignment.datetime}}
+            </div>
+         </div>
+         <div class="fs-6">
+            <p>Submission ends : {{ assignment.deadline }}</p>
+         </div>
+         <hr>
+         <!-- individual assignment ends -->
+         {% empty %}
+         <hr>
+         <h6 style="text-align:center">No assignments given yet</h6>
+         <hr>
+         {% endfor %}
+      </div>
+      
+   </div>
+   <!-- assignment section ends -->
+   <!-- course material section starts -->
+   <div class="course-section p-3 m-3 ">
+      <div class="d-flex flex-row justify-content-between edit">
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><span style="margin-right: 0.6rem;"></span>Course Material</h4>
+         <a class=" -sm -outline-success rounded" style="height:2rem"
+            href="{% url 'addCourseMaterial' course.code  %}"><span class="px-2">Add</span></a>
+      </div>
+      <div class="add-announcement">
+         {% for material in materials  %}
+         <!-- individual material starts -->
+         <hr>
+         <a class="add-announcement" href="{{ material.file.url }}">{{material.title}}</a><br>
+         <div class="fs-6 text-break mb-2">{{material.description}}</div>
+         
+         <div class="d-flex flex-row justify-content-between">
+            <a
+                        href="{% url 'deleteCourseMaterial' course.code material.id %}">Remove</a>
+            <div class="add-announcement" style="color:grey;">
+               {{material.datetime}}
+            </div>
+         </div>
+         <hr>
+         {% empty %}
+         <hr>
+         <h6 style="text-align:center">Course materials not available</h6>
+         <hr>
+         {% endfor %}
+         <!-- individual material ends -->
+      </div>
+   </div>
+   <!-- course material section ends-->
+</div>
+{% endblock %}

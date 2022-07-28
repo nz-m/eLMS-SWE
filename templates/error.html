@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Error!</title>
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/favicon-16x16.png' %}">
+      <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
+      <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+   </head>
+   <body>
+      <div class="container d-flex justify-content-center align-items-center flex-column" style="min-height: 90vh;">
+         <div>
+            <h2 style="display:inline; color: rgb(10, 10, 48);">oops! an </h2>
+            <h1 style="display: inline;color:rgb(226, 6, 6);font-size: 8vw; font-weight: bold;"> ERROR</h1>
+            <h2 style="display:inline;color:rgb(10, 10, 48)"> occured</h2>
+         </div>
+         <a style=" text-decoration: none;" href=" {% url 'std_logout' %} ">Please log in again from here</a>
+         <div>
+            <h2 style="color: rgb(10, 10, 48); font-size: 1rem;">
+               If problem persists try clearing the cookies of you browser and restart
+            </h2>
+         </div>
+      </div>
+      <script src=" {% static 'js/bootstrap.bundle.min.js' %}"></script>
+   </body>
+</html>

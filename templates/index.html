@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>elms</title>
+
+      <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+   </head>
+   <body>
+      <!-- Navbar Starts -->
+      <nav class="navbar sticky-top navbar-expand-lg navbar-primary">
+         <div class="container-fluid">
+            <a class="navbar-brand fw-bold fs-5 px-2 py-1" href="/admin" target="_blank" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="Access admin panel">elms</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+               aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+            <span class=" navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  
+                  <li class="nav-item">
+                     <a class="nav-link active fw-bold" href="{% url 'std_logout' %}" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Log out">Log out</a>
+                  </li>
+                  
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="navbar-toggler-icon"></span>
+                   </button>
+                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                     <ul class="navbar-nav">
+                       <li class="nav-item dropdown">
+                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           {% block user %}{% endblock  %}
+                         </a>
+                         <ul class="dropdown-menu dropdown-menu-dark">
+                           <li><a class="dropdown-item" href="#">Profile</a></li>
+                           <li><a class="dropdown-item" href="#">Another action</a></li>
+                           <li><a class="dropdown-item" href="#">Something else here</a></li>
+                         </ul>
+                       </li>
+                     </ul>
+                   </div>
+               </ul>
+              
+            </div>
+         </div>
+      </nav>
+      <!-- Navbar Ends -->
+      {% block  content %}
+      {% endblock  %}
+     <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
+      <!-- Tooltips-->
+      <script>
+         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+             return new bootstrap.Tooltip(tooltipTriggerEl)
+         }) 
+      </script>
+   </body>
+</html>

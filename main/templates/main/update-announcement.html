@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+{% if announcement.title %}
+
+
+               <div>
+                  <div>Update Announcement</div>
+                  <form action="{% url 'updateAnnouncement' course.code announcement.id %}" method="post">
+                     {% csrf_token %}
+                     <!-- Title Input -->
+                     <div>
+                        <input id="title" value="{{ announcement.title}}" name="title"
+                           maxlength="255" type="text" placeholder="Title" required />
+                        <label for="title">Title</label>
+                     </div>
+                     <!-- Description Input -->
+                     <div>
+                        <textarea  id="content" name="content" type="text"
+                           placeholder="Description" maxlength="2000"
+                           required>{{ announcement.description}}</textarea>
+                        <label for="content">Description</label>
+                     </div>
+                     <div >
+                        <button type="submit">Update</button>
+                     </div>
+                  </form>
+                  <!-- End of form -->
+               </div>
+   
+{% endif %}
+{% endblock %}

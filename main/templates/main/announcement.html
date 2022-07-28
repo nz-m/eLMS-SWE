@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+
+               <div >
+                  <div>Post Announcement</div>
+                  <form method="post">
+                     {% csrf_token %}
+                     <!-- title Input -->
+                     <div >
+                        <input id="title" name="title" maxlength="255" type="text"
+                           placeholder="Title" required />
+                        <label for="title">Title</label>
+                     </div>
+                     <!-- description Input -->
+                     <div>
+                        <textarea name="content" type="text"
+                           placeholder="Description" maxlength="2000"
+                           required></textarea>
+                        <label for="content">Description</label>
+                     </div>
+                     <!-- submit button -->
+                     <div>
+                        <button type="submit">Post</button>
+                     </div>
+                  </form>
+                  <!-- end of form -->
+               </div>
+ 
+{% endblock %}

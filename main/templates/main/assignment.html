@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container container-announcement">
+   <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3">
+         <label for="title" class="form-label">Title:</label>
+         <input type="text" id="title" name="title" maxlength="255" required>
+      </div>
+      <div class="mb-3">
+         <label for="content" class="form-label">Details:</label>
+         <textarea  id="content" rows="3" name="content" maxlength="2000"
+            required></textarea>
+      </div>
+      <div class="mb-3">
+         <label for="marks" class="form-label">Marks:</label>
+         <input type="number"  id="marks" rows="3" name="marks" min="0" max="100"
+            required>
+      </div>
+      <div >
+         <input type="file"  id="file" aria-describedby="file" aria-label="Upload"
+            name="file" required>
+      </div>
+      <div>
+         <label class="form-label">Submission Ends:</label>
+         <input type="datetime-local" id="datetime" name="datetime" required>
+      </div>
+      <div>
+         <button type="submit">Post</button>
+      </div>
+   </form>
+</div>
+{% endblock %}

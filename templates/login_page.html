@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   <body>
+
+                           <!-- Sign In Form -->
+                           <form method="POST">
+                              {% csrf_token %}
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" id="id" placeholder="11111" name="id"
+                                    required>
+                                 <label for="id">ID</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="password" class="form-control" id="password" placeholder="Password"
+                                    name="password" required>
+                                 <label for="password">Password</label>
+                              </div>
+                              <div class="d-grid">
+                                 <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                                    type="submit">Sign in</button>
+                                 <div class="text-center">
+                                    <a href="/admin" style="text-decoration: none" target="_blank">Login as
+                                    admin</a>
+                                 </div>
+                              </div>
+                           </form>
+          
+      <script>
+         if (window.history.replaceState) {
+             window.history.replaceState(null, null, window.location.href);
+         }
+      </script> 
+   </body>
+</html>

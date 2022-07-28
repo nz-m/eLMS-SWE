@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% block title %} {{ course.name }} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block content %}
+
+
+              
+                  <div class="h4 fw-light mb-3">Add course material</div>
+                  <form action="" method="POST" enctype="multipart/form-data">
+                     {% csrf_token %}
+                     <!-- title Input -->
+                     <div >
+                        <input id="title" name="title" maxlength="255" type="text"
+                           placeholder="Title" required />
+                        <label for="title">Title</label>
+                     </div>
+                     <!-- description Input -->
+                     <div >
+                        <textarea  id="content" name="content" type="text"
+                           placeholder="Description"  maxlength="2000"
+                           required></textarea>
+                        <label for="content">Description</label>
+                     </div>
+                     <!-- file input -->
+                     <div >
+                        <input  id="file" type="file" name="file" required>
+                     </div>
+                     <!-- submit button -->
+                     <div >
+                        <button type="submit">Post</button>
+                     </div>
+                  </form>
+              
+     
+{% endblock %}

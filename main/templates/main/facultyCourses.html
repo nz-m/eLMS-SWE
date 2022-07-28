@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="site-section">
+
+   <div class="container">
+      {% if courses %}
+      <!-- course container -->
+      <div class="card_primary d-flex justify-content-center flex-wrap ">
+         {% for courses in courses %}
+         <!-- individual course starts -->
+         <div class="cd card text-center my-4 mx-4" style="width: 30rem !important;">
+            <div class="card-header text-light">
+               Dept. of {{courses.department}}
+            </div>
+            <div class="card-body">
+               <h5 class="card-title">{{courses.department}}-{{courses.code}} : {{courses.name}}</h5>
+               <a href="{% url 'faculty' courses.code %}" class="btn btn-outline-dark px-5">Enter</a>
+            </div>
+            <div class="card-footer text-light">
+               Total Students : {{studentCount|get_item:courses.code}}
+            </div>
+         </div>
+         <!-- individual course ends -->
+         {% endfor %}
+         <!-- course container ends -->
+      </div>
+      {% else %}
+      <div class="text-center h4 text-secondary">No courses to show</div>
+      {% endif %}
+   </div>
+</div>
+{% endblock %}
