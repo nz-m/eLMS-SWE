@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
+* {
+    font-family: 'Manrope', sans-serif;
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-mod {
+    background-color: rgb(10, 10, 48);
+    color: white !important;
+  }
+  .login {
+    min-height: 100vh;
+  }
+  
+  .bg-image {
+    background-image: url("../images/online_study.svg");
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .login-heading {
+    font-weight: 300;
+  }
+  
+  a{
+    text-decoration: none !important;
+  }
+  
+  .btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  .course-section {
+    font-size: 1.5rem;
+    border-radius: 5px;
+  }
+  
+  .course_name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 0.4rem 0.2rem;
+  }
+  
+  .course_content {
+    font-size: 1.3rem;
+    color: #000;
+  }
+  
+  .card-header,
+  .card-footer {
+    background-color: rgb(10, 10, 48);
+  }
+  
+  .cd {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+      rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+      rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    transition: 0.3s;
+  }
+  
+  .cd:hover {
+    transform: scale(1.1);
+  }
+  .container {
+    margin-top: 2.5rem;
+  }
+  
+  .container-announcement {
+    max-width: 40vw;
+    min-width: 380px;
+  }
+  
+  
+  .add-announcement {
+    text-decoration: none;
+    font-size: medium;
+  }
+  
+  .profile {
+    width: 50%;
+    min-width: fit-content;
+    height: 40vh;
+    border-radius: 1.2rem;
+  }
+  .margin-mod {
+    padding-top: 4.5rem;
+  }
+  .form-border{
+    border: 2px solid rgb(10, 10, 48) !important;
+  }
+  

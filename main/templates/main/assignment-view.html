@@ -1,0 +1,129 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} {{ assignment.title }} - eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block content %}
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item active" aria-current="page">Assignment <span>
+            ({{ assignment.title }})</span> 
+         </li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container">
+   <div class="shadow rounded p-3">
+      <h2>{{assignment.title}}</h2>
+      <div class="p-2 text-break">{{assignment.description}}</div>
+      <h6 class="p-2 fw-bold">Deadline: <span class="px-2 text-danger"> {{assignment.deadline}} </span></h6>
+      {% if assignment.file %}
+      <label class="p-2 fw-bold" for="">Attachment: &nbsp <a
+         class="px-2 py-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2"
+         style="text-decoration: none; font-size: smaller !important" href="{{assignment.file.url}}"> &nbsp View
+      </a> &nbsp or &nbsp <a
+         class="fs-6 px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
+         style="text-decoration: none; font-size: smaller !important" download href=" {{assignment.file.url}}">
+      Download</a></label><br>
+      {% endif %}
+      <label class="p-2 fw-bold" for="">
+      Submitted : {{assignment.submission_set.count}}/{{totalStudents}}
+      </label><br>
+      <label class="p-2 fw-bold" for="">Time Remaining : <span class="fw-semibold" id="timeRemain"></span></label>
+   </div>
+   <h6 class="fw-bold mt-4 mb-4">Showing all submissions:</h6>
+</div>
+<!--Student grading table-->
+<div class="container">
+   <table class="table shadow rounded">
+      <thead class="table-dark">
+         <tr>
+            <th class="text-center" scope="col">#</th>
+            <th class="text-center" scope="col">Student ID</th>
+            <th class="text-center" scope="col">Student name</th>
+            <th class="text-center" scope="col">Submitted file</th>
+            <th class="text-center" scope="col">Submitted on</th>
+            <th class="text-center w-25" scope="col">Grade</th>
+         </tr>
+      </thead>
+      <tbody>
+         {% if not submissions %}
+         <td class="text-center text-muted fst-italic" colspan="6">No one submitted yet</th>
+            {% else %}
+            {% for submission in submissions %}
+         <tr>
+            <td class="text-center">{{ forloop.counter }}</th>
+            <td class="text-center">{{ submission.student_id }}</th>
+            <td class="text-center">{{submission.student.name}}</td>
+            <td class="text-center"><a
+               class="fw-bold px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
+               style="text-decoration: none; font-size: smaller !important" download
+               href="{{submission.file.url}}">Download</a></td>
+            <td class="text-center">{{submission.datetime}}</td>
+            {% if submission %}
+            <td class="text-center">
+               <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
+                  method="post">
+                  {% csrf_token %}
+                  <input class="text-center rounded-2" type="number" step=".01" name="marks" id="marks"
+                     value="{{submission.marks}}" max="{{ assignment.marks}}" min="0" required><button
+                     type="submit" class="btn btn-sm ms-2 rounded-2"><img
+                     src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>
+            </td>
+            {% else %}
+            <td class="text-center">
+            <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
+               method="post">
+            {% csrf_token %}
+            <input class="text-center" type="number" step=".01" name="marks" id="marks"
+               max="{{ assignment.marks}}" min="0" required><button type="submit"
+               class="btn btn-outline-primary btn-sm ms-2"><img
+               src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>
+            </td>
+            {% endif %}
+            </form>
+         </tr>
+         {% endfor %}
+         {% endif %}
+      </tbody>
+   </table>
+</div>
+<script>
+   var time = new Date('{{ assignment.deadline|date:"D, d M Y H:i:s"}}').getTime();
+   var rand = setInterval(function () {
+       var now = new Date().getTime();
+       var difference = time - now;
+       var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+       var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+       var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+       var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+   
+       document.getElementById("timeRemain").innerHTML = days + " days " + hours + " hours " +
+           minutes + " minutes " + seconds + " seconds ";
+   
+       if (difference < 0) {
+           clearInterval(rand);
+           document.getElementById("timeRemain").innerHTML = "Closed!";
+           document.getElementById("timeRemain").style.color = "red";
+       }
+   }, 1000);
+</script>
+{% endblock %}

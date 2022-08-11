@@ -1,0 +1,64 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Assignments | {{ course.name }} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
+{% endblock %}
+{% block user %}
+{{student.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock allCourses %}
+{% block content %}
+<div class="site-section">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myCourses' %}">My
+               Courses</a>
+            </li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Assignment</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+   <div class="container d-flex flex-wrap flex-column">
+      <!-- assignment section starts -->
+      <div class="course-section p-3 m-3 shadow">
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
+            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
+         <div class="add-announcement">
+            {% for assignment in assignments %}
+            <!-- individual assignment starts -->
+            <hr>
+            <a class="add-announcement fw-bold"
+               href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
+            <div class="d-flex justify-content-between">
+               <div class="add-announcement" style="color:grey;">
+                  {{assignment.datetime}}
+               </div>
+               <h6> Due Date : {{ assignment.deadline}} </h6>
+            </div>
+            <hr>
+            <!-- individual assignment ends -->
+            {% empty %}
+            <hr>
+            <h6 style="text-align:center">No assignments given yet</h6>
+            <hr>
+            {% endfor %}
+         </div>
+         <div class="text-center fs-6">
+            <p>Showing {{ assignments.count}} of {{course.assignment_set.count}} {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}</p>
+         </div>
+      </div>
+      <!-- assignment section ends -->
+   </div>
+</div>
+{% endblock %}

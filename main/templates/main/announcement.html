@@ -1,32 +1,65 @@
 {% extends 'index.html' %}
 {% load static %}
-
+{% block title %} {{ course.name }} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
 {% block content %}
-
-
-               <div >
-                  <div>Post Announcement</div>
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item active" aria-current="page">Announcement</li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container">
+   <div class="row justify-content-center">
+      <div class="col-sm-12 col-lg-8">
+         <div class="card border-0 rounded shadow">
+            <div class="card-body p-4">
+               <div class="text-center">
+                  <div class="h4 fw-light mb-3">Post Announcement</div>
                   <form method="post">
                      {% csrf_token %}
                      <!-- title Input -->
-                     <div >
-                        <input id="title" name="title" maxlength="255" type="text"
+                     <div class="form-floating mb-3">
+                        <input class="form-control" id="title" name="title" maxlength="255" type="text"
                            placeholder="Title" required />
                         <label for="title">Title</label>
                      </div>
                      <!-- description Input -->
-                     <div>
-                        <textarea name="content" type="text"
-                           placeholder="Description" maxlength="2000"
+                     <div class="form-floating mb-3">
+                        <textarea class="form-control" id="content" name="content" type="text"
+                           placeholder="Description" style="height: 10rem;" maxlength="2000"
                            required></textarea>
                         <label for="content">Description</label>
                      </div>
                      <!-- submit button -->
-                     <div>
-                        <button type="submit">Post</button>
+                     <div class="d-grid col-12 mx-auto">
+                        <button class="btn btn-primary" type="submit">Post</button>
                      </div>
                   </form>
                   <!-- end of form -->
                </div>
- 
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 {% endblock %}

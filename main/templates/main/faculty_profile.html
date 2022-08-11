@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% block title %} {{faculty.name}} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block content %}
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item active" aria-current="page"> Profile </li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container shadow">
+   <div class="row">
+      <div class="col-12">
+         <div class="h4 my-3 text-secondary d-flex justify-content-center shadow-sm">
+            <p>Teacher info</p>
+         </div>
+      </div>
+   </div>
+   <div class="d-flex flex-column align-items-center">
+      <div class="my-3">
+         <img src="/media/{{faculty.photo}}" alt="image" style="height: 10rem ; width:10rem">
+      </div>
+      <div class="my-3">
+         <h4>Name : {{faculty.name}}</h4>
+         <h4>ID : <span class="mx-3 px-1"></span>{{faculty.faculty_id}}</h4>
+         <h4>Dept :<span class="mx-2"> {{faculty.department}}</h4>
+      </div>
+   </div>
+</div>
+{% endblock %}

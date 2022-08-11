@@ -1,0 +1,131 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} {{ course.name }} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
+{% endblock %}
+{% block user %}
+{{student.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock allCourses %}
+{% block content %}
+<div class="site-section">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myCourses' %}">My
+               Courses</a>
+            </li>
+            <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active"
+               aria-current="page">{{ course.name }}</a></li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+   <div class="container d-flex flex-wrap flex-column">
+      <!-- course name starts -->
+      <div class="course-section p-3 m-3 shadow d-flex justify-content-between align-items-center">
+         <h3 class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
+         <a class="rounded btn btn-outline-primary btn-sm px-2" href="{% url 'discussion' course.code %}">
+         Discussion
+         </a>
+      </div>
+      <!-- course name ends -->
+      <!-- announcement section starts -->
+      <div class="course-section p-3 m-3 shadow">
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
+            alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
+         </h4>
+         <div>
+            {% for announcement in announcements %}
+            <!-- individual announcement starts -->
+            <hr>
+            <h4>{{announcement.title}}</h4>
+            <div class="fs-6 text-break">
+               {{announcement.description}}
+            </div>
+            <div class="announcement-cont d-flex flex-row-reverse">
+               <div class="add-announcement" style="color:grey;">
+                  {{announcement.datetime}}
+               </div>
+            </div>
+            <hr>
+            <!-- individual announcement ends-->
+            {% empty %}
+            <hr>
+            <h6 style="text-align:center">No announcements given yet</h6>
+            <hr>
+            {% endfor %}
+         </div>
+      </div>
+      <!-- announcement section ends -->
+      <!-- assignment section starts -->
+      <div class="course-section p-3 m-3 shadow">
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
+            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
+         <div class="add-announcement">
+            {% for assignment in assignments %}
+            <!-- individual assignment starts -->
+            <hr>
+            <a class="add-announcement fw-bold"
+               href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
+            <div class="d-flex justify-content-between">
+               <h6> Due Date : {{ assignment.deadline}} </h6>
+               <div class="add-announcement" style="color:grey;">
+                  {{assignment.datetime}}
+               </div>
+            </div>
+            <hr>
+            <!-- individual assignment ends -->
+            {% empty %}
+            <hr>
+            <h6 style="text-align:center">No assignments given yet</h6>
+            <hr>
+            {% endfor %}
+         </div>
+         {% if assignments %}
+         <div class="text-center fs-6">
+            <p>Showing {{ assignments.count}} of {{course.assignment_set.count}}
+               {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
+            </p>
+            <a href=" {% url 'student-assignments' course.code %} ">Show all</a>
+         </div>
+         {% endif %}
+      </div>
+      <!-- assignment section ends -->
+      <!-- course material section starts -->
+      <div class="course-section p-3 m-3 shadow">
+         <!-- section title -->
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}" alt=""
+            style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h4>
+         <!-- section title ends -->
+         <div class="add-announcement">
+            {% for material in materials  %}
+            <!-- individual material starts -->
+            <hr>
+            <a class="add-announcement" href="{{ material.file.url }}">{{material.title}}</a><br>
+            <div class="d-flex justify-content-between text-break">
+               <p>{{ material.description }}</p>
+               <div class="add-announcement" style="color:grey;">
+                  {{material.datetime}}
+               </div>
+            </div>
+            <hr>
+            {% empty %}
+            <hr>
+            <h6 style="text-align:center">Course materials not available</h6>
+            <hr>
+            {% endfor %}
+            <!-- individual material ends -->
+         </div>
+      </div>
+      <!-- course material section ends -->
+   </div>
+</div>
+{% endblock %}

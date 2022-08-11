@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+{% block title %} Courses | eLMS {% endblock title %}
+{% block profile %}
+{% if faculty  %} {% url 'profile' faculty.faculty_id %}
+{% else %} {% url 'profile' student.student_id %}
+{% endif %}
+{% endblock %}
+{% block user %}
+{% if faculty %} {{faculty.name}}
+{% else %} {{student.name}}
+{% endif %}
+{% endblock user %}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block content %}
+<div class="container">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item active" aria-current="page">All courses</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+   <div class="row gy-5">
+      {% if courses %}
+      {% for course in courses%}
+      <!-- individual card starts -->
+      <div class="col-sm-6 d-flex align-items-stretch justify-content-center">
+         <div class="card shadow" style="width: 30rem !important;">
+            <div class="class-header text-center text-light border-bottom bg-dark rounded">
+               <h6 class="my-2"> Dept. of {{course.department}}</h6>
+            </div>
+            <div class="card-body d-flex flex-column align-items-center">
+               <h5 class="card-title fw-bold">{{course.department}}-{{course.code}} : {{course.name}}</h5>
+               {% if course.faculty %}
+               <p class="card-text fw-bold">Course Teacher : {{ course.faculty.name}}</p>
+               {% else %}
+               <p> Teacher not assigned</p>
+               {% endif %}
+               {% if not faculty %}
+               {% comment %} if student {% endcomment %}
+               {% if course not in enrolled%}
+               <a href="{% url 'access' course.code %}" class="btn btn-outline-dark"><span class="px-2">Access</span></a>
+               {% else %}
+               <a href="{% url 'course' course.code %}" class="btn btn-outline-dark"><span
+                  class="px-3">Enter</span></a>
+               {% endif %}
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      <!-- individual card ends -->
+      {% endfor %}
+   </div>
+   {% else %}
+   <div class="text-center h4 text-secondary">No courses to show</div>
+   {% endif %}
+</div>
+{% endblock  %}

@@ -1,8 +1,29 @@
 {% extends 'index.html' %}
-
+{% block title %}Dashboard | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
 {% block content %}
 <div class="site-section">
-
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active" aria-current="page">My Courses</a>
+            </li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
    <div class="container">
       {% if courses %}
       <!-- course container -->

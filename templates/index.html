@@ -5,13 +5,17 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>elms</title>
-
+      <title>{% block title %}{% endblock title %}</title>
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/favicon-16x16.png' %}">
+      <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
       <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'styles/style.css' %}">
    </head>
    <body>
       <!-- Navbar Starts -->
-      <nav class="navbar sticky-top navbar-expand-lg navbar-primary">
+      <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-mod">
          <div class="container-fluid">
             <a class="navbar-brand fw-bold fs-5 px-2 py-1" href="/admin" target="_blank" data-bs-toggle="tooltip"
                data-bs-placement="bottom" title="Access admin panel">elms</a>
@@ -21,44 +25,42 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  
+                  <li class="nav-item">
+                     <a class="nav-link active fw-bold" aria-current="page" href="{% block courses %}{% endblock courses %}"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Course home page">Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link active fw-bold" href="{% block allCourses %}{% endblock %}" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Show all courses">Courses</a>
+                  </li>
                   <li class="nav-item">
                      <a class="nav-link active fw-bold" href="{% url 'std_logout' %}" data-bs-toggle="tooltip"
                         data-bs-placement="bottom" title="Log out">Log out</a>
                   </li>
-                  
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                     <span class="navbar-toggler-icon"></span>
-                   </button>
-                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                     <ul class="navbar-nav">
-                       <li class="nav-item dropdown">
-                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                           {% block user %}{% endblock  %}
-                         </a>
-                         <ul class="dropdown-menu dropdown-menu-dark">
-                           <li><a class="dropdown-item" href="#">Profile</a></li>
-                           <li><a class="dropdown-item" href="#">Another action</a></li>
-                           <li><a class="dropdown-item" href="#">Something else here</a></li>
-                         </ul>
-                       </li>
-                     </ul>
-                   </div>
+                  <li class="nav-item">
+                     <a class="nav-link active fw-bold" href="{% block profile %}{% endblock profile %}"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Check your profile">{% block user %}{% endblock  %}</a>
+                  </li>
                </ul>
-              
+               <form class="d-flex" action=" {% url 'search' %}" method="GET">
+                  <input class="form-control me-2" type="search" placeholder="Search courses" aria-label="Search"
+                     name="q">
+                  <button class="btn btn-outline-light" type="submit">Search</button>
+               </form>
             </div>
          </div>
       </nav>
       <!-- Navbar Ends -->
       {% block  content %}
       {% endblock  %}
-     <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
+      <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
       <!-- Tooltips-->
       <script>
          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
              return new bootstrap.Tooltip(tooltipTriggerEl)
-         }) 
+         })
       </script>
    </body>
 </html>

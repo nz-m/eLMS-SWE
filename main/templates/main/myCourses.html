@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% block title %}Dashboard | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
+{% endblock %}
+{% block user %}
+{{student.name}}
+{% endblock user %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock%}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock %}
+{% block content %}
+<div class="site-section">
+   <!--navigation links-->
+   <div class="container">
+      <div class="container shadow-sm">
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb p-3">
+               <li class="breadcrumb-item active" aria-current="page">My courses</li>
+            </ol>
+         </nav>
+      </div>
+      {% if courses %}
+      <!-- Course container -->
+      <div class="card_primary d-flex justify-content-center flex-wrap">
+         {% for courses in courses %}
+         <!-- individual course starts -->
+         <div class="cd card text-center my-4 mx-4" style="width: 30rem !important;">
+            <div class="card-header text-light fw-bold">
+               Dept. of {{courses.department}}
+            </div>
+            <div class="card-body">
+               <h5 class="card-title fw-bold"> {{courses.department}}-{{courses.code}} : {{courses.name}}</h5>
+               <a href="{% url 'course' courses.code %}" class="btn btn-outline-dark px-5">Enter</a>
+            </div>
+            <div class="card-footer text-light fw-bold">
+               {% if courses.faculty %}
+               Course Teacher : {{ courses.faculty.name}}
+               {% else %}
+               Teacher not assigned yet
+               {% endif %}
+            </div>
+         </div>
+         <!-- individual course ends -->
+         {% endfor %}
+         <!-- Course container ends -->
+      </div>
+      {% else %}
+      <div class="text-center fs-5 text-secondary">
+         <p>You are not enrolled in any courses</p>
+      </div>
+      {% endif %}
+   </div>
+</div>
+{% endblock %}

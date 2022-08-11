@@ -1,22 +1,49 @@
 {% extends 'index.html' %}
 {% load static %}
-
+{% block title %} {{ course.name }} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
 {% block content %}
 <div class="site-section">
-
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'facultyCourses' %}">My Courses</a></li>
+         <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active"
+            aria-current="page">{{ course.name }}</a></li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
 <div class="container d-flex flex-wrap flex-column">
    <!-- course name starts -->
-   <div class="course-section p-3 m-3  d-flex justify-content-between align-items-center">
+   <div class="course-section p-3 m-3 shadow d-flex justify-content-between align-items-center">
       <h3 class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
-      
+      <a class="btn btn-outline-primary btn-sm"
+         href="{% url 'discussion' course.code %}">
+      Discussion
+      </a>
    </div>
    <!-- course name ends -->
    <!-- announcement section starts -->
-   <div class="course-section p-3 m-3 ">
+   <div class="course-section p-3 m-3 shadow">
       <div class="d-flex justify-content-between">
-         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><span style="margin-right: 0.6rem;"></span>Announcement
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
+            alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
          </h4>
-         <a class=" -sm -outline-success rounded" style="height:2rem"
+         <a class="btn btn-sm btn-outline-success rounded" style="height:2rem"
             href="{% url 'addAnnouncement' course.code  %}">Create</a>
       </div>
       <div>
@@ -27,10 +54,33 @@
          <div class="fs-6 text-break">{{announcement.description}}</div>
          <div class="announcement-cont d-flex justify-content-between">
             <div>
-               <a
-                  href="{% url 'deleteAnnouncement' course.code announcement.id %}">Delete</a>
-             
-               <a class=" -sm px-3"
+               <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop">
+               Delete
+               </button>
+               <!-- Popup -->
+               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                     <div class="modal-content">
+                        <div class="modal-header" style="border:none">
+                           <button type="button" class="btn-close" data-bs-dismiss="modal"
+                              aria-label="Close">
+                           </button>
+                        </div>
+                        <div class="modal-body fs-6">
+                           Are you sure you want to delete this announcement?
+                        </div>
+                        <div class="modal-footer" style="border:none">
+                           <button type="button" data-bs-dismiss="modal"
+                              class="btn btn-sm ">Cancel</button>
+                           <a class="btn btn-sm btn-primary"
+                              href="{% url 'deleteAnnouncement' course.code announcement.id %}">Confirm</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <a class="btn btn-sm btn-outline-primary px-3"
                   href="{% url 'editAnnouncement' course.code announcement.id %}">Edit</a>
             </div>
             <div class="add-announcement" style="color:grey;">
@@ -48,17 +98,18 @@
    </div>
    <!-- announcement section ends -->
    <!-- assignment section starts -->
-   <div class="course-section p-3 m-3 ">
+   <div class="course-section p-3 m-3 shadow">
       <div class="d-flex flex-row justify-content-between edit">
-         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"></span>Assignment</h4>
-         <a class=" -sm -outline-success rounded" style="height:2rem"
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
+            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
+         <a class="btn btn-sm btn-outline-success rounded" style="height:2rem"
             href="{% url 'addAssignment' course.code %}">Create</a>
       </div>
       <div class="add-announcement">
          {% for assignment in assignments %}
          <!-- individual assignment starts -->
          <hr>
-         <a class="text-bold fs-5" href="#">
+         <a class="text-bold fs-5" href="{% url 'submission' course.code assignment.id %}">
          {{assignment.title}}</a>
          <div class="d-flex justify-content-between mt-3">
             <div class="text-muted">
@@ -79,14 +130,22 @@
          <hr>
          {% endfor %}
       </div>
-      
+      <div class="text-center fs-6">
+         {% if assignments %}
+         <p>Showing {{ assignments.count}} of {{course.assignment_set.count}}
+            {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
+         </p>
+         <a href=" {% url 'allAssignments' course.code %} ">Show all</a>
+         {% endif %}
+      </div>
    </div>
    <!-- assignment section ends -->
    <!-- course material section starts -->
-   <div class="course-section p-3 m-3 ">
+   <div class="course-section p-3 m-3 shadow">
       <div class="d-flex flex-row justify-content-between edit">
-         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><span style="margin-right: 0.6rem;"></span>Course Material</h4>
-         <a class=" -sm -outline-success rounded" style="height:2rem"
+         <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
+            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h4>
+         <a class="btn btn-sm btn-outline-success rounded" style="height:2rem"
             href="{% url 'addCourseMaterial' course.code  %}"><span class="px-2">Add</span></a>
       </div>
       <div class="add-announcement">
@@ -95,10 +154,32 @@
          <hr>
          <a class="add-announcement" href="{{ material.file.url }}">{{material.title}}</a><br>
          <div class="fs-6 text-break mb-2">{{material.description}}</div>
-         
+         <!-- Popup -->
+         <div class="modal fade" id="materialDel" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="materialBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-header" style="border:none">
+                     <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body fs-6">
+                     Are you sure you want to remove this item?
+                  </div>
+                  <div class="modal-footer" style="border:none">
+                     <button type="button" class="btn btn-sm "
+                        data-bs-dismiss="modal">Cancel</button>
+                     <a class="btn btn-sm btn-primary"
+                        href="{% url 'deleteCourseMaterial' course.code material.id %}">Confirm</a>
+                  </div>
+               </div>
+            </div>
+         </div>
          <div class="d-flex flex-row justify-content-between">
-            <a
-                        href="{% url 'deleteCourseMaterial' course.code material.id %}">Remove</a>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+               data-bs-target="#materialDel">
+            Remove
+            </button>
             <div class="add-announcement" style="color:grey;">
                {{material.datetime}}
             </div>

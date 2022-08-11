@@ -1,32 +1,58 @@
 {% extends 'index.html' %}
 {% load static %}
+{% block title %}{{ announcement.title }} - eLMS{% endblock title %}
+{% block profile %}{% url 'profile' faculty.faculty_id %}{% endblock %}
+{% block user %}{{faculty.name}}{% endblock user %}
+{% block courses %}{% url 'facultyCourses' %}{% endblock courses %}
+{% block allCourses %}{% url 'courses' %}{% endblock %}
 {% block content %}
 {% if announcement.title %}
-
-
-               <div>
-                  <div>Update Announcement</div>
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item active" aria-current="page">Announcement</li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container">
+   <div class="row justify-content-center">
+      <div class="col-sm-12 col-lg-8">
+         <div class="card border-0 rounded-2 shadow">
+            <div class="card-body p-4">
+               <div class="text-center">
+                  <div class="h4 fw-light mb-3">Update Announcement</div>
                   <form action="{% url 'updateAnnouncement' course.code announcement.id %}" method="post">
                      {% csrf_token %}
                      <!-- Title Input -->
-                     <div>
-                        <input id="title" value="{{ announcement.title}}" name="title"
+                     <div class="form-floating mb-3">
+                        <input class="form-control" id="title" value="{{ announcement.title}}" name="title"
                            maxlength="255" type="text" placeholder="Title" required />
                         <label for="title">Title</label>
                      </div>
                      <!-- Description Input -->
-                     <div>
-                        <textarea  id="content" name="content" type="text"
-                           placeholder="Description" maxlength="2000"
+                     <div class="form-floating mb-3">
+                        <textarea class="form-control" id="content" name="content" type="text"
+                           placeholder="Description" style="height: 10rem;" maxlength="2000"
                            required>{{ announcement.description}}</textarea>
                         <label for="content">Description</label>
                      </div>
-                     <div >
-                        <button type="submit">Update</button>
+                     <div class="d-grid col-12 mx-auto">
+                        <button class="btn btn-primary" type="submit">Update</button>
                      </div>
                   </form>
                   <!-- End of form -->
                </div>
-   
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 {% endif %}
 {% endblock %}

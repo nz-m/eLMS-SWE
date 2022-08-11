@@ -1,0 +1,79 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} Assignments | {{ course.name }} | eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block content %}
+<div class="site-section">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'facultyCourses' %}">My
+               Courses</a>
+            </li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Assignment</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+   <div class="container d-flex flex-wrap flex-column">
+      <!-- course name starts -->
+      <div class="course-section p-3 m-3 shadow-sm d-flex justify-content-center">
+         <h3 class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
+      </div>
+      <!-- course name ends -->
+      <!-- assignment section starts -->
+      <div class="course-section p-3 m-3 shadow">
+         <div class="d-flex flex-row justify-content-between edit">
+            <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
+               alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
+            <a class="btn btn-outline-primary" href="{% url 'addAssignment' course.code  %}"><span
+               class="mx-2">+</span></a>
+         </div>
+         <div class="add-announcement">
+            {% for assignment in assignments %}
+            <!-- individual assignment starts -->
+            <hr>
+            <a class="text-bold fs-5" href="{% url 'submission' course.code assignment.id %}">
+            {{assignment.title}}</a>
+            <div class="d-flex justify-content-between mt-3">
+               <div class="text-muted">
+                  <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
+               </div>
+               <div class="fs-6" style="color:grey;">
+                  {{assignment.datetime}}
+               </div>
+            </div>
+            <div class="fs-6">
+               <p>Submission ends : {{ assignment.deadline }}</p>
+            </div>
+            <hr>
+            <!-- individual assignment ends -->
+            {% empty %}
+            <hr>
+            <h6 style="text-align:center">No assignments given yet</h6>
+            <hr>
+            {% endfor %}
+         </div>
+         <div class="text-center fs-6">
+            <p>Showing {{ assignments.count}} of {{course.assignment_set.count}} {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}</p>
+         </div>
+      </div>
+      <!-- assignment section ends -->
+   </div>
+</div>
+{% endblock %}

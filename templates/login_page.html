@@ -5,9 +5,24 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Log in | eLMS</title>
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/favicon-16x16.png' %}">
+      <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
+      <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'styles/style.css' %}">
    </head>
    <body>
-
+      <div class="container-fluid ps-md-0">
+         <div class="row g-0">
+            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+            <div class="col-md-8 col-lg-6">
+               <div class="login d-flex align-items-center py-5">
+                  <div class="container">
+                     <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                           <h3 class="login-heading mb-4">Welcome back!</h3>
                            <!-- Sign In Form -->
                            <form method="POST">
                               {% csrf_token %}
@@ -30,11 +45,27 @@
                                  </div>
                               </div>
                            </form>
-          
+                           {% if messages %}
+                           <!-- Error Alert -->
+                           <div class="alert alert-danger alert-dismissible fade show my-2">
+                              <strong>Error!</strong> {% for message in messages %}
+                              <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                              {% endfor %}
+                              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                           </div>
+                           {% endif %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
       <script>
          if (window.history.replaceState) {
              window.history.replaceState(null, null, window.location.href);
          }
-      </script> 
+      </script>
    </body>
 </html>

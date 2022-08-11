@@ -12,6 +12,13 @@ class Student(models.Model):
         default="Student", max_length=100, null=False, blank=True)
     course = models.ManyToManyField(
         'Course', related_name='students', blank=True)
+    photo = models.ImageField(upload_to='profile_pics', blank=True,
+                              null=False, default='profile_pics/default_student.png')
+
+    def delete(self, *args, **kwargs):
+        if self.photo != 'profile_pics/default_student.png':
+            self.photo.delete()
+        super().delete(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Students'
@@ -28,6 +35,13 @@ class Faculty(models.Model):
     department = models.CharField(max_length=100, null=False)
     role = models.CharField(
         default="Faculty", max_length=100, null=False, blank=True)
+    photo = models.ImageField(upload_to='profile_pics', blank=True,
+                              null=False, default='profile_pics/default_faculty.png')
+
+    def delete(self, *args, **kwargs):
+        if self.photo != 'profile_pics/default_faculty.png':
+            self.photo.delete()
+        super().delete(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Faculty'

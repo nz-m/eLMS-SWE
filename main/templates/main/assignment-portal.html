@@ -1,0 +1,116 @@
+{% extends 'index.html' %}
+{% block title %} {{ assignment.title }} - eLMS {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
+{% endblock %}
+{% block user %}
+{{student.name}}
+{% endblock user %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+{% block content %}
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item active" aria-current="page">Assignment <span>
+            ({{ assignment.title }})</span> 
+         </li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container shadow p-3">
+   {% if messages %}
+   <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      {% endfor %}
+   </ul>
+   {% endif %}
+   <div class="assignment-contex" id="links">
+      <h2>{{assignment.title}}</h2>
+      <div class="p-2 text-break">{{assignment.description}}</div>
+      <h6 class="p-2 fw-bold">Deadline: <span class="px-2 text-danger"> {{assignment.deadline}} </span></h6>
+      <label class="p-2 fw-bold" for="">Total Marks: </label>
+      <span style="color: black;" class="p-2 fw-bold">{{assignment.marks}}</span><br>
+      {% if assignment.file %}
+      <label class="p-2 fw-bold" for="">Attachment: &nbsp <a
+         class="px-2 py-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2"
+         style="text-decoration: none; font-size: smaller !important" href="{{assignment.file.url}}"> &nbsp View
+      </a> &nbsp or &nbsp <a
+         class="fs-6 px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
+         style="text-decoration: none; font-size: smaller !important" download href=" {{assignment.file.url}}">
+      Download</a></label><br>
+      {% endif %}
+      {% if submission.status %}
+      <label class="p-2 fw-bold" for="">Status: </label>
+      <span style="color: #32CD32;" class="p-2 fw-bold">{{submission.status}}!</span><br>
+      {% else %}
+      <label class="p-2 fw-bold" for="">Status: </label>
+      <span style="color: red;" class="p-2 fw-bold">Pending!</span><br>
+      {% endif %}
+      <label class="p-2 fw-bold" for="">Time Remaining : <span id="timeRemain" class="fw-semibold"></span></label><br>
+      {% if submission.marks %}
+      <label class="p-2 fw-bold" for="">Grade: </label>
+      <span class="p-2 fw-bold" id="grade">{{submission.marks}} / {{assignment.marks}}</span><br>
+      {% else %}
+      <label class="p-2 fw-bold" for="">Grade: </label>
+      {% if submission.marks == 0.00 %}
+      <span class="p-2 fw-bold">0.00 / {{assignment.marks}} </span><br>
+      {% else %}
+      <span class="p-2 fw-bold">Not published</span><br>
+      {% endif %}
+      {% endif %}
+      {% if submission.file %}
+      <label class="p-2 fw-bold" for=""> Your Submission : </label>
+      <a style="text-decoration:none" download href="{{submission.file.url}}">{{submission.file.name}}</a>
+      {% endif %}
+   </div>
+   {% if time < assignment.deadline and not submission.file %}
+   <form action="{% url 'addSubmission' course.code assignment.id %}" method="POST" enctype="multipart/form-data"
+      id="gradeForm" name="gradeForm">
+      {% csrf_token %}
+      <div id="fileSubmit">
+         <div class="input-group mb-3 p-2">
+            <input type="file" class="form-control shadow-sm rounded" id="file" name="file" required>
+         </div>
+         <div class="btn-container d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary px-5 shadow-sm rounded">Submit</button><span
+               class="p-2"></span>
+         </div>
+      </div>
+   </form>
+   {% endif %}
+</div>
+<script>
+   var time = new Date('{{ assignment.deadline|date:"D, d M Y H:i:s"}}').getTime();
+   var rand = setInterval(function () {
+       var now = new Date().getTime();
+       var difference = time - now;
+       var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+       var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+       var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+       var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+   
+       document.getElementById("timeRemain").innerHTML = days + " days " + hours + " hours " +
+           minutes + " minutes " + seconds + " seconds ";
+   
+       if (difference < 0) {
+           clearInterval(rand);
+           document.getElementById("timeRemain").innerHTML = "Closed!";
+           document.getElementById("timeRemain").style.color = "red";
+           document.getElementById("fileSubmit").style.display = 'none';
+       }
+   }, 1000);
+</script>
+{% endblock %}
