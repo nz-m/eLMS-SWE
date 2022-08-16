@@ -30,7 +30,7 @@
       <div class="card_primary d-flex justify-content-center flex-wrap ">
          {% for courses in courses %}
          <!-- individual course starts -->
-         <div class="cd card text-center my-4 mx-4" style="width: 30rem !important;">
+         <div class="cd card text-center my-4 mx-4 courseAnim" style="width: 30rem !important;">
             <div class="card-header text-light">
                Dept. of {{courses.department}}
             </div>
@@ -51,4 +51,5 @@
       {% endif %}
    </div>
 </div>
+
 {% endblock %}
