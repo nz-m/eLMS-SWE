@@ -12,6 +12,10 @@
       <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
       <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
       <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+      <link href="https://vjs.zencdn.net/7.20.2/video-js.css" rel="stylesheet" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
    </head>
    <body>
       <!-- Navbar Starts -->
@@ -55,12 +59,16 @@
       {% block  content %}
       {% endblock  %}
       <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
+      <script src=" {% static 'js/chart.js' %} "></script>
+
+          
+      
       <!-- Tooltips-->
       <script>
          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
              return new bootstrap.Tooltip(tooltipTriggerEl)
          })
-      </script>
+      </script>     
    </body>
 </html>
