@@ -30,18 +30,15 @@
    <!-- course name starts -->
    <div class="course-section p-3 m-3 shadow d-flex justify-content-between align-items-center courseCls">
       <h3 id="courseTitle" class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
-      <a class="btn btn-outline-primary btn-sm"
-         href="{% url 'discussion' course.code %}">
-      Discussion
-      </a>
-      <a class="btn btn-outline-primary btn-sm"
-         href="{% url 'attendance' course.code %}">
-      Attendance
-      </a>
-      <a class="btn btn-outline-primary btn-sm"
-         href="{% url 'allQuizzes' course.code %}">
-      Online test
-      </a>
+      <div class="dropdown">
+            <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
+            alt="Options" height="32">
+         <ul class="dropdown-menu">
+           <li><a class="dropdown-item" href="{% url 'discussion' course.code %}">Discussion</a></li>
+           <li><a class="dropdown-item" href="{% url 'attendance' course.code %}">Attendance</a></li>
+           <li><a class="dropdown-item" href="{% url 'allQuizzes' course.code %}">Online test</a></li>
+         </ul>
+       </div>
    </div>
    <!-- course name ends -->
    <!-- announcement section starts -->
@@ -218,12 +215,11 @@
    <!-- course material section ends-->
 </div>
 <script>
-        
-
+    
       anime(
      
          {
-            targets: '.assignmentCls',
+          targets: '.assignmentCls',
             translateX: [
                { value: '-100%', duration: 0 },
                { value: '0', duration: 1000 }
@@ -276,5 +272,4 @@
          ); 
 
 </script>
-
 {% endblock %}

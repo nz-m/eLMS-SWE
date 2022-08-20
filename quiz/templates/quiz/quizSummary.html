@@ -1,0 +1,142 @@
+
+{% extends 'index.html' %}
+{% block title %}Attendance | {{ course.name }} {% endblock title %}
+{% comment %} {% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+<div class="container" id="con">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+               Courses</a>
+            </li>
+            {% comment %} 
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+            {% endcomment %}
+            {% comment %}             
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+            {% endcomment %}
+            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+</div>
+
+
+
+
+
+<div class="container shadow-sm">
+    <div class="h4"> Quiz -1 Summery</div>
+    <div>
+        <p class="text-break word-break"> Title : Lorem ipsum dolor </p>
+    </div>
+    <p>starts</p>
+    <p>ends</p>
+
+    <h2>Show these if quiz started</h2>
+    <p>Student Attempted : 4/5</p>
+    <p>Total Questions : 5</p>
+    <p>Total Attempted : 4</p>
+    <p>Highest Marks : 12</p>
+
+
+</div>
+<div class="container shadow-sm">
+    <p>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+            Question-1
+        </button>
+      </p>
+
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, maiores!</p>
+      <p>A : hi</p>
+      <p>B : hello</p>
+      <p>C : hey</p>
+      <p>D : hey</p>
+      <p class="fw-bold">Answer : Hello</p>
+      <p>Correct answer recieved : 4/6 </p>
+      <p>This was 2nd</p>
+      
+      <div class="collapse" id="collapseExample2">
+
+    <h2> Show chart if quiz started ans disble edit button</h2>
+    <div class="chart col-6 d-flex">
+        <canvas id="canvas2"></canvas>
+    </div>
+    </div>
+    <p>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+            Question-3
+        </button>
+      </p>
+
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, maiores!</p>
+      <p>A : hi</p>
+      <p>B : hello</p>
+      <p>C : hey</p>
+      <p>D : hey</p>
+      <p class="fw-bold">Answer : Hello</p>
+      <p>Correct answer recieved : 4/6 </p>
+      <p>This was 2nd</p>
+      
+      <div class="collapse" id="collapseExample3">
+
+    <h2> Show chart if quiz started ans disble edit button</h2>
+    <div class="chart col-6 d-flex">
+        <canvas id="canvas3"></canvas>
+    </div>
+</div>
+
+
+    {% comment %} <a href="{% url '' %}" class="btn btn-sm btn-primary">Edit</a> {% endcomment %}
+
+   
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

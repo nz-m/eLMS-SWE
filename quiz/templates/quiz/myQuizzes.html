@@ -1,0 +1,163 @@
+{% extends 'index.html' %}
+
+{% block title %}Attendance | {{ course.name }} {% endblock title %}
+
+{% comment %} {% block profile %}
+ {% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+ {{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+<div class="container" id="con">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+           
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+                  Courses</a>
+            </li>
+            {% comment %} <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'faculty' course.code %}">{{ course.name }}</a></li> {% endcomment %}
+{% comment %}             
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'course' course.code %}">{{ course.name }}</a></li> {% endcomment %}
+            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+
+
+
+
+
+   <div class="container">
+    <h6> Active Quizzes </h6>
+    <button id="sort">
+        Sort by recent
+    </button>
+    <button id="sortOld">
+        Sort by Oldest
+    </button>
+
+    <table class="table text-center">
+        {% if quizzes %}
+        <thead class="bg-light">
+            <tr>
+                <th scope="col">SL</th>
+                <th scope="col">Name</th>
+                <th scope="col">Starts</th>
+                <th scope="col">Ends</th>
+                <th scope="col">Questions</th>
+                <th scope="col">Total Marks</th>
+
+            </tr>
+        </thead>
+        <tbody class="">
+            {% for quiz in quizzes %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{ quiz.title}}</td>
+                <td>{{quiz.start}}</td>
+                <td>{{quiz.end}}</td>
+                {% if quiz.total_questions > 0 %}
+                <td>{{quiz.total_questions}}</td>
+                <td>{{quiz.total_marks}}</td>
+
+                {% else %}
+                <td colspan="2" class="text-center">Questions not set yet</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <th scope="col" colspan="4" class="text-center">No active quizzes available</th>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+
+
+
+    <h6> Previous Quizzes </h6>
+    <table class="table">
+        <thead class="bg-light">
+            <tr>
+                <th scope="col">SL</th>
+                <th scope="col">Name</th>
+                <th scope="col">Ended</th>
+                <th scope="col">Grade</th>
+            </tr>
+        </thead>
+
+        <tbody class="">
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>Otto</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+   
+
+ 
+</div>
+
+<script>
+    var sort = document.getElementById('sort');
+    sort.addEventListener('click', function() {
+        var table = document.getElementsByTagName('table')[0];
+        var rows = table.rows;
+        var switching = true;
+        var i = 1;
+        while (switching) {
+            switching = false;
+            for (var i = 1; i < (rows.length - 1); i++) {
+                var x = rows[i].getElementsByTagName('td')[2];
+                var y = rows[i + 1].getElementsByTagName('td')[2];
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+    }
+    );
+    var sortOld = document.getElementById('sortOld');
+    sortOld.addEventListener('click', function() {
+        var table = document.getElementsByTagName('table')[0];
+        var rows = table.rows;
+        var switching = true;
+        var i = 1;
+        while (switching) {
+            switching = false;
+            for (var i = 1; i < (rows.length - 1); i++) {
+                var x = rows[i].getElementsByTagName('td')[2];
+                var y = rows[i + 1].getElementsByTagName('td')[2];
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+    }
+    );
+
+ 
+
+</script>
+ 
+{% endblock %}

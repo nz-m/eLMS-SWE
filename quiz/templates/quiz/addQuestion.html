@@ -1,0 +1,92 @@
+{% extends 'index.html' %}
+{% block title %}Attendance | {{ course.name }} {% endblock title %}
+{% comment %} {% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+<div class="container" id="con">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+               Courses</a>
+            </li>
+            {% comment %} 
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+            {% endcomment %}
+            {% comment %}             
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+            {% endcomment %}
+            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+</div>
+<div class="container shadow-sm rounded p-4" style="max-width: 768px;">
+   <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
+      {% csrf_token %}
+      <div class="mb-3 row">
+         <label for="textarea" class="col-sm-2 col-form-label">Question</label>
+         <div class="col-sm-10">
+            <textarea class="form-control" id="textarea" style="height: 150px;" name="question" required></textarea>
+         </div>
+      </div>
+      <div class="mb-3 row">
+         <label for="option" class="col-sm-2 col-form-label">Option 1</label>
+         <div class="col-sm-10">
+            <input type="text" class="form-control" id="option" name="option1" required>
+         </div>
+      </div>
+      <div class="mb-3 row">
+         <label for="option" class="col-sm-2 col-form-label">Option 2</label>
+         <div class="col-sm-10">
+            <input type="text" class="form-control" id="option" name="option2" required>
+         </div>
+      </div>
+      <div class="mb-3 row">
+         <label for="option" class="col-sm-2 col-form-label">Option 3</label>
+         <div class="col-sm-10">
+            <input type="text" class="form-control" id="option" name="option3" required>
+         </div>
+      </div>
+      <div class="mb-3 row ">
+         <label for="option" class="col-sm-2 col-form-label">Option 4</label>
+         <div class="col-sm-10">
+            <input type="text" class="form-control" id="option" name="option4" required>
+         </div>
+      </div>
+      <div class="mb-3 row">
+         <label for="marks" class="col-sm-2 col-form-label">Marks</label>
+         <div class="col-sm-10">
+            <input type="number" min="0" class="form-control" id="marks" name="marks" required>
+         </div>
+      </div>
+      <select class="form-select mb-3" aria-label="Default select example" name="answer" required>
+         <option selected>Answer</option>
+         <option value="A">Option 1</option>
+         <option value="B">Option 2</option>
+         <option value="C">Option 3</option>
+         <option value="D">Option 4</option>
+      </select>
+      <div class="p-2 d-flex flex-row-reverse" style="background-color: rgb(250,250,250);">
+         <button name="saveAdd" class="btn btn-sm btn-success px-2 mx-2" type="submit">Save and add another</button>
+         <button name="saveOnly" class="btn btn-sm btn-primary px-3 mx-2" type="submit">Save</button>
+         <a href="{% url 'allQuizzes' course.code %}" class="btn btn-sm btn-outline-danger me-auto">Cancel</a>
+
+      </div>
+   </form>
+</div>
+{% endblock %}

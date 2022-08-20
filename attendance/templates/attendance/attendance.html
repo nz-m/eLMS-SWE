@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+
+{% block title %}Attendance | {{ course.name }} {% endblock title %}
+
+{% comment %} {% block profile %}
+ {% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+ {{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+<div class="container" id="con">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+           
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+                  Courses</a>
+            </li>
+            {% comment %} <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'faculty' course.code %}">{{ course.name }}</a></li> {% endcomment %}
+{% comment %}             
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'course' course.code %}">{{ course.name }}</a></li> {% endcomment %}
+            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+
+   
+
+ 
+</div>
+<div class="container">
+
+
+    <div class="d-flex flex-row-reverse p-2 border" style="background-color:rgb(250,250,250)">
+        
+            <form method="POST" action="{% url 'loadStudents' course.code %}">
+             {% csrf_token %} 
+            <input name="date" type="date" class="border border-secondary px-2 rounded">
+            <button type="submit" class="btn btn-sm btn-primary mx-1 px-3">
+                Load
+            </button>
+            </form> 
+       
+    </div>
+
+   <table class="table my-3 text-center">
+       <thead class="table-dark">
+           <tr>
+               <th scope="col">#</th>
+               <th scope="col">Name</th>
+               <th scope="col">ID</th>
+               <th scope="col">Total Absence</th>
+               <th scope="col">Attendance</th>
+
+           </tr>
+       </thead>
+       <tbody class="table-group-divider">
+             {% for attendance in attendance_data %}
+           <tr class="text-center">
+               <th scope="row"> {{ forloop.counter }}</th>
+               <td>{{attendance.student.name}}</td>
+               <td>{{attendance.student.student_id}}</td>
+                <td>{{attendance.total_absence}}</td>
+               <td class="d-flex justify-content-center">
+                   <div class="form-check form-switch">
+                    <form action="{% url 'submitAttendance' course.code attendance.date  %}" method="POST">
+                        {% csrf_token %}
+                        {% if attendance.status == 'P' %}
+                        <input class="form-check-input" name="checkbox" checked="checked" value={{attendance.id}} type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        {% else %}
+                        <input class="form-check-input" name="checkbox" value={{attendance.id}} type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        {% endif %} 
+                   </div>
+               </td>
+           </tr>
+             {% endfor %}
+       </tbody>
+   </table>
+   <div class="d-flex flex-row-reverse p-2 border" style="background-color: rgb(250, 250, 250);">
+       <span>
+       </span>
+       <button type="submit" class="btn btn-sm btn-danger">Discard</button>
+       <button type="submit" class="btn btn-sm btn-primary px-3 mx-1">Save</button>
+    </form>
+   </div>
+
+</div>
+
+
+{% endblock %}

@@ -28,6 +28,9 @@ admin.site.index_title = "Welcome to eLMS Administration Portal"
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('main.urls')),
+    path('', include('discussion.urls')),
+    path('', include('attendance.urls')),
+    path('', include('quiz.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
