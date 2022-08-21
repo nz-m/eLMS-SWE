@@ -33,7 +33,6 @@ def addQuestion(request, code, quiz_id):
         option4 = request.POST.get('option4')
         answer = request.POST.get('answer')
         marks = request.POST.get('marks')
-
         question = Question(question=question, option1=option1, option2=option2,
                             option3=option3, option4=option4, answer=answer, marks=marks, quiz=quiz)
         question.save()
@@ -63,6 +62,7 @@ def myQuizzes(request, code):
     quizzes = Quiz.objects.filter(course=course)
     student = Student.objects.get(student_id=request.session['student_id'])
 
+
     active_quizzes = []
     previous_quizzes = []
 
@@ -73,27 +73,28 @@ def myQuizzes(request, code):
             previous_quizzes.append(quiz)
         else:
             active_quizzes.append(quiz)
-    # get total marks for each quiz
-    for activeQuiz in active_quizzes:
-        total_marks = 0
-        for student_answer in StudentAnswer.objects.filter(student=student, quiz=activeQuiz):
-            if student_answer.answer == student_answer.question.answer:
-                total_marks += 1
-        activeQuiz.total_marks = total_marks
-    for previousQuiz in previous_quizzes:
-        total_marks = 0
-        for student_answer in StudentAnswer.objects.filter(student=student, quiz=previousQuiz):
-            if student_answer.answer == student_answer.question.answer:
-                total_marks += 1
-        previousQuiz.total_marks = total_marks
+    
+    #sum marks of all questions in quiz
+    for quiz in active_quizzes:
+        quiz.total_marks = 0
+        for question in quiz.question_set.all():
+            quiz.total_marks += question.marks
 
-    # get correct answers for each previous quiz
+
+            
+
+
+
+
     for previousQuiz in previous_quizzes:
-        correct_answers = 0
-        for student_answer in StudentAnswer.objects.filter(student=student, quiz=previousQuiz):
-            if student_answer.answer == student_answer.question.answer:
-                correct_answers += 1
-        previousQuiz.correct_answers = correct_answers
+        total_marks_obtained = 0
+        student_answers = StudentAnswer.objects.filter(
+            student=student, quiz=previousQuiz)
+        for student_answer in student_answers:
+            total_marks_obtained += student_answer.question.marks if student_answer.answer == student_answer.question.answer else 0
+        
+        previousQuiz.total_marks_obtained = total_marks_obtained
+
     # get total question for each previous quiz and active quiz
     for previousQuiz in previous_quizzes:
         previousQuiz.total_questions = Question.objects.filter(
@@ -101,6 +102,7 @@ def myQuizzes(request, code):
     for activeQuiz in active_quizzes:
         activeQuiz.total_questions = Question.objects.filter(
             quiz=activeQuiz).count()
+
 
     return render(request, 'quiz/myQuizzes.html', {'course': course, 'active_quizzes': active_quizzes, 'previous_quizzes': previous_quizzes})
 
@@ -136,13 +138,10 @@ def quizResult(request, code, quiz_id):
     student = Student.objects.get(student_id=request.session['student_id'])
     student_answers = StudentAnswer.objects.filter(
         student=student, quiz=quiz)
-    total_marks = 0
-    for student_answer in student_answers:
-        if student_answer.answer == student_answer.question.answer:
-            total_marks += 1
-    # add student answer to questions
+   
+
     for question in questions:
         student_answer = StudentAnswer.objects.get(
             student=student, question=question)
         question.student_answer = student_answer.answer
-    return render(request, 'quiz/quizResult.html', {'course': course, 'quiz': quiz, 'questions': questions, 'total_marks': total_marks})
+    return render(request, 'quiz/quizResult.html', {'course': course, 'quiz': quiz, 'questions': questions})
