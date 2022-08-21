@@ -98,6 +98,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Ended</th>
                 <th scope="col">Marks</th>
+                <th scope="col">Percentage</th>
             </tr>
         </thead>
 
@@ -111,7 +112,8 @@
                     <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
                 </td>
                 <td>{{quizP.end}}</td>
-                <td>{{quizP.total_marks_obtained}}</td>
+                <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
+                <td> {{ quizP.percentage}}%</td>
             </tr>
             {% endfor %}
             {% else %}

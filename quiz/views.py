@@ -81,17 +81,26 @@ def myQuizzes(request, code):
             quiz.total_marks += question.marks
 
 
-            
-
-
     for previousQuiz in previous_quizzes:
         total_marks_obtained = 0
         student_answers = StudentAnswer.objects.filter(
             student=student, quiz=previousQuiz)
+        # total marks of that quiz
+        
         for student_answer in student_answers:
             total_marks_obtained += student_answer.question.marks if student_answer.answer == student_answer.question.answer else 0
-        
         previousQuiz.total_marks_obtained = total_marks_obtained
+
+        # total marks for that quiz
+        previousQuiz.total_marks = 0
+        for question in previousQuiz.question_set.all():
+            previousQuiz.total_marks += question.marks
+        
+        # percentage for that quiz
+        previousQuiz.percentage = (total_marks_obtained / previousQuiz.total_marks) * 100
+        previousQuiz.percentage = round(previousQuiz.percentage, 2)
+        
+
 
     for previousQuiz in previous_quizzes:
         previousQuiz.total_questions = Question.objects.filter(

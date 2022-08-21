@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block title %}Attendance | {{ course.name }} {% endblock title %}
 {% comment %} {% block profile %}
 {% url 'profile' faculty.faculty_id %}
@@ -59,9 +60,18 @@
 {% comment %} show all question with correct ans checked {% endcomment %}
 
 
+<div class="container mb-2">
+
 <div>
-<div>
-    {{question.question}}
+   <div class="d-flex justify-content-between mb-3">
+   <div>
+  <span class="fw-bold"> Question-{{forloop.counter}}  </span>  {{question.question}} | {{question.marks}} marks
+   </div>
+
+
+      {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
+    
+ 
 </div>
 
 <div>
@@ -75,17 +85,8 @@
     
 </div>
 </div>
-
-   Your answer is : {{question.student_answer}} <br>
-   Correct answer is : {{question.answer}}
-
-
-
-
-</h4>
-<h4>
-  
-</h4>
+Correct answer : <p class="fw-bold text-italic d-inline">{{ question.answer }}</p>
+</div>
 
 {% endfor %}
 
