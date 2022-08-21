@@ -37,16 +37,16 @@
    <!-- navigation links end -->
    <div class="container">
       <div class="container">
-         <h4> Quiz -1 Object oriented programming</h4>
+         <h4> {{quiz.title}}</h4>
          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi rem voluptate voluptatibus aspernatur
-            beatae error illum cum magnam. Enim facere modi, architecto tempore inventore explicabo dolor commodi
-            accusantium quae vel qui laboriosam excepturi officia quo natus? Quia ipsam sed numquam.
+            {{quiz.description}}
          </p>
-         <p>Starting in : 4 minutes 3 seconds</p>
-         <p>Ending in : 4 minutes 3 seconds</p>
-         <p>Total Questions : </p>
-         <p>Marks : </p>
+         <p>Starts : {{quiz.start}}</p>
+         <p>Ends : {{quiz.end}}</p>
+         <p>Total Questions : {{quiz.total_questions}} </p>
+         <p>Marks : {{ quiz.total_marks}}</p>
+         <p>Duration : {{ quiz.duration}} hours</p>
+         
       </div>
       {% for question in questions  %}
       {% comment %} show all question with correct ans checked {% endcomment %}

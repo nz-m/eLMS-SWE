@@ -15,6 +15,10 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+    def duration(self):
+        return self.end - self.start
+    def total_questions(self):
+        return Question.objects.filter(quiz=self).count()
 
 
 class Question(models.Model):
@@ -43,3 +47,4 @@ class StudentAnswer(models.Model):
 
     def __str__(self):
         return self.student.name + ' ' + self.quiz.title + ' ' + self.question.question
+    

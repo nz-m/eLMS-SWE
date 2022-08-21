@@ -169,13 +169,9 @@
     if (distanceEnd < 0) {
         clearInterval(x);
         document.getElementById("end").innerHTML = "Ended!";
-
-       
+        $('#end').css('color', 'red');
         $('#subForm').click();
     
-        {% comment %} window.location.href = "{% url 'quizResult' course.code quiz.id %}"; {% endcomment %}
-
-
     }
     }, 1000);
     
