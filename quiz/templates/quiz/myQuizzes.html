@@ -37,7 +37,7 @@
 
 
 
-
+<h5>Make two tabs/ switch between old and new quizzes</h5>
 
    <div class="container">
     <h6> Active Quizzes </h6>
@@ -49,7 +49,7 @@
     </button>
 
     <table class="table text-center">
-        {% if quizzes %}
+        {% if active_quizzes %}
         <thead class="bg-light">
             <tr>
                 <th scope="col">SL</th>
@@ -62,10 +62,10 @@
             </tr>
         </thead>
         <tbody class="">
-            {% for quiz in quizzes %}
+            {% for quiz in active_quizzes %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
-                <td>{{ quiz.title}}</td>
+                <td><a href="{% url 'startQuiz' course.code quiz.id %}">{{quiz.title}}</a></td>
                 <td>{{quiz.start}}</td>
                 <td>{{quiz.end}}</td>
                 {% if quiz.total_questions > 0 %}
@@ -88,8 +88,10 @@
 
 
 
-    <h6> Previous Quizzes </h6>
+<h6> Previous Quizzes </h6>
     <table class="table">
+        {% if previous_quizzes %}
+
         <thead class="bg-light">
             <tr>
                 <th scope="col">SL</th>
@@ -100,12 +102,23 @@
         </thead>
 
         <tbody class="">
+            {% for quizP in previous_quizzes %}
+
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Otto</td>
+                <th scope="row">{{forloop.counter}}</th>
+
+                <td>
+                    <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
+                </td>
+                <td>{{quizP.end}}</td>
+                <td>{{quizP.correct_answers}}</td>
             </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <th scope="col" colspan="4" class="text-center">Not previous quiz attempted</th>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
 </div>
@@ -117,46 +130,9 @@
 </div>
 
 <script>
-    var sort = document.getElementById('sort');
-    sort.addEventListener('click', function() {
-        var table = document.getElementsByTagName('table')[0];
-        var rows = table.rows;
-        var switching = true;
-        var i = 1;
-        while (switching) {
-            switching = false;
-            for (var i = 1; i < (rows.length - 1); i++) {
-                var x = rows[i].getElementsByTagName('td')[2];
-                var y = rows[i + 1].getElementsByTagName('td')[2];
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                }
-            }
-        }
-    }
-    );
-    var sortOld = document.getElementById('sortOld');
-    sortOld.addEventListener('click', function() {
-        var table = document.getElementsByTagName('table')[0];
-        var rows = table.rows;
-        var switching = true;
-        var i = 1;
-        while (switching) {
-            switching = false;
-            for (var i = 1; i < (rows.length - 1); i++) {
-                var x = rows[i].getElementsByTagName('td')[2];
-                var y = rows[i + 1].getElementsByTagName('td')[2];
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                    switching = true;
-                }
-            }
-        }
-    }
-    );
 
- 
+
+ //Do sorting here
 
 </script>
  

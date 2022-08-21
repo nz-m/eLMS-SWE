@@ -66,7 +66,9 @@
             <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
            </th>
            <td>
-              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}" style="background-color: rgb(44, 151, 75);">Add Question</a>
+              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}" style="background-color: rgb(44, 151, 75);">Add Question
+               disable if quiz is started</a>
+            
            </td>
         </tr>
         {% endfor %}
