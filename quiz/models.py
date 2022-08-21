@@ -11,7 +11,7 @@ class Quiz(models.Model):
     end = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    total_marks = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.title
@@ -20,7 +20,7 @@ class Quiz(models.Model):
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     question = models.TextField()
-    marks = models.IntegerField(default=0, null=True, blank=True)
+    marks = models.IntegerField(default=0, null=False)
     option1 = models.TextField(null=False, blank=False, default='',)
     option2 = models.TextField(null=False, blank=False, default='')
     option3 = models.TextField(null=False, blank=False, default='')

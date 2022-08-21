@@ -10,7 +10,6 @@ body {
   padding: 0;
 
 }
-
 .navbar-mod {
   background-color: rgb(10, 10, 48);
   color: white !important;
@@ -101,3 +100,4 @@ a {
 .form-border {
   border: 2px solid rgb(10, 10, 48) !important;
 }
+

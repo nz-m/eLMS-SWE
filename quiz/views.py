@@ -61,6 +61,14 @@ def myQuizzes(request, code):
     course = Course.objects.get(code=code)
     quizzes = Quiz.objects.filter(course=course)
     student = Student.objects.get(student_id=request.session['student_id'])
+       # check if that student has already attempted this quiz
+    for quiz in quizzes:
+        student_answers = StudentAnswer.objects.filter(
+            student=student, quiz=quiz)
+        if student_answers.count() > 0:
+            quiz.attempted = True
+        else:
+            quiz.attempted = False
 
 
     active_quizzes = []
@@ -85,20 +93,21 @@ def myQuizzes(request, code):
         total_marks_obtained = 0
         student_answers = StudentAnswer.objects.filter(
             student=student, quiz=previousQuiz)
-        # total marks of that quiz
+        
         
         for student_answer in student_answers:
             total_marks_obtained += student_answer.question.marks if student_answer.answer == student_answer.question.answer else 0
         previousQuiz.total_marks_obtained = total_marks_obtained
 
-        # total marks for that quiz
         previousQuiz.total_marks = 0
         for question in previousQuiz.question_set.all():
             previousQuiz.total_marks += question.marks
-        
-        # percentage for that quiz
-        previousQuiz.percentage = (total_marks_obtained / previousQuiz.total_marks) * 100
-        previousQuiz.percentage = round(previousQuiz.percentage, 2)
+       
+        try:
+            previousQuiz.percentage = (total_marks_obtained / previousQuiz.total_marks) * 100
+            previousQuiz.percentage = round(previousQuiz.percentage, 2)
+        except ZeroDivisionError:
+            previousQuiz.percentage = 0
         
 
 
@@ -108,9 +117,10 @@ def myQuizzes(request, code):
     for activeQuiz in active_quizzes:
         activeQuiz.total_questions = Question.objects.filter(
             quiz=activeQuiz).count()
+    
+ 
+    return render(request, 'quiz/myQuizzes.html', {'course': course, 'quizzes': quizzes, 'active_quizzes': active_quizzes, 'previous_quizzes': previous_quizzes})
 
-
-    return render(request, 'quiz/myQuizzes.html', {'course': course, 'active_quizzes': active_quizzes, 'previous_quizzes': previous_quizzes})
 
 
 
@@ -118,7 +128,17 @@ def startQuiz(request, code, quiz_id):
     course = Course.objects.get(code=code)
     quiz = Quiz.objects.get(id=quiz_id)
     questions = Question.objects.filter(quiz=quiz)
-    return render(request, 'quiz/portalStdNew.html', {'course': course, 'quiz': quiz, 'questions': questions})
+    total_questions = questions.count()
+
+    marks = 0
+    for question in questions:
+        marks += question.marks
+    quiz.total_marks = marks
+
+
+    return render(request, 'quiz/portalStdNew.html', {'course': course, 'quiz': quiz, 'questions': questions, 'total_questions': total_questions})
+
+    
 
 
 def studentAnswer(request, code, quiz_id):
@@ -139,13 +159,29 @@ def quizResult(request, code, quiz_id):
     course = Course.objects.get(code=code)
     quiz = Quiz.objects.get(id=quiz_id)
     questions = Question.objects.filter(quiz=quiz)
-    student = Student.objects.get(student_id=request.session['student_id'])
-    student_answers = StudentAnswer.objects.filter(
-        student=student, quiz=quiz)
+    try:
+        student = Student.objects.get(student_id=request.session['student_id'])
+        student_answers = StudentAnswer.objects.filter(student=student, quiz=quiz)
+        total_marks_obtained = 0
+        for student_answer in student_answers:
+            total_marks_obtained += student_answer.question.marks if student_answer.answer == student_answer.question.answer else 0
+        quiz.total_marks_obtained = total_marks_obtained
+        quiz.total_marks = 0
+        for question in questions:
+            quiz.total_marks += question.marks
+        quiz.percentage = (total_marks_obtained / quiz.total_marks) * 100
+        quiz.percentage = round(quiz.percentage, 2)
+    except:
+        quiz.total_marks_obtained = 0
+        quiz.total_marks = 0
+        quiz.percentage = 0
    
-
+    
     for question in questions:
         student_answer = StudentAnswer.objects.get(
             student=student, question=question)
         question.student_answer = student_answer.answer
     return render(request, 'quiz/quizResult.html', {'course': course, 'quiz': quiz, 'questions': questions})
+    
+        
+

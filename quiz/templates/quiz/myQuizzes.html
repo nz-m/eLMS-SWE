@@ -89,7 +89,7 @@
 
 
 <h6> Previous Quizzes </h6>
-    <table class="table">
+    <table class="table text-center">
         {% if previous_quizzes %}
 
         <thead class="bg-light">
@@ -104,17 +104,31 @@
 
         <tbody class="">
             {% for quizP in previous_quizzes %}
-
+            {% if quizP.attempted %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
-
                 <td>
+                 
                     <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
+                    
                 </td>
                 <td>{{quizP.end}}</td>
+                
                 <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
                 <td> {{ quizP.percentage}}%</td>
             </tr>
+            {% else %}
+            <tr class="alert alert-danger">
+                <th scope="row">{{forloop.counter}}</th>
+                <td>
+                {{quizP.title}}
+                </td>
+                <td>{{quizP.end}}</td>
+                <td colspan="2" class="text-center">Not attempted</td>
+                </div>
+            </tr>
+                        
+                {% endif %}
             {% endfor %}
             {% else %}
             <tr>
@@ -135,6 +149,9 @@
 
 
  //Do sorting here
+
+
+
 
 </script>
  
