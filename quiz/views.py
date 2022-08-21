@@ -74,7 +74,7 @@ def myQuizzes(request, code):
         else:
             active_quizzes.append(quiz)
     
-    #sum marks of all questions in quiz
+
     for quiz in active_quizzes:
         quiz.total_marks = 0
         for question in quiz.question_set.all():
@@ -82,8 +82,6 @@ def myQuizzes(request, code):
 
 
             
-
-
 
 
     for previousQuiz in previous_quizzes:
@@ -95,7 +93,6 @@ def myQuizzes(request, code):
         
         previousQuiz.total_marks_obtained = total_marks_obtained
 
-    # get total question for each previous quiz and active quiz
     for previousQuiz in previous_quizzes:
         previousQuiz.total_questions = Question.objects.filter(
             quiz=previousQuiz).count()
@@ -119,15 +116,13 @@ def studentAnswer(request, code, quiz_id):
     course = Course.objects.get(code=code)
     quiz = Quiz.objects.get(id=quiz_id)
     questions = Question.objects.filter(quiz=quiz)
-    # get student instance from session
     student = Student.objects.get(student_id=request.session['student_id'])
-    # get student answer from forM OF RADIO BUTTONS NAME = QUESTION_ID
+
     for question in questions:
         answer = request.POST.get(str(question.id))
         student_answer = StudentAnswer(
             student=student, question=question, answer=answer, quiz=quiz)
         student_answer.save()
-    # redirect to myQuizzes
     return redirect('myQuizzes', code=code)
 
 
