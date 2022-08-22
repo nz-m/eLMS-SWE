@@ -19,6 +19,10 @@ class Quiz(models.Model):
         return self.end - self.start
     def total_questions(self):
         return Question.objects.filter(quiz=self).count()
+    def total_marks(self):
+        return Question.objects.filter(quiz=self).aggregate(total_marks=models.Sum('marks'))['total_marks']
+  
+
 
 
 class Question(models.Model):
@@ -33,6 +37,23 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+    
+    def get_answer(self):
+        case = {
+            'A': self.option1,
+            'B': self.option2,
+            'C': self.option3,
+            'D': self.option4,
+        }
+        return case[self.answer]
+        
+
+        
+    
+  
+
+
+
 
 
 

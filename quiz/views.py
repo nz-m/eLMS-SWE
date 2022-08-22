@@ -53,7 +53,14 @@ def quizSummary(request, code, quiz_id):
     course = Course.objects.get(code=code)
     quiz = Quiz.objects.get(id=quiz_id)
     questions = Question.objects.filter(quiz=quiz)
+    obtained_marks = 0
+    for question in questions:
+        if request.POST.get(question.id) == question.answer:
+            obtained_marks += question.marks
+    quiz.total_marks_obtained = obtained_marks
+   
     return render(request, 'quiz/quizSummary.html', {'course': course, 'quiz': quiz, 'questions': questions})
+    
 
 
 # REFACTOR NEEDED
@@ -81,10 +88,6 @@ def myQuizzes(request, code):
         else:
             active_quizzes.append(quiz)
 
-    for quiz in active_quizzes:
-        quiz.total_marks = 0
-        for question in quiz.question_set.all():
-            quiz.total_marks += question.marks
 
     for previousQuiz in previous_quizzes:
         total_marks_obtained = 0

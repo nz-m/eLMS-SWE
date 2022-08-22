@@ -36,37 +36,48 @@
    </div>
    <!-- navigation links end -->
    <div class="container">
-      <div class="container">
-         <h4> {{quiz.title}}</h4>
+      <div class="container shadow-sm p-3">
+         <h4> {{quiz.title}} Summary</h4>
          <p>
             {{quiz.description}}
          </p>
          <p>Starts : {{quiz.start}}</p>
          <p>Ends : {{quiz.end}}</p>
          <p>Total Questions : {{quiz.total_questions}} </p>
-         <p>Marks : {{ quiz.total_marks}}</p>
+         <p>Marks : {{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</p>
          <p>Duration : {{ quiz.duration}} hours</p>
+
          
       </div>
       {% for question in questions  %}
       {% comment %} show all question with correct ans checked {% endcomment %}
-      <div class="container mb-2">
+      <div class="container mb-2 shadow-sm p-3">
          <div>
             <div class="d-flex justify-content-between mb-3">
                <div>
-                  <span class="fw-bold"> Question-{{forloop.counter}}  </span>  {{question.question}} | {{question.marks}} marks
+                  <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
                </div>
                {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
             </div>
             <div>
+               
                <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
                <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
                <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
                <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
             </div>
          </div>
-         Correct answer : 
-         <p class="fw-bold text-italic d-inline">{{ question.answer }}</p>
+         <div>
+            {% if question.student_answer %}
+         Your response  <span class="fw-bold"> {{ question.student_answer }} : {{question.get_answer}}</span>
+         {% else %}
+         <span> You did not answer!</span>
+         {% endif %}
+
+         </div>
+         <div>
+            Correct answer  <span class="fw-bold text-italic"> {{ question.answer }} : {{question.get_answer}}</span>
+         </div>
       </div>
       {% endfor %}
    </div>

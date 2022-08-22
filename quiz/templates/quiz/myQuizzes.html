@@ -37,17 +37,9 @@
 
 
 
-<h5>Make two tabs/ switch between old and new quizzes</h5>
 
    <div class="container">
-    <h6> Active Quizzes </h6>
-    <button id="sort">
-        Sort by recent
-    </button>
-    <button id="sortOld">
-        Sort by Oldest
-    </button>
-
+    <h6 class="fw-bold"> Active Quizzes </h6>
     <table class="table text-center">
         {% if active_quizzes %}
         <thead class="bg-light">
@@ -73,13 +65,14 @@
                 <td>{{quiz.total_marks}}</td>
 
                 {% else %}
-                <td colspan="2" class="text-center">Questions not set yet</td>
+                <td class="text-center">Questions not set yet</td>
+                <td class="text-center">0</td>
                 {% endif %}
             </tr>
             {% endfor %}
             {% else %}
             <tr>
-                <th scope="col" colspan="4" class="text-center">No active quizzes available</th>
+                <th class="text-center">No active quizzes available</th>
             </tr>
             {% endif %}
         </tbody>
@@ -88,7 +81,7 @@
 
 
 
-<h6> Previous Quizzes </h6>
+<h6 class="fw-bold"> Previous Quizzes </h6>
     <table class="table text-center">
         {% if previous_quizzes %}
 
@@ -124,15 +117,15 @@
                 {{quizP.title}}
                 </td>
                 <td>{{quizP.end}}</td>
-                <td colspan="2" class="text-center">Not attempted</td>
-                </div>
+                <td class="text-center">Not attempted</td>
+                <td class="text-center">Not attempted</td>
             </tr>
                         
                 {% endif %}
             {% endfor %}
             {% else %}
             <tr>
-                <th scope="col" colspan="4" class="text-center">Not previous quiz attempted</th>
+                <th scope="col" class="text-center">Not previous quiz attempted</th>
             </tr>
             {% endif %}
         </tbody>
