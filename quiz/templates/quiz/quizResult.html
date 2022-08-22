@@ -21,16 +21,13 @@
          <ol class="breadcrumb p-3">
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
-            </li>
-            {% comment %} 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
+            </li>           
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+               <li class="breadcrumb-item fw-bold" ><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'myQuizzes' course.code %}">My Quizzes</a></li>
+            <li class="breadcrumb-item ">{{ quiz.title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quizz Result</li>
          </ol>
       </nav>
    </div>
