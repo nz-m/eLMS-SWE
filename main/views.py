@@ -209,7 +209,23 @@ def error(request):
 
 
 # Display user student profile after Login
-
+def profile(request, id):
+    try:
+        if request.session['student_id'] == str(id):
+            student = Student.objects.get(student_id=id)
+            return render(request, 'main/profile.html', {'student': student})
+        else:
+            return redirect('std_login')
+    except:
+        #fetch faculty profile images after login and display faculty profile
+        try:
+            if request.session['faculty_id'] == str(id):
+                faculty = Faculty.objects.get(faculty_id=id)
+                return render(request, 'main/faculty_profile.html', {'faculty': faculty})
+            else:
+                return redirect('std_login')
+        except:
+            return render(request, 'error.html')
 
 
 def addAnnouncement(request, code):
