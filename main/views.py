@@ -208,7 +208,7 @@ def error(request):
     return render(request, 'error.html')
 
 
-# Display user profile after Login(student & faculty)
+# Display user profile(student & faculty)
 def profile(request, id):
     try:
         if request.session['student_id'] == str(id):

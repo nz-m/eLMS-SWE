@@ -8,7 +8,7 @@
 git clone https://github.com/nz-m/eLMS-SWE.git
 ```
 
-2. Create a virtual environment(Windows)
+2. Create a virtual environment
 
 ```bash
 py -m venv env
