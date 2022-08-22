@@ -208,7 +208,7 @@ def error(request):
     return render(request, 'error.html')
 
 
-# Display user profile after Login(student & faculty)
+# Display user student profile after Login
 def profile(request, id):
     try:
         if request.session['student_id'] == str(id):
@@ -217,6 +217,7 @@ def profile(request, id):
         else:
             return redirect('std_login')
     except:
+        #fetch faculty profile images after login and display faculty profile
         try:
             if request.session['faculty_id'] == str(id):
                 faculty = Faculty.objects.get(faculty_id=id)
