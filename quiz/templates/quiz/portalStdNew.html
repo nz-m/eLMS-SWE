@@ -37,20 +37,20 @@
    <div class="container">
 
 
-      <div class="container shadow-sm p-3 mb-3">
+      <div class="container shadow-sm p-3 mb-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">
          <h4> {{quiz.title}}</h4>
          <p>
             {{quiz.description}}
          </p>
-         <p>Starting in : <span id="start" class="fw-bold">  </span></p>
-         <p>Ending in : <span id="end" class="fw-bold">  </span></p>
          <p>Total Questions : {{ total_questions }}</p>
          <p>Total Marks : {{quiz.total_marks}} </p>
+         <p>Starting in : <span id="start" class="fw-bold"> </span></p>
+         <p>Ending in : <span id="end" class="fw-bold"> </span></p>
        
 
              {% comment %} Attempt button {% endcomment %}
       <div class="p-2 d-flex justify-content-center">
-        <button id="attempt" type="button" class=" btn btn-sm btn-primary">
+        <button id="attempt" type="button" class=" btn btn-sm btn-success">
         Attempt now
         </button>
      </div>
@@ -65,11 +65,11 @@
 
 
       {% comment %} Form starts {% endcomment %}
-      <div id="questions" class="p-3">
+      <div id="questions" class="">
         <form action="{% url 'studentAnswer' course.code quiz.id %}" method="post">
             {% csrf_token %}
             {% for question in questions  %}
-            <div class="border-bottom mb-3 alert alert-info">
+            <div class="border-bottom mb-3 bg-warning bg-opacity-10 rounded p-3">
                 <div class="d-flex justify-content-between border-bottom mb-3">
                 <h6>Question {{forloop.counter}}</h6>
                 <h6>Marks : {{question.marks}}</h6>
@@ -118,7 +118,7 @@
             </div>
             {% endfor %}
             <div class="d-flex justify-content-end bg-light p-2 border rounded">
-            <input id="subForm" type="submit" value="Submit" class="btn btn-sm btn-primary">
+            <input id="subForm" type="submit" value="Submit" class="btn btn-sm btn-success">
             </div>
             
         </form>
@@ -133,10 +133,15 @@
 
 <script>
     $('#questions').hide();
+   $('#attempt').hide();
+
+
+
     $('#attempt').click(function(){
         $('#questions').show(1000);
         $('#attempt').hide(1000);
     }); 
+
 
 
     var countDownDate = new Date('{{ quiz.start|date:"D, d M Y H:i:s"}}').getTime();
@@ -153,6 +158,8 @@
     if (distance < 0) {
         clearInterval(x);
         document.getElementById("start").innerHTML = "Started!";
+         document.getElementById("start").style.color = "green";
+         $('#attempt').show(200);
     }
     }, 1000);
 
