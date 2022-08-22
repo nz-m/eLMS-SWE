@@ -35,8 +35,8 @@
             alt="Options" height="32">
          <ul class="dropdown-menu">
            <li><a class="dropdown-item" href="{% url 'discussion' course.code %}">Discussion</a></li>
-           <li><a class="dropdown-item" href="#">Attendance</a></li>
-           <li><a class="dropdown-item" href="#">Online test</a></li>
+           <li><a class="dropdown-item" href="{% url 'attendance' course.code %}">Attendance</a></li>
+           <li><a class="dropdown-item" href="{% url 'allQuizzes' course.code %}">Online test</a></li>
          </ul>
        </div>
    </div>

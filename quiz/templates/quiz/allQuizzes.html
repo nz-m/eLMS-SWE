@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+{% block title %}Attendance | {{ course.name }} {% endblock title %}
+{% comment %} {% block profile %}
+{% url 'profile' faculty.faculty_id %}
+{% endblock %}
+{% block user %}
+{{faculty.name}}
+{% endblock user %}
+{% block courses %}
+{% url 'facultyCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %} {% endcomment %}
+{% block content %}
+<div class="container" id="con">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+               Courses</a>
+            </li>
+            {% comment %} 
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+            {% endcomment %}
+            {% comment %}             
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+            {% endcomment %}
+            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+</div>
+
+<div class="container shadow">
+  <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
+     <div class="h5 fw-bold">Online Assessment -  {{ course.name}}</div>
+     <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}">New</a>
+  </div>
+  <table class="table">
+     <thead class="text-center">
+        <tr>
+           <th scope="col">SL</th>
+           <th scope="col">Starts</th>
+           <th scope="col">Ends</th>
+           <th scope="col">Questions</th>
+           <th scope="col">Title</th>
+           <th scope="col"></th>
+
+        </tr>
+     </thead>
+     <tbody class="table-group-divider text-wrap text-break text-center">
+      {% for quiz in quizzes %}
+      
+        <tr>
+           <th scope="row">{{ forloop.counter }}</th>
+           <td>{{ quiz.start}}</td>
+           <td>{{ quiz.end}}</td>
+           <td>{{ quiz.total_questions}}</td>
+           </td>
+           <th scope="col">
+            <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
+           </th>
+           <td>
+              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}" style="background-color: rgb(44, 151, 75);">Add Question
+               disable if quiz is started</a>
+            
+           </td>
+        </tr>
+        {% endfor %}
+   
+     </tbody>
+  </table>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
