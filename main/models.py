@@ -119,23 +119,9 @@ class Submission(models.Model):
         difference = self.assignment.deadline - self.datetime
         days = difference.days
         hours = difference.seconds//3600
-        minutes = (difference.seconds//60)%60
-        seconds = difference.seconds%60
+        minutes = (difference.seconds//60) % 60
+        seconds = difference.seconds % 60
         return str(days) + " days, " + str(hours) + " hours, " + str(minutes) + " minutes, " + str(seconds) + " seconds"
-
-
-
-       
-        
-
-
-       
-    
-        
-        
-
-        
-
 
     def delete(self, *args, **kwargs):
         self.file.delete()
