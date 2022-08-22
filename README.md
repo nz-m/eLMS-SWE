@@ -8,36 +8,17 @@
 git clone https://github.com/nz-m/eLMS-SWE.git
 ```
 
-2. Create a virtual environment
-
-```bash
-py -m venv env
 ```
+Create migrations and migrate
 
-```bash
-env\Scripts\activate
-```
-
-3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-4. Set up the database
-
-```bash
+```sh
 python manage.py makemigrations
 ```
-```bash
+```sh
 python manage.py migrate
 ```
-5. Create a superuser
+Create a superuser
 
-```bash
+```sh
 python manage.py createsuperuser
-```
-6. Run the application
-
-```bash
-python manage.py runserver
 ```
