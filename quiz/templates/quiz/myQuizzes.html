@@ -35,20 +35,12 @@
 
 
 
-<h5>Make two tabs/ switch between old and new quizzes</h5>
 
    <div class="container">
-    <h6> Active Quizzes </h6>
-    <button id="sort">
-        Sort by recent
-    </button>
-    <button id="sortOld">
-        Sort by Oldest
-    </button>
-
+    <h6 class="fw-bold"> Active Quizzes </h6>
     <table class="table text-center">
         {% if active_quizzes %}
-        <thead class="bg-light">
+        <thead class="bg-dark text-light">
             <tr>
                 <th scope="col">SL</th>
                 <th scope="col">Name</th>
@@ -71,13 +63,14 @@
                 <td>{{quiz.total_marks}}</td>
 
                 {% else %}
-                <td colspan="2" class="text-center">Questions not set yet</td>
+                <td class="text-center">Questions not set yet</td>
+                <td class="text-center">0</td>
                 {% endif %}
             </tr>
             {% endfor %}
             {% else %}
             <tr>
-                <th scope="col" colspan="4" class="text-center">No active quizzes available</th>
+                <th class="text-center">No active quizzes available</th>
             </tr>
             {% endif %}
         </tbody>
@@ -86,11 +79,11 @@
 
 
 
-<h6> Previous Quizzes </h6>
-    <table class="table">
+<h6 class="fw-bold"> Previous Quizzes </h6>
+    <table class="table text-center shadow">
         {% if previous_quizzes %}
 
-        <thead class="bg-light">
+        <thead class="bg-dark text-light">
             <tr>
                 <th scope="col">SL</th>
                 <th scope="col">Name</th>
@@ -102,21 +95,55 @@
 
         <tbody class="">
             {% for quizP in previous_quizzes %}
+            {% if quizP.attempted %}
 
+                {% if quizP.publish_status %}
+
+                                
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>
+                                    
+                                        <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
+                                        
+                                    </td>
+                                    <td>{{quizP.end}}</td>
+                                    
+                                    <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
+                                    <td> {{ quizP.percentage}}%</td>
+                                </tr>
+
+
+                                {% else %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>
+                                    {{quizP.title}}
+                                    </td>
+                                    <td>{{quizP.end}}</td>
+                                    <td class="text-center text-warning">Not Published</td>
+                                    <td class="text-center text-warning">Not Published</td>
+                                </tr>
+
+
+
+                     {% endif %}
+            {% else %}
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
-
                 <td>
-                    <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
+                {{quizP.title}}
                 </td>
                 <td>{{quizP.end}}</td>
-                <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
-                <td> {{ quizP.percentage}}%</td>
+                <td class="text-center text-danger">Not attempted</td>
+                <td class="text-center text-danger">Not attempted</td>
             </tr>
+                        
+                {% endif %}
             {% endfor %}
             {% else %}
             <tr>
-                <th scope="col" colspan="4" class="text-center">Not previous quiz attempted</th>
+                <th scope="col" class="text-center">Not previous quiz attempted</th>
             </tr>
             {% endif %}
         </tbody>
@@ -132,7 +159,11 @@
 <script>
 
 
- //Do sorting here
+
+
+
+
+
 
 </script>
  

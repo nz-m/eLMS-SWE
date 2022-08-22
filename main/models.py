@@ -1,3 +1,4 @@
+import string
 from django.db import models
 # Create your models here.
 
@@ -113,6 +114,18 @@ class Submission(models.Model):
     marks = models.DecimalField(
         max_digits=6, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=100, null=True, blank=True)
+
+    def file_name(self):
+        return self.file.name.split('/')[-1]
+     
+
+    def time_difference(self):
+        difference = self.assignment.deadline - self.datetime
+        days = difference.days
+        hours = difference.seconds//3600
+        minutes = (difference.seconds//60) % 60
+        seconds = difference.seconds % 60
+        return str(days) + " days, " + str(hours) + " hours, " + str(minutes) + " minutes, " + str(seconds) + " seconds"
 
     def delete(self, *args, **kwargs):
         self.file.delete()

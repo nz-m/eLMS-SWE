@@ -32,78 +32,73 @@
       </nav>
    </div>
    <!-- navigation links end -->
+   <div class="container">
+      <div class="container shadow-sm p-3 bg-info bg-opacity-10 border border-info rounded">
+         <h4> {{quiz.title}} Summary</h4>
+         <p>
+            {{quiz.description}}
+         </p>
+         <p>Starts : {{quiz.start}}</p>
+         <p>Ends : {{quiz.end}}</p>
+         <p>Total Questions : {{quiz.total_questions}} </p>
+         <p>Marks : {{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</p>
+         <p>Duration : {{ quiz.duration}} hours</p>
+    
 
+         
+      </div>
+      {% for question in questions  %}
+      {% comment %} show all question with correct ans checked {% endcomment %}
+      <div class="questionInd container mb-2 shadow-sm p-3 border rounded {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
+         <div>
+            <div class="d-flex justify-content-between mb-3">
+               <div>
+                  <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
+               </div>
+               {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
+            </div>
+            <div>
+               
+               <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
+               <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
+               <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
+               <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
+            </div>
+         </div>
+         <div>
+            {% if question.student_answer %}
+         Your response  <span class="fw-bold"> {{ question.student_answer }} : {{question.get_answer}}</span>
+         {% else %}
+         <span> You did not answer!</span>
+         {% endif %}
 
-
-<div class="container">
-    <div class="container">
-        <h4> Quiz -1 Object oriented programming</h4>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi rem voluptate voluptatibus aspernatur
-            beatae error illum cum magnam. Enim facere modi, architecto tempore inventore explicabo dolor commodi
-            accusantium quae vel qui laboriosam excepturi officia quo natus? Quia ipsam sed numquam.
-        </p>
-        <p>Starting in : 4 minutes 3 seconds</p>
-        <p>Ending in : 4 minutes 3 seconds</p>
-        <p>Total Questions : </p>
-        <p>Marks : </p>
-    </div>
-
-
-
-
-{% for question in questions  %}
-
-{% comment %} show all question with correct ans checked {% endcomment %}
-
-
-<div class="container mb-2">
-
-<div>
-   <div class="d-flex justify-content-between mb-3">
-   <div>
-  <span class="fw-bold"> Question-{{forloop.counter}}  </span>  {{question.question}} | {{question.marks}} marks
+         </div>
+         <div>
+            Correct answer  <span class="fw-bold text-italic"> {{ question.answer }} : {{question.get_answer}}</span>
+         </div>
+      </div>
+      {% endfor %}
    </div>
-
-
-      {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
-    
- 
-</div>
-
-<div>
-    
-   <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
-   <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
-   <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
-   <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
-
-    
-    
-</div>
-</div>
-Correct answer : <p class="fw-bold text-italic d-inline">{{ question.answer }}</p>
-</div>
-
-{% endfor %}
-
-
-
-
-
-
-
-
-
-</div>
-
 </div>
 
 
+<script>
+   $(document).ready(function () {
+      $('#con').css('min-height', $(window).height());
+   });
 
 
+let questionInd = document.querySelectorAll('.questionInd');
+anime({
+   targets: questionInd,
+   opacity: [0, 1],
+   easing: 'easeInOutQuad',
+   duration: 1500,
+   delay: function (el, i) {
+      return i * 250;
+   }
+});
+
+
+</script>
 {% endblock %}
-
-
-
-

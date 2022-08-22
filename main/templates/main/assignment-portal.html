@@ -54,12 +54,11 @@
       {% endif %}
       {% if submission.status %}
       <label class="p-2 fw-bold" for="">Status: </label>
-      <span style="color: #32CD32;" class="p-2 fw-bold">{{submission.status}}!</span><br>
+      <span style="color: #32CD32;" class="p-2 fw-bold">{{submission.status}} {{submission.time_difference}} early!</span><br>
       {% else %}
       <label class="p-2 fw-bold" for="">Status: </label>
       <span style="color: red;" class="p-2 fw-bold">Pending!</span><br>
       {% endif %}
-      <label class="p-2 fw-bold" for="">Time Remaining : <span id="timeRemain" class="fw-semibold"></span></label><br>
       {% if submission.marks %}
       <label class="p-2 fw-bold" for="">Grade: </label>
       <span class="p-2 fw-bold" id="grade">{{submission.marks}} / {{assignment.marks}}</span><br>
@@ -73,8 +72,9 @@
       {% endif %}
       {% if submission.file %}
       <label class="p-2 fw-bold" for=""> Your Submission : </label>
-      <a style="text-decoration:none" download href="{{submission.file.url}}">{{submission.file.name}}</a>
+      <a style="text-decoration:none" download href="{{submission.file.url}}">{{submission.file_name}}</a>
       {% endif %}
+      <label id="timer" class="p-2 fw-bold" for="">Time Remaining : <span id="timeRemain" class="fw-semibold"></span></label><br>
    </div>
    {% if time < assignment.deadline and not submission.file %}
    <form action="{% url 'addSubmission' course.code assignment.id %}" method="POST" enctype="multipart/form-data"
@@ -110,7 +110,18 @@
            document.getElementById("timeRemain").innerHTML = "Closed!";
            document.getElementById("timeRemain").style.color = "red";
            document.getElementById("fileSubmit").style.display = 'none';
+           
+           
+
        }
    }, 1000);
+
+{% if submission.file %}
+$(document).ready(function(){
+      $('#timer').hide(); 
+}
+);
+{% endif %}
+
 </script>
 {% endblock %}

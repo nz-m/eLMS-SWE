@@ -65,10 +65,12 @@
                 <input type="datetime-local" class="form-control" id="end" name="end" required>
             </div>
 
-            <div class="mb-3 formInputR">
-                <label for="number" class="form-label">Total Marks</label>
-                <input type="number" min="0" class="form-control" id="number" name="marks" required>
-            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox" name="checkbox">
+                <label class="form-check-label" for="checkbox">
+                    Publish grade after submission
+                </label>
+              </div>
 
             <div class="d-flex justify-content-end p-2 border" style="background-color: rgb(250,250,250);">
                 <button type="submit" class="btn btn-sm btn-primary mx-2">Proceed</button>
@@ -79,15 +81,17 @@
     </div>
 
 
-
-
-
-
-
-
-
 </div>
 <script>
+    //change value of checkbox if checked
+    $('#checkbox').change(function() {
+        if ($(this).is(":checked")) {
+            $('#checkbox').val("True");
+        } else {
+            $('#checkbox').val("False");
+        }
+    });
+
     anime(
      // fade in from left to center 
         {
