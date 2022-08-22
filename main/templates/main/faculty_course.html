@@ -125,7 +125,7 @@
          <!-- individual assignment starts -->
          <a class="text-bold fs-5" href="{% url 'submission' course.code assignment.id %}">
          {{assignment.title}}</a>
-         <div class="d-flex justify-content-between mt-3">
+         <div class="d-flex justify-content-between">
             <div class="text-muted">
                <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
             </div>

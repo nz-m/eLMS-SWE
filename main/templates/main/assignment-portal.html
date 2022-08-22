@@ -54,7 +54,7 @@
       {% endif %}
       {% if submission.status %}
       <label class="p-2 fw-bold" for="">Status: </label>
-      <span style="color: #32CD32;" class="p-2 fw-bold">{{submission.status}} {{submission.get_time_difference}} early!</span><br>
+      <span style="color: #32CD32;" class="p-2 fw-bold">{{submission.status}} {{submission.time_difference}} early!</span><br>
       {% else %}
       <label class="p-2 fw-bold" for="">Status: </label>
       <span style="color: red;" class="p-2 fw-bold">Pending!</span><br>
@@ -72,7 +72,7 @@
       {% endif %}
       {% if submission.file %}
       <label class="p-2 fw-bold" for=""> Your Submission : </label>
-      <a style="text-decoration:none" download href="{{submission.file.url}}">{{submission.file.name}}</a>
+      <a style="text-decoration:none" download href="{{submission.file.url}}">{{submission.file_name}}</a>
       {% endif %}
       <label id="timer" class="p-2 fw-bold" for="">Time Remaining : <span id="timeRemain" class="fw-semibold"></span></label><br>
    </div>

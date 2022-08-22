@@ -42,7 +42,7 @@
     <h6 class="fw-bold"> Active Quizzes </h6>
     <table class="table text-center">
         {% if active_quizzes %}
-        <thead class="bg-light">
+        <thead class="bg-dark text-light">
             <tr>
                 <th scope="col">SL</th>
                 <th scope="col">Name</th>
@@ -82,10 +82,10 @@
 
 
 <h6 class="fw-bold"> Previous Quizzes </h6>
-    <table class="table text-center">
+    <table class="table text-center shadow">
         {% if previous_quizzes %}
 
-        <thead class="bg-light">
+        <thead class="bg-dark text-light">
             <tr>
                 <th scope="col">SL</th>
                 <th scope="col">Name</th>
@@ -98,27 +98,47 @@
         <tbody class="">
             {% for quizP in previous_quizzes %}
             {% if quizP.attempted %}
-            <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td>
-                 
-                    <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
-                    
-                </td>
-                <td>{{quizP.end}}</td>
-                
-                <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
-                <td> {{ quizP.percentage}}%</td>
-            </tr>
+
+                {% if quizP.publish_status %}
+
+                                
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>
+                                    
+                                        <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
+                                        
+                                    </td>
+                                    <td>{{quizP.end}}</td>
+                                    
+                                    <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
+                                    <td> {{ quizP.percentage}}%</td>
+                                </tr>
+
+
+                                {% else %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>
+                                    {{quizP.title}}
+                                    </td>
+                                    <td>{{quizP.end}}</td>
+                                    <td class="text-center text-warning">Not Published</td>
+                                    <td class="text-center text-warning">Not Published</td>
+                                </tr>
+
+
+
+                     {% endif %}
             {% else %}
-            <tr class="alert alert-danger">
+            <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td>
                 {{quizP.title}}
                 </td>
                 <td>{{quizP.end}}</td>
-                <td class="text-center">Not attempted</td>
-                <td class="text-center">Not attempted</td>
+                <td class="text-center text-danger">Not attempted</td>
+                <td class="text-center text-danger">Not attempted</td>
             </tr>
                         
                 {% endif %}

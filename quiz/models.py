@@ -13,7 +13,9 @@ class Quiz(models.Model):
     end = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    publish_status = models.BooleanField(default=False,null=True, blank=True)
+    class Meta:
+        verbose_name_plural = "Quizzes"
     def __str__(self):
         return self.title
 

@@ -115,7 +115,11 @@ class Submission(models.Model):
         max_digits=6, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=100, null=True, blank=True)
 
-    def get_time_difference(self):
+    def file_name(self):
+        return self.file.name.split('/')[-1]
+     
+
+    def time_difference(self):
         difference = self.assignment.deadline - self.datetime
         days = difference.days
         hours = difference.seconds//3600

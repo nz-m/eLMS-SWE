@@ -15,8 +15,9 @@ def quiz(request, code):
         description = request.POST.get('description')
         start = request.POST.get('start')
         end = request.POST.get('end')
-        quiz = Quiz(title=title, description=description,
-                    start=start, end=end, course=course)
+        publish_status = request.POST.get('checkbox')
+        quiz = Quiz(title=title, description=description, start=start,
+                    end=end, publish_status=publish_status, course=course)
         quiz.save()
         return redirect('addQuestion', code=code, quiz_id=quiz.id)
     return render(request, 'quiz/quiz.html', {'course': course})
@@ -33,8 +34,10 @@ def addQuestion(request, code, quiz_id):
         option4 = request.POST.get('option4')
         answer = request.POST.get('answer')
         marks = request.POST.get('marks')
+
         question = Question(question=question, option1=option1, option2=option2,
-                            option3=option3, option4=option4, answer=answer, marks=marks, quiz=quiz)
+                            option3=option3, option4=option4, answer=answer, quiz=quiz, marks=marks)
+
         question.save()
     if 'saveOnly' in request.POST:
         return redirect('allQuizzes', code=code)
@@ -58,9 +61,8 @@ def quizSummary(request, code, quiz_id):
         if request.POST.get(question.id) == question.answer:
             obtained_marks += question.marks
     quiz.total_marks_obtained = obtained_marks
-   
+
     return render(request, 'quiz/quizSummary.html', {'course': course, 'quiz': quiz, 'questions': questions})
-    
 
 
 # REFACTOR NEEDED
@@ -87,7 +89,6 @@ def myQuizzes(request, code):
             previous_quizzes.append(quiz)
         else:
             active_quizzes.append(quiz)
-
 
     for previousQuiz in previous_quizzes:
         total_marks_obtained = 0

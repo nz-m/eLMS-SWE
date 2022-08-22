@@ -67,6 +67,13 @@
                 <input type="datetime-local" class="form-control" id="end" name="end" required>
             </div>
 
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox" name="checkbox">
+                <label class="form-check-label" for="checkbox">
+                    Publish grade after submission
+                </label>
+              </div>
+
             <div class="d-flex justify-content-end p-2 border" style="background-color: rgb(250,250,250);">
                 <button type="submit" class="btn btn-sm btn-primary mx-2">Proceed</button>
                 <a href="#" type="button" class="btn btn-sm btn-danger">Discard</a>
@@ -76,15 +83,17 @@
     </div>
 
 
-
-
-
-
-
-
-
 </div>
 <script>
+    //change value of checkbox if checked
+    $('#checkbox').change(function() {
+        if ($(this).is(":checked")) {
+            $('#checkbox').val("True");
+        } else {
+            $('#checkbox').val("False");
+        }
+    });
+
     anime(
      // fade in from left to center 
         {
