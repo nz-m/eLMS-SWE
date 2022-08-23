@@ -82,6 +82,9 @@ class Announcement(models.Model):
     def __str__(self):
         return self.title
 
+    def post_date(self):
+        return self.datetime.strftime("%d-%b-%y, %I:%M %p")
+
 
 class Assignment(models.Model):
     course_code = models.ForeignKey(
@@ -104,6 +107,12 @@ class Assignment(models.Model):
         self.file.delete()
         super().delete(*args, **kwargs)
 
+    def post_date(self):
+        return self.datetime.strftime("%d-%b-%y, %I:%M %p")
+
+    def due_date(self):
+        return self.deadline.strftime("%d-%b-%y, %I:%M %p")
+
 
 class Submission(models.Model):
     assignment = models.ForeignKey(
@@ -117,7 +126,6 @@ class Submission(models.Model):
 
     def file_name(self):
         return self.file.name.split('/')[-1]
-     
 
     def time_difference(self):
         difference = self.assignment.deadline - self.datetime
@@ -126,6 +134,9 @@ class Submission(models.Model):
         minutes = (difference.seconds//60) % 60
         seconds = difference.seconds % 60
         return str(days) + " days, " + str(hours) + " hours, " + str(minutes) + " minutes, " + str(seconds) + " seconds"
+
+    def submission_date(self):
+        return self.datetime.strftime("%d-%b-%y, %I:%M %p")
 
     def delete(self, *args, **kwargs):
         self.file.delete()
@@ -158,3 +169,6 @@ class Material(models.Model):
     def delete(self, *args, **kwargs):
         self.file.delete()
         super().delete(*args, **kwargs)
+
+    def post_date(self):
+        return self.datetime.strftime("%d-%b-%y, %I:%M %p")

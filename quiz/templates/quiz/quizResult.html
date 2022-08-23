@@ -69,9 +69,8 @@
             </div>
          </div>
          <div>
-            {% if question.student_answer %}
-         Your response  <span class="fw-bold"> {{ question.student_answer }} : {{question.get_answer}}</span>
-         {% else %}
+            {% if  not question.student_answer %}
+  
          <span> You did not answer!</span>
          {% endif %}
 

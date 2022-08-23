@@ -77,7 +77,7 @@
                class="fw-bold px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
                style="text-decoration: none; font-size: smaller !important" download
                href="{{submission.file.url}}">Download</a></td>
-            <td class="text-center">{{submission.datetime}}</td>
+            <td class="text-center">{{submission.post_date}}</td>
             {% if submission %}
             <td class="text-center">
                <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"

@@ -1,6 +1,9 @@
 
 from django.db import models
 from main.models import Student, Course
+from datetime import datetime
+from django.utils import timezone
+
 
 # Create your models here.
 
@@ -13,9 +16,11 @@ class Quiz(models.Model):
     end = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    publish_status = models.BooleanField(default=False,null=True, blank=True)
+    publish_status = models.BooleanField(default=False, null=True, blank=True)
+
     class Meta:
         verbose_name_plural = "Quizzes"
+
     def __str__(self):
         return self.title
 
@@ -27,6 +32,12 @@ class Quiz(models.Model):
 
     def total_marks(self):
         return Question.objects.filter(quiz=self).aggregate(total_marks=models.Sum('marks'))['total_marks']
+
+    def starts(self):
+        return self.start.strftime("%a, %d-%b-%y at %I:%M %p")
+
+    def ends(self):
+        return self.end.strftime("%a, %d-%b-%y at %I:%M %p")
 
 
 class Question(models.Model):

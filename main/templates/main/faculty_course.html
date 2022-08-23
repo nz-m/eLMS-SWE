@@ -95,7 +95,7 @@
                    </svg> &nbsp; Edit</a>
             </div>
             <div class="add-announcement" style="color:grey;">
-               {{announcement.datetime}}
+               {{announcement.post_date}}
             </div>
          </div>
          <hr>
@@ -130,11 +130,11 @@
                <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
             </div>
             <div class="fs-6" style="color:grey;">
-               {{assignment.datetime}}
+               {{assignment.post_date}}
             </div>
          </div>
          <div class="fs-6">
-            <p>Submission ends : {{ assignment.deadline }}</p>
+            <p>Submission ends : {{ assignment.due_date }}</p>
          </div>
          <hr>
          <!-- individual assignment ends -->
@@ -200,7 +200,7 @@
             Remove
             </button>
             <div class="add-announcement" style="color:grey;">
-               {{material.datetime}}
+               {{material.post_date}}
             </div>
          </div>
          <hr>
