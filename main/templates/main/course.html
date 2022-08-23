@@ -57,7 +57,7 @@
             </div>
             <div class="announcement-cont d-flex flex-row-reverse">
                <div class="add-announcement" style="color:grey;">
-                  {{announcement.datetime}}
+                  {{announcement.post_date}}
                </div>
             </div>
             <hr>
@@ -81,9 +81,9 @@
             <a class="add-announcement fw-bold"
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="d-flex justify-content-between">
-               <h6> Due Date : {{ assignment.deadline}} </h6>
+               <h6> Due Date : {{ assignment.due_date}} </h6>
                <div class="add-announcement" style="color:grey;">
-                  {{assignment.datetime}}
+                  {{assignment.post_date}}
                </div>
             </div>
             <hr>
@@ -118,7 +118,7 @@
             <div class="d-flex justify-content-between text-break">
                <p>{{ material.description }}</p>
                <div class="add-announcement" style="color:grey;">
-                  {{material.datetime}}
+                  {{material.post_date}}
                </div>
             </div>
             <hr>
