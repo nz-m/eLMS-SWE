@@ -536,7 +536,6 @@ def courses(request):
             'accessed': accessed
         }
 
-
         return render(request, 'main/all-courses.html', context)
 
     else:
@@ -557,7 +556,6 @@ def access(request, code):
         else:
             return render(request, 'main/access.html', {'course': course, 'student': student})
 
-           
     else:
         return redirect('std_login')
 
@@ -567,8 +565,8 @@ def search(request):
         if request.method == 'GET':
 
             q = request.GET['q']
-            courses = Course.objects.filter(Q(code__icontains=q) | Q(name__icontains=q) | Q(
-                department__icontains=q) | Q(faculty__name__icontains=q))
+            courses = Course.objects.filter(Q(code__icontains=q) | Q(
+                name__icontains=q) | Q(faculty__name__icontains=q))
 
             if request.session.get('student_id'):
                 student = Student.objects.get(

@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'eLMS.wsgi.application'
 #         'NAME': 'elms',
 #         'HOST': 'localhost',
 #         'USER': 'root',
-#         'PASSWORD': '4321',
+#         'PASSWORD': '',
 #     }
 # }
 
