@@ -1,20 +1,20 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
-{% url 'profile' faculty.faculty_id %}
+{% block title %}{{quiz.title}} | {{ course.name }} {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
 {% endblock %}
 {% block user %}
-{{faculty.name}}
+{{student.name}}
 {% endblock user %}
 {% block courses %}
-{% url 'facultyCourses' %}
+{% url 'myCourses' %}
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
-<div class="container" id="con">
+
    <!-- navigation links -->
    <div class="container shadow-sm">
       <nav aria-label="breadcrumb">
@@ -22,15 +22,15 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
             </li>
-            {% comment %} 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
+            
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+            
+                       
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
+           
+            <li class="breadcrumb-item active" aria-current="page">{{quiz.title}}</li>
          </ol>
       </nav>
    </div>
@@ -81,13 +81,10 @@
       </div>
       {% endfor %}
    </div>
-</div>
+
 
 
 <script>
-   $(document).ready(function () {
-      $('#con').css('min-height', $(window).height());
-   });
 
 
 let questionInd = document.querySelectorAll('.questionInd');

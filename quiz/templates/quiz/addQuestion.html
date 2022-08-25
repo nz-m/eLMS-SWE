@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
+{% block title %}Add Question {{quiz.title}} | {{ course.name }} {% endblock title %}
+ {% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
@@ -11,7 +11,7 @@
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
 <div class="container" id="con">
    <!-- navigation links -->
@@ -20,16 +20,12 @@
          <ol class="breadcrumb p-3">
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
-            </li>
-            {% comment %} 
+            </li> 
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+               <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> Add Question-{{quiz.title}}</li>
          </ol>
       </nav>
    </div>
@@ -75,7 +71,6 @@
          </div>
       </div>
       <select class="form-select mb-3" aria-label="Default select example" name="answer" required>
-         <option selected>Answer</option>
          <option value="A">Option 1</option>
          <option value="B">Option 2</option>
          <option value="C">Option 3</option>

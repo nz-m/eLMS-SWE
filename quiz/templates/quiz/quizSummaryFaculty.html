@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
+{% block title %}{{quiz.title}} | {{ course.name }} {% endblock title %}
+{% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
@@ -11,25 +11,23 @@
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %}
 {% block content %}
-<div class="container" id="con">
+
    <!-- navigation links -->
-   <div class="container shadow-sm">
+   <div class=" container shadow-sm">
       <nav aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
             </li>
-            {% comment %} 
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+               <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+               {{quiz.title}}
+            </li>
          </ol>
       </nav>
    </div>
@@ -50,11 +48,11 @@
    
    <p>Quiz Duration : {{ quiz.duration }}</p>
    {% if quiz.start < time %}
+
    <div>
       <p>Student Participated : {{ quiz.attempted_students}}/{{total_students}}</p>
-      {% if quiz.highest_marks %}
-      <p>Highest Marks : {{quiz.highest_marks}}</p>
-      {% endif %}
+
+
       {% if quiz.publish_status %}
       <p class="text-success fw-bold">
          Marks Published!
@@ -64,6 +62,39 @@
          <button class="btn btn-sm btn-success" type="submit">Publish Marks</button>
       </form>
       {% endif %}
+         
+<div>
+   <button id="showMarks"  class="btn btn-sm btn-success mb-2"> Show all marks</button>
+</div>
+
+<div class="container pb-2" id="allmarks">
+   <div class="fw-bold">Marks of students</div>
+   <table class="table text-center">
+      <thead>
+        <tr>
+          <th scope="col">Sl</th>
+          <th scope="col">Name</th>
+          <th scope="col">ID</th>
+          <th scope="col">Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+         {% for student in students %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{student.name}}</td>
+          <td>{{student.student_id}}</td>
+          {% if student.attempted %}
+          <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
+            {% else %}
+            <td>Not Attempted</td>
+          {% endif %}
+        </tr>
+         {% endfor %}
+      
+      </tbody>
+    </table>
+</div>
    </div>
 </div>
 <div class="container">
@@ -95,9 +126,13 @@
    {% endfor %}
  
 </div>
+
+
 {% else %}
 Quiz not stated yet
 {% endif %}
+
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -125,7 +160,7 @@ Quiz not stated yet
             hoverBorderWidth: 1,
             hoverBorderRadius: 5,
             hoverBorderDash: [5, 5],
-            hoverOffset: 4,
+            hoverBorderDashOffset: 0.0,
 
 
         }]
@@ -172,13 +207,23 @@ Quiz not stated yet
     
    
    // scroll to bottom of page on button click
-   {% comment %} $(document).ready(function () {
+ $(document).ready(function () {
     $('.bt').click(function () {
         $('html, body').animate({
             scrollTop: $(document).height()
-        }, 'slow');
-    });
-   }
-   );  {% endcomment %}
+         }, '1000');
+      });
+   });
+
+ 
+   $('#allmarks').hide();
+   $('#showMarks').click(function () {
+      $(this).text(function (i, text) {
+         return text === "Hide all marks" ?  "Show all marks" : "Hide all marks";
+      });
+      $('#allmarks').toggle('slow');
+     
+   });
+     
 </script>
 {% endblock %}

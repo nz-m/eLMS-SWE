@@ -1,8 +1,8 @@
 {% extends 'index.html' %}
 
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
+{% block title %}Create Quiz | {{ course.name }} {% endblock title %}
 
-{% comment %} {% block profile %}
+ {% block profile %}
  {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
@@ -13,7 +13,7 @@
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
 <div class="container" id="con">
    <!-- navigation links -->
@@ -24,12 +24,11 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                   Courses</a>
             </li>
-            {% comment %} <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-                  href="{% url 'faculty' course.code %}">{{ course.name }}</a></li> {% endcomment %}
-{% comment %}             
+             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+                  href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>             
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-                  href="{% url 'course' course.code %}">{{ course.name }}</a></li> {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+                  href="{% url 'allQuizzes' course.code %}">All quizzes</a></li> 
+            <li class="breadcrumb-item active" aria-current="page">Create Quiz</li>
          </ol>
       </nav>
    </div>
@@ -76,7 +75,7 @@
 
             <div class="d-flex justify-content-end p-2 border" style="background-color: rgb(250,250,250);">
                 <button type="submit" class="btn btn-sm btn-primary mx-2">Proceed</button>
-                <a href="#" type="button" class="btn btn-sm btn-danger">Discard</a>
+                <a href="{% url 'allQuizzes' course.code %}" type="button" class="btn btn-sm btn-danger">Discard</a>
 
             </div>
         </form>

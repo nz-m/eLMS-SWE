@@ -1,17 +1,17 @@
 {% extends 'index.html' %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
-{% url 'profile' faculty.faculty_id %}
+{% block title %}{{quiz.title}} | {{ course.name }} {% endblock title %}
+ {% block profile %}
+{% url 'profile' student.student_id %}
 {% endblock %}
 {% block user %}
-{{faculty.name}}
+{{student.name}}
 {% endblock user %}
 {% block courses %}
 {% url 'facultyCourses' %}
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
 <div class="container" id="con">
    <!-- navigation links -->
@@ -21,15 +21,13 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
             </li>
-            {% comment %} 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+                        
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
+           
+            <li class="breadcrumb-item active" aria-current="page">{{quiz.title}}</li>
          </ol>
       </nav>
    </div>
@@ -37,7 +35,7 @@
    <div class="container">
 
 
-      <div class="container shadow p-3 mb-3 border border-warning rounded">
+      <div class="container p-3 mb-3 border border-warning rounded">
          <h4> {{quiz.title}}</h4>
          <p>
             {{quiz.description}}
@@ -57,9 +55,6 @@
       </div>
 
 
-
-
-  
 
 
 

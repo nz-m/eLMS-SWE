@@ -1,8 +1,7 @@
 
 from django.db import models
 from main.models import Student, Course
-from datetime import datetime
-from django.utils import timezone
+
 
 
 # Create your models here.
@@ -41,9 +40,6 @@ class Quiz(models.Model):
 
     def attempted_students(self):
         return Student.objects.filter(studentanswer__quiz=self).distinct().count()
-
-    def highest_marks(self):
-        return StudentAnswer.objects.filter(quiz=self).aggregate(highest_marks=models.Max('marks'))['highest_marks']
 
 
 class Question(models.Model):

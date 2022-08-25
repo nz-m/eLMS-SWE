@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
+{% block title %}Quizzes | {{ course.name }} {% endblock title %}
+{% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
@@ -11,7 +11,7 @@
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
 <div class="container" id="con">
    <!-- navigation links -->
@@ -21,15 +21,9 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
             </li>
-            {% comment %} 
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>    
+            <li class="breadcrumb-item active" aria-current="page">Quizzes</li>
          </ol>
       </nav>
    </div>
@@ -65,10 +59,10 @@
            <td>{{ quiz.total_questions}}</td>
            <td>
             {% if quiz.start < time %}
-              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}" style="background-color: rgb(44, 151, 75);">Add question
+              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}">Add question
               </a>
               {% else %}
-               <button disabled class="btn btn-sm btn-success" style="background-color: rgb(44, 151, 75);">Add question</button>
+               <button disabled class="btn btn-sm btn-success">Add question</button>
             {% endif %}
            </td>
         </tr>
