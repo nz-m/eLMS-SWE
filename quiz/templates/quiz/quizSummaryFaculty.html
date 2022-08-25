@@ -1,4 +1,3 @@
-
 {% extends 'index.html' %}
 {% block title %}Attendance | {{ course.name }} {% endblock title %}
 {% comment %} {% block profile %}
@@ -36,107 +35,150 @@
    </div>
    <!-- navigation links end -->
 </div>
-
-
-
-
-
 <div class="container shadow-sm">
-    <div class="h4"> Quiz -1 Summery</div>
-    <div>
-        <p class="text-break word-break"> Title : Lorem ipsum dolor </p>
-    </div>
-    <p>starts</p>
-    <p>ends</p>
-
-    <h2>Show these if quiz started</h2>
-    <p>Student Attempted : 4/5</p>
-    <p>Total Questions : 5</p>
-    <p>Total Attempted : 4</p>
-    <p>Highest Marks : 12</p>
-
-
-</div>
-<div class="container shadow-sm">
-    <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
-            Question-1
-        </button>
-      </p>
-
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, maiores!</p>
-      <p>A : hi</p>
-      <p>B : hello</p>
-      <p>C : hey</p>
-      <p>D : hey</p>
-      <p class="fw-bold">Answer : Hello</p>
-      <p>Correct answer recieved : 4/6 </p>
-      <p>This was 2nd</p>
-      
-      <div class="collapse" id="collapseExample2">
-
-    <h2> Show chart if quiz started ans disble edit button</h2>
-    <div class="chart col-6 d-flex">
-        <canvas id="canvas2"></canvas>
-    </div>
-    </div>
-    <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-            Question-3
-        </button>
-      </p>
-
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, maiores!</p>
-      <p>A : hi</p>
-      <p>B : hello</p>
-      <p>C : hey</p>
-      <p>D : hey</p>
-      <p class="fw-bold">Answer : Hello</p>
-      <p>Correct answer recieved : 4/6 </p>
-      <p>This was 2nd</p>
-      
-      <div class="collapse" id="collapseExample3">
-
-    <h2> Show chart if quiz started ans disble edit button</h2>
-    <div class="chart col-6 d-flex">
-        <canvas id="canvas3"></canvas>
-    </div>
-</div>
-
-
-
-
+   Need to fix the alignment
+   <div class="h4"> {{quiz.title}} Summary</div>
+   <div>
+      <p class="text-break word-break"> {{quiz.description}} </p>
+   </div>
+   <p>Start : {{quiz.starts}}</p>
+   <p>End : {{ quiz.ends }}</p>
+   <p>Total Questions : {{ quiz.total_questions}}</p>
+   {% if quiz.total_marks %}
+   <p>Total Marks : {{ quiz.total_marks }}</p>
+   {% endif %}
    
-
+   <p>Quiz Duration : {{ quiz.duration }}</p>
+   {% if quiz.start < time %}
+   <div>
+      <p>Student Participated : {{ quiz.attempted_students}}/{{total_students}}</p>
+      {% if quiz.highest_marks %}
+      <p>Highest Marks : {{quiz.highest_marks}}</p>
+      {% endif %}
+      {% if quiz.publish_status %}
+      <p class="text-success fw-bold">
+         Marks Published!
+      </p>
+      {% else %}
+      <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
+         <button class="btn btn-sm btn-success" type="submit">Publish Marks</button>
+      </form>
+      {% endif %}
+   </div>
 </div>
-
+<div class="container">
+   {% for question in questions %}
+   <div class="d-grid gap-2 mb-1">
+      <button class="bt alert alert-info" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
+      <span class="fw-bold">Question {{forloop.counter}} - </span> {{question.question}}
+      </button>
+   </div>
+   <div class="collapse" id="question{{question.id}}">
+      <div class="row">
+         <div class="col-lg-6 col-md-6 col-sm-12 border-end">
+            <p>A : {{question.option1}}</p>
+            <p>B : {{question.option2}}</p>
+            <p>C : {{question.option3}}</p>
+            <p>D : {{question.option4}}</p>
+            <p class="fw-bold">Answer : {{question.answer}}</p>
+            <p>Marks : {{question.marks}}</p>
+            <p>Correct answer recieved : {{ question.total_correct_answers }} </p>
+            <p>Wrong answer recieved : {{ question.total_wrong_answers }} </p>
+         </div>
+         <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="chart">
+               <canvas id="canvas{{question.id}}"></canvas>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endfor %}
+ 
+</div>
+{% else %}
+Quiz not stated yet
+{% endif %}
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+   var color = [
+   '#FFCD56',
+   '#36A2EB',
+   '#FF4069',
+   '#6CBB3C',
+   ]
+   
+   {% for question in questions %}
+    var data{{question.id}} = {
+        labels: [
+        'A',
+        'B',
+        'C',
+        'D'
+        ],
+        datasets: [{
+            data: [{{question.A}}, {{question.B}}, {{question.C}}, {{question.D}}],
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1,
+            hoverBorderColor: 'deepskyblue',
+            hoverBorderWidth: 1,
+            hoverBorderRadius: 5,
+            hoverBorderDash: [5, 5],
+            hoverOffset: 4,
 
 
+        }]
+    };
+    {% endfor %}
+    {% for question in questions %}
+    var ctx{{question.id}} = document.getElementById('canvas{{question.id}}').getContext('2d');
+    var myChart{{question.id}} = new Chart(ctx{{question.id}}, {
+        type: 'doughnut',
+        data: data{{question.id}},
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Question - {{forloop.counter}} responeses',
+                }
+            },
+        
+            animation : true,
+            animationSteps : 60,
+            animationEasing : 'easeOutBounce',
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                }
+            },
+          
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        startAtZero: true
+
+
+                    }
+                }]
+            }
+
+        }
+    });
+    {% endfor %}
+    
+   
+   // scroll to bottom of page on button click
+   {% comment %} $(document).ready(function () {
+    $('.bt').click(function () {
+        $('html, body').animate({
+            scrollTop: $(document).height()
+        }, 'slow');
+    });
+   }
+   );  {% endcomment %}
+</script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

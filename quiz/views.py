@@ -47,9 +47,11 @@ def addQuestion(request, code, quiz_id):
 def allQuizzes(request, code):
     course = Course.objects.get(code=code)
     quizzes = Quiz.objects.filter(course=course)
+    time = datetime.datetime.now()
+
     for quiz in quizzes:
         quiz.total_questions = Question.objects.filter(quiz=quiz).count()
-    return render(request, 'quiz/allQuizzes.html', {'course': course, 'quizzes': quizzes})
+    return render(request, 'quiz/allQuizzes.html', {'course': course, 'quizzes': quizzes, 'time': time})
 
 
 def quizSummary(request, code, quiz_id):
@@ -142,8 +144,8 @@ def studentAnswer(request, code, quiz_id):
 
     for question in questions:
         answer = request.POST.get(str(question.id))
-        student_answer = StudentAnswer(
-            student=student, question=question, answer=answer, quiz=quiz)
+        student_answer = StudentAnswer(student=student, quiz=quiz, question=question,
+                                       answer=answer, marks=question.marks if answer == question.answer else 0)
         student_answer.save()
     return redirect('myQuizzes', code=code)
 
@@ -175,3 +177,26 @@ def quizResult(request, code, quiz_id):
             student=student, question=question)
         question.student_answer = student_answer.answer
     return render(request, 'quiz/quizResult.html', {'course': course, 'quiz': quiz, 'questions': questions})
+
+
+def quizSummary(request, code, quiz_id):
+    course = Course.objects.get(code=code)
+    quiz = Quiz.objects.get(id=quiz_id)
+    questions = Question.objects.filter(quiz=quiz)
+    time = datetime.datetime.now()
+    total_students = Student.objects.filter(course=course).count()
+    for question in questions:
+        question.A = StudentAnswer.objects.filter(
+            question=question, answer='A').count()
+        question.B = StudentAnswer.objects.filter(
+            question=question, answer='B').count()
+        question.C = StudentAnswer.objects.filter(
+            question=question, answer='C').count()
+        question.D = StudentAnswer.objects.filter(
+            question=question, answer='D').count()
+
+    if request.method == 'POST':
+        quiz.publish_status = True
+        quiz.save()
+        return redirect('quizSummary', code=code, quiz_id=quiz.id)
+    return render(request, 'quiz/quizSummaryFaculty.html', {'course': course, 'quiz': quiz, 'questions': questions, 'time': time, 'total_students': total_students})

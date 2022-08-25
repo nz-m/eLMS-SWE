@@ -45,30 +45,31 @@
      <thead class="text-center">
         <tr>
            <th scope="col">SL</th>
+           <th scope="col">Quiz</th>
            <th scope="col">Starts</th>
            <th scope="col">Ends</th>
            <th scope="col">Questions</th>
-           <th scope="col">Title</th>
            <th scope="col"></th>
 
         </tr>
      </thead>
      <tbody class="table-group-divider text-wrap text-break text-center">
       {% for quiz in quizzes %}
-      
         <tr>
            <th scope="row">{{ forloop.counter }}</th>
-           <td>{{ quiz.start}}</td>
-           <td>{{ quiz.end}}</td>
-           <td>{{ quiz.total_questions}}</td>
-           </td>
-           <th scope="col">
-            <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
-           </th>
            <td>
-              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}" style="background-color: rgb(44, 151, 75);">Add Question
-               disable if quiz is started</a>
-            
+            <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
+           </td>
+           <td>{{ quiz.starts}}</td>
+           <td>{{ quiz.ends}}</td>
+           <td>{{ quiz.total_questions}}</td>
+           <td>
+            {% if quiz.start < time %}
+              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}" style="background-color: rgb(44, 151, 75);">Add question
+              </a>
+              {% else %}
+               <button disabled class="btn btn-sm btn-success" style="background-color: rgb(44, 151, 75);">Add question</button>
+            {% endif %}
            </td>
         </tr>
         {% endfor %}

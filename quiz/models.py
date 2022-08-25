@@ -39,6 +39,12 @@ class Quiz(models.Model):
     def ends(self):
         return self.end.strftime("%a, %d-%b-%y at %I:%M %p")
 
+    def attempted_students(self):
+        return Student.objects.filter(studentanswer__quiz=self).distinct().count()
+
+    def highest_marks(self):
+        return StudentAnswer.objects.filter(quiz=self).aggregate(highest_marks=models.Max('marks'))['highest_marks']
+
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -62,6 +68,12 @@ class Question(models.Model):
             'D': self.option4,
         }
         return case[self.answer]
+
+    def total_correct_answers(self):
+        return StudentAnswer.objects.filter(question=self, answer=self.answer).count()
+
+    def total_wrong_answers(self):
+        return StudentAnswer.objects.filter(question=self).exclude(answer=self.answer).count()
 
 
 class StudentAnswer(models.Model):
