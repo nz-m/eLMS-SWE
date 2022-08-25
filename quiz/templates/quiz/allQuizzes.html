@@ -13,7 +13,7 @@
 {% url 'courses' %}
 {% endblock %} 
 {% block content %}
-<div class="container" id="con">
+
    <!-- navigation links -->
    <div class="container shadow-sm">
       <nav aria-label="breadcrumb">
@@ -32,9 +32,10 @@
 
 <div class="container shadow">
   <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
-     <div class="h5 fw-bold">Online Assessment -  {{ course.name}}</div>
+     <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
      <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}">New</a>
   </div>
+  {% if quizzes %}
   <table class="table">
      <thead class="text-center">
         <tr>
@@ -58,7 +59,7 @@
            <td>{{ quiz.ends}}</td>
            <td>{{ quiz.total_questions}}</td>
            <td>
-            {% if quiz.start < time %}
+            {% if quiz.status == 'Not Started' %}
               <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}">Add question
               </a>
               {% else %}
@@ -70,7 +71,13 @@
    
      </tbody>
   </table>
-</div>
+  {% else %}
+  <div >
+       <p class="text-center fw-bold pb-3">No quizzes found</p>
+  </div>
+
+  {% endif %}
+
 {% endblock %}
 
 

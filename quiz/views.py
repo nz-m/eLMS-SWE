@@ -1,15 +1,10 @@
 import datetime
-from multiprocessing import context
 from django.shortcuts import render, redirect
 from .models import Quiz, Question, StudentAnswer
 from main.models import Student, Course, Faculty, Department
 from main.views import is_faculty_authorised, is_student_authorised
 
 
-# AUTHORIZATION CHECK NEEDED, IMPORT AUTH FUNCTIONS
-
-
-# Create your views here.
 def quiz(request, code):
     try:
         course = Course.objects.get(code=code)
@@ -24,10 +19,10 @@ def quiz(request, code):
                             end=end, publish_status=publish_status, course=course)
                 quiz.save()
                 return redirect('addQuestion', code=code, quiz_id=quiz.id)
-            
+
             else:
                 return render(request, 'quiz/quiz.html', {'course': course, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
-            
+
         else:
             return redirect('std_login')
     except:
@@ -66,10 +61,15 @@ def allQuizzes(request, code):
         course = Course.objects.get(code=code)
         quizzes = Quiz.objects.filter(course=course)
         time = datetime.datetime.now()
-
         for quiz in quizzes:
             quiz.total_questions = Question.objects.filter(quiz=quiz).count()
-        return render(request, 'quiz/allQuizzes.html', {'course': course, 'quizzes': quizzes, 'time': time, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
+            if quiz.start > time:
+                quiz.status = 'Not Started'
+
+            elif quiz.end < time:
+                quiz.status = 'ended'
+
+        return render(request, 'quiz/allQuizzes.html', {'course': course, 'quizzes': quizzes, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
     else:
         return redirect('std_login')
 
@@ -243,4 +243,3 @@ def quizSummary(request, code, quiz_id):
 
     else:
         return redirect('std_login')
-
