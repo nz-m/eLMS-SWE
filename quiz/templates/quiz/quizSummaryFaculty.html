@@ -35,7 +35,7 @@
 <div class="container shadow-sm rounded">
    <div class="row">
       <div class="col-6">
-         <div class="h4"> {{quiz.title}} - Summary</div>
+         <div class="fs-5 fw-bold"> {{quiz.title}} - Summary</div>
          <div>
             <p class="text-break word-break opacity-75"> {{quiz.description}} </p>
          </div>
@@ -44,13 +44,14 @@
          {% if quiz.start < time %}
          <div>
             <p>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span></p>
+            <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
             {% if quiz.publish_status %}
             <p class="text-success fw-bold">
                Marks Published!
             </p>
             {% else %}
             <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-               <button class="btn btn-sm btn-success" type="submit">Publish Marks</button>
+               <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
             </form>
             {% endif %}
          </div>
@@ -61,18 +62,17 @@
       <div class="col-6 my-4 border-start">
          <p>Start : <span class="fw-bold"> {{quiz.starts}} </span> </p>
          <p>End : <span class="fw-bold"> {{ quiz.ends }} </span></p>
-         <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
          {% if quiz.total_marks %}
          <p>Total Marks :<span class="fw-bold"> {{ quiz.total_marks }}</span></p>
          {% endif %}
-         <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }}</span></p>
+         <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span></p>
       </div>
       
    </div>
    
    
       <div>
-         <button id="showMarks"  class="btn btn-sm btn-success my-2">Show marks</button>
+         <button id="showMarks"  class="btn btn-sm btn-success my-2 px-3">Show marks</button>
       </div>
      
    </div>
@@ -214,7 +214,6 @@ Quiz not started yet
     {% endfor %}
     
    
-   // scroll to bottom of page on button click
    $(document).ready(function () {
     $('.bt').click(function () {
         $('html, body').animate({

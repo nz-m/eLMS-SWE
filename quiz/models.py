@@ -20,12 +20,15 @@ class Quiz(models.Model):
 
     class Meta:
         verbose_name_plural = "Quizzes"
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
-
     def duration(self):
         return self.end - self.start
+    def duration_in_seconds(self):
+        return (self.end - self.start).total_seconds()
+        
 
     def total_questions(self):
         return Question.objects.filter(quiz=self).count()

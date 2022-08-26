@@ -1,8 +1,10 @@
 import datetime
+from email import message
 from django.shortcuts import render, redirect
 from .models import Quiz, Question, StudentAnswer
 from main.models import Student, Course, Faculty, Department
 from main.views import is_faculty_authorised, is_student_authorised
+from django.contrib import messages
 
 
 def quiz(request, code):
@@ -18,6 +20,7 @@ def quiz(request, code):
                 quiz = Quiz(title=title, description=description, start=start,
                             end=end, publish_status=publish_status, course=course)
                 quiz.save()
+                messages.success(request, 'New Quiz Added!', extra_tags='addedQuiz')
                 return redirect('addQuestion', code=code, quiz_id=quiz.id)
 
             else:
@@ -45,6 +48,7 @@ def addQuestion(request, code, quiz_id):
                 question = Question(question=question, option1=option1, option2=option2,
                                     option3=option3, option4=option4, answer=answer, quiz=quiz, marks=marks)
                 question.save()
+                messages.success(request, 'New Question Added!', extra_tags='addedQuestion')
             else:
                 return render(request, 'quiz/addQuestion.html', {'course': course, 'quiz': quiz, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
             if 'saveOnly' in request.POST:

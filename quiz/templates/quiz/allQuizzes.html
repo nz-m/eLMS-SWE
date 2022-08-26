@@ -28,7 +28,41 @@
       </nav>
    </div>
    <!-- navigation links end -->
-</div>
+
+
+   <div class="container">
+   
+   {% if messages %}
+       {% for message in messages %}
+       <div class="alert alert-success alert-dismissible fade show" role="alert">
+         <span class="fw-bold"> {{ message }}</span>
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       </div>
+       {% endfor %}
+   {% endif %}
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="container shadow rounded">
   <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
@@ -79,6 +113,19 @@
   </div>
 
   {% endif %}
+</div>
+
+
+
+   <script>
+
+      $(document).ready(function(){
+        setTimeout(function(){
+          $(".alert").alert('close');
+        },2500);
+      });
+      </script>
+
 
 {% endblock %}
 

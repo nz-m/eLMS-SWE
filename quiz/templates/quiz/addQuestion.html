@@ -30,52 +30,65 @@
       </nav>
    </div>
    <!-- navigation links end -->
-</div>
+   <div class="container">
+   
+      {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="fw-bold"> {{ message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+      {% endif %}
+      </div>
+   
+   
 <div class="container shadow-sm rounded p-4" style="max-width: 768px;">
-         <h5 class="text-center">Add Question-{{quiz.title}}</h5>
+         <p class="text-center fw-bold">Add Question-{{quiz.title}}</p>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">
-         <label for="textarea" class="col-sm-2 col-form-label">Question</label>
+         <label for="textarea" class="col-sm-2 col-form-label fw-bold">Question</label>
          <div class="col-sm-10">
             <textarea class="form-control" id="textarea" style="height: 150px;" name="question" required></textarea>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="option" class="col-sm-2 col-form-label">Option 1</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Option A</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option1" required>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="option" class="col-sm-2 col-form-label">Option 2</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Option B</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option2" required>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="option" class="col-sm-2 col-form-label">Option 3</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Option C</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option3" required>
          </div>
       </div>
       <div class="mb-3 row ">
-         <label for="option" class="col-sm-2 col-form-label">Option 4</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Option D</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option4" required>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="marks" class="col-sm-2 col-form-label">Marks</label>
+         <label for="marks" class="col-sm-2 col-form-label fw-bold">Marks</label>
          <div class="col-sm-10">
             <input type="number" min="0" class="form-control" id="marks" name="marks" required>
          </div>
       </div>
       <select class="form-select mb-3" aria-label="Default select example" name="answer" required>
-         <option value="A">Option 1</option>
-         <option value="B">Option 2</option>
-         <option value="C">Option 3</option>
-         <option value="D">Option 4</option>
+         <option value="">Select Answer</option>
+         <option value="A"> A</option>
+         <option value="B"> B</option>
+         <option value="C"> C</option>
+         <option value="D"> D</option>
       </select>
       <div class="p-2 d-flex flex-row-reverse" style="background-color: rgb(250,250,250);">
          <button name="saveAdd" class="btn btn-sm btn-success px-2 mx-2" type="submit">Save and add another</button>
@@ -85,4 +98,14 @@
       </div>
    </form>
 </div>
+
+<script>
+
+$(document).ready(function(){
+  setTimeout(function(){
+    $(".alert").alert('close');
+  },2500);
+});
+</script>
+
 {% endblock %}

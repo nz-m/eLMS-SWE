@@ -36,21 +36,21 @@
    </div>
    <!-- navigation links end -->
    <div class="container">
-      <div class="shadow-sm p-3 bg-info bg-opacity-10 border border-info rounded">
+      <div class="shadow p-3 rounded">
         
          <div class="row">
             <div class="col-md-6">
-               <h4> {{quiz.title}} Summary</h4>
-               <p>
+               <p class=" fw-bold fs-5"> {{quiz.title}} Summary</p>
+               <p class="text-muted">
                   {{quiz.description}}
                </p>
-               <p>Total Questions : {{quiz.total_questions}} </p>
-               <p>Marks : {{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</p>
+               <p>Total Questions : <span class="fw-bold">{{quiz.total_questions}}</span></p>
+               <p>Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span></p>
             </div>
             <div class="col-md-6 my-4">
-               <p>Starts : {{quiz.starts}}</p>
-               <p>Ends : {{quiz.ends}}</p>
-               <p>Duration : {{ quiz.duration}} hours</p>
+               <p>Started : <span class="fw-bold">{{quiz.starts}}</span></p>
+               <p>Ended : <span class="fw-bold">{{quiz.ends}}</span></p>
+               <p>Duration : <span class="fw-bold">{{ quiz.duration}} Hours</span></p>
             </div>
          </div>
         
@@ -64,7 +64,7 @@
       <div class="questionInd container mb-2 shadow-sm p-3 border rounded {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
          <div>
             <div class="d-flex justify-content-between mb-3">
-               <div>
+               <div class="fw-bold">
                   <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
                </div>
                {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
