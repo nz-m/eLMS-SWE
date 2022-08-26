@@ -1,191 +1,190 @@
 {% extends 'index.html' %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
-{% url 'profile' faculty.faculty_id %}
+{% block title %}{{quiz.title}} | {{ course.name }} {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
 {% endblock %}
 {% block user %}
-{{faculty.name}}
+{{student.name}}
 {% endblock user %}
 {% block courses %}
 {% url 'facultyCourses' %}
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
-<div class="container" id="con">
-   <!-- navigation links -->
-   <div class="container shadow-sm">
-      <nav aria-label="breadcrumb">
-         <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-               Courses</a>
-            </li>
-            {% comment %} 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
-         </ol>
-      </nav>
-   </div>
-   <!-- navigation links end -->
-   <div class="container">
-
-
-      <div class="container shadow p-3 mb-3 border border-warning rounded">
-         <h4> {{quiz.title}}</h4>
-         <p>
-            {{quiz.description}}
-         </p>
-         <p>Total Questions : {{ total_questions }}</p>
-         <p>Total Marks : {{quiz.total_marks}} </p>
-         <p>Starting in : <span id="start" class="fw-bold"> </span></p>
-         <p>Ending in : <span id="end" class="fw-bold"> </span></p>
-       
-
-             {% comment %} Attempt button {% endcomment %}
-      <div class="p-2 d-flex justify-content-center">
-        <button id="attempt" type="button" class=" btn btn-sm btn-success">
-        Attempt now
-        </button>
-     </div>
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
+         <li class="breadcrumb-item active" aria-current="page">{{quiz.title}}</li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container shadow-sm rounded">
+   <div class="p-3 mb-3">
+      <div class="row">
+         <div class="col-md-12 text-center">
+            <p class="fw-bold fs-5"> {{quiz.title}}</p>
+            <p>
+               {{quiz.description}}
+            </p>
+            <p>Total Questions : {{ total_questions }}</p>
+            <p>Total Marks : {{quiz.total_marks}} </p>
+            <p>Duration : {{quiz.duration}} Hours</p>
+            <p id="starting" >Starting in : <span id="startTime" class="fw-bold"> </span></p>
+            <p>Ending in : <span id="end" class="fw-bold"> </span></p>
+            <p class="fw-bold fs-4" id="start"></p>
+         </div>
+         
       </div>
-
-
-
-
-  
-
-
-
-
-      {% comment %} Form starts {% endcomment %}
-      <div id="questions" class="">
-        <form action="{% url 'studentAnswer' course.code quiz.id %}" method="post">
-            {% csrf_token %}
-            {% for question in questions  %}
-            <div class="border-bottom mb-3 bg-warning bg-opacity-10 rounded p-3">
-                <div class="d-flex justify-content-between border-bottom mb-3">
-                <h6>Question {{forloop.counter}}</h6>
-                <h6>Marks : {{question.marks}}</h6>
-                </div>
-                <label class="fw-bold mb-2"> {{question.question}} </label>
-                {% comment %}
-                <select name="{{question.id}}" id="question{{forloop.counter}}">
-                <option value="A">{{question.option1}}</option>
-                <option value="B">{{question.option2}}</option>
-                <option value="C">{{question.option3}}</option>
-                <option value="D">{{question.option4}}</option>
-                </select>
-                <input type="radio" name="{{question.id}}" value="A">{{question.option1}}<br>
-                <input type="radio" name="{{question.id}}" value="B">{{question.option2}}<br>
-                <input type="radio" name="{{question.id}}" value="C">{{question.option3}}<br>
-                <input type="radio" name="{{question.id}}" value="D">{{question.option4}}<br>
-                {% endcomment %}
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{question.id}}" value="A">
-                <label class="form-check-label">
-                A : {{question.option1}}
-                </label>
-                </div>
-
-                <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="{{question.id}}" value="B">
-                <label class="form-check-label">
-                B : {{question.option2}}
-                </label>
-                </div>
-                <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="{{question.id}}" value="C">
-                <label class="form-check-label">
-                C : {{question.option3}}
-                </label>
-                </div>
-                <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="{{question.id}}" value="D">
-                <label class="form-check-label">
-                D : {{question.option4}}
-                </label>
-                </div>
-                <input type="hidden" name="question" value="{{question.id}}">
-                <input type="hidden" name="quiz" value="{{quiz.id}}">
-                <input type="hidden" name="course" value="{{course.code}}">
-            </div>
-            {% endfor %}
-            <div class="d-flex justify-content-end bg-light p-2 border rounded mb-3">
-            <input id="subForm" type="submit" value="Submit" class="btn btn-sm btn-success">
-            </div>
-            
-        </form>
-    </div>
-    {% comment %} form ends {% endcomment %}
-
-
-
-
+      <div class="row py-2">
+         {% comment %} Attempt button {% endcomment %}
+         <div class="p-2 d-flex justify-content-center">
+            <button id="attempt" type="button" class=" btn btn-sm btn-success">
+               Attempt now
+            </button>
+         </div>
+      </div>
+      <div class="progress">
+         <div id="progressBar" class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-label="Success striped example" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+       </div>
    </div>
+   {% comment %} Form starts {% endcomment %}
+   {% comment %} form ends {% endcomment %}
 </div>
 
+<div class="container">
+   <div id="questions" class="">
+      <form action="{% url 'studentAnswer' course.code quiz.id %}" method="post">
+         {% csrf_token %}
+         {% for question in questions  %}
+         <div class="border-bottom mb-3 bg-warning bg-opacity-10 rounded p-3">
+            <div class="d-flex justify-content-between border-bottom mb-3">
+               <h6>Question {{forloop.counter}}</h6>
+               <h6>Marks : {{question.marks}}</h6>
+            </div>
+            <label class="fw-bold mb-2"> {{question.question}} </label>
+            <div class="form-check">
+               <input class="form-check-input" type="radio" name="{{question.id}}" value="A">
+               <label class="form-check-label">
+               A : {{question.option1}}
+               </label>
+            </div>
+            <div class="form-check mb-2">
+               <input class="form-check-input" type="radio" name="{{question.id}}" value="B">
+               <label class="form-check-label">
+               B : {{question.option2}}
+               </label>
+            </div>
+            <div class="form-check mb-2">
+               <input class="form-check-input" type="radio" name="{{question.id}}" value="C">
+               <label class="form-check-label">
+               C : {{question.option3}}
+               </label>
+            </div>
+            <div class="form-check mb-2">
+               <input class="form-check-input" type="radio" name="{{question.id}}" value="D">
+               <label class="form-check-label">
+               D : {{question.option4}}
+               </label>
+            </div>
+            <input type="hidden" name="question" value="{{question.id}}">
+            <input type="hidden" name="quiz" value="{{quiz.id}}">
+            <input type="hidden" name="course" value="{{course.code}}">
+         </div>
+         {% endfor %}
+         <div class="d-flex justify-content-end bg-light p-2 border rounded mb-3">
+            <input id="subForm" type="submit" value="Submit" class="btn btn-sm btn-primary px-3">
+         </div>
+      </form>
+   </div>
+
+</div>
 <script>
-    $('#questions').hide();
+   $('#questions').hide();
    $('#attempt').hide();
+   $('.progress').hide();
+   $('#attempt').click(function(){
+       $('#questions').show(1000);
+       $('#attempt').hide(1000);
+   
+   }); 
+   
+   var countDownDate = new Date('{{ quiz.start|date:"D, d M Y H:i:s"}}').getTime();
+   var x = setInterval(function() {
+   var now = new Date().getTime();
+   var distance = countDownDate - now;
+   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+   document.getElementById("startTime").innerHTML = days + " Days " + hours + " Hours " 
+   + minutes + " Minutes " + seconds + " Seconds ";
+   if (distance < 0) {
+       clearInterval(x);
+       document.getElementById("start").innerHTML = "Started!";
+        document.getElementById("start").style.color = "green";
+        $('#attempt').show(200);
+         $('.progress').show(200);
+        $('#starting').hide();
+
+   }
+   }, 1000);
+   
+   var countDownDateEnd = new Date('{{ quiz.end|date:"D, d M Y H:i:s"}}').getTime();
+   var x1 = setInterval(function() {
+   var nowEnd = new Date().getTime();
+   var distanceEnd = countDownDateEnd - nowEnd;
+   var daysEnd = Math.floor(distanceEnd / (1000 * 60 * 60 * 24));
+   var hoursEnd = Math.floor((distanceEnd % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+   var minutesEnd = Math.floor((distanceEnd % (1000 * 60 * 60)) / (1000 * 60));
+   var secondsEnd = Math.floor((distanceEnd % (1000 * 60)) / 1000);
+   document.getElementById("end").innerHTML = daysEnd + " Days " + hoursEnd + " Hours "
+   + minutesEnd + " Minutes " + secondsEnd + " Seconds ";
+   if (distanceEnd < 0) {
+       clearInterval(x);
+       document.getElementById("end").innerHTML = "Ended!";
+       $('#end').css('color', 'red');
+       $('#subForm').click();
+   
+   }
+   }, 1000);
+   
 
 
+var interval = setInterval(function() {
+   var currentTime = new Date().getTime();
+   var deadline = new Date('{{ quiz.end|date:"D, d M Y H:i:s"}}').getTime();
+   var timeLeft = deadline - currentTime;
+   var timeLeft = timeLeft / 1000;
+   var quizDuration = {{ quiz.duration_in_seconds }};
+   var percentage = (timeLeft / quizDuration) * 100;
+   var percentage = 100 - percentage;
+   var percentage = percentage.toFixed(2);
 
-    $('#attempt').click(function(){
-        $('#questions').show(1000);
-        $('#attempt').hide(1000);
-    }); 
-
-
-
-    var countDownDate = new Date('{{ quiz.start|date:"D, d M Y H:i:s"}}').getTime();
-    console.log(countDownDate);
-    var x = setInterval(function() {
-    var now = new Date().getTime();
-    var distance = countDownDate - now;
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    document.getElementById("start").innerHTML = days + " Days " + hours + " Hours " 
-    + minutes + " Minutes " + seconds + " Seconds ";
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("start").innerHTML = "Started!";
-         document.getElementById("start").style.color = "green";
-         $('#attempt').show(200);
-    }
-    }, 1000);
-
-    var countDownDateEnd = new Date('{{ quiz.end|date:"D, d M Y H:i:s"}}').getTime();
-    var x1 = setInterval(function() {
-    var nowEnd = new Date().getTime();
-    var distanceEnd = countDownDateEnd - nowEnd;
-    var daysEnd = Math.floor(distanceEnd / (1000 * 60 * 60 * 24));
-    var hoursEnd = Math.floor((distanceEnd % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutesEnd = Math.floor((distanceEnd % (1000 * 60 * 60)) / (1000 * 60));
-    var secondsEnd = Math.floor((distanceEnd % (1000 * 60)) / 1000);
-    document.getElementById("end").innerHTML = daysEnd + " Days " + hoursEnd + " Hours "
-    + minutesEnd + " Minutes " + secondsEnd + " Seconds ";
-    if (distanceEnd < 0) {
-        clearInterval(x);
-        document.getElementById("end").innerHTML = "Ended!";
-        $('#end').css('color', 'red');
-        $('#subForm').click();
-    
-    }
-    }, 1000);
-    
-
-
- 
-
-
+   $('#progressBar').css('width', percentage + '%');
+   $('#progressBar').text(percentage + '%');
+  
+}, 1000);
+   
 </script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+

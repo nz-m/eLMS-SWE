@@ -1,20 +1,20 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
-{% url 'profile' faculty.faculty_id %}
+{% block title %}{{quiz.title}} | {{ course.name }} {% endblock title %}
+{% block profile %}
+{% url 'profile' student.student_id %}
 {% endblock %}
 {% block user %}
-{{faculty.name}}
+{{student.name}}
 {% endblock user %}
 {% block courses %}
-{% url 'facultyCourses' %}
+{% url 'myCourses' %}
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %} 
 {% block content %}
-<div class="container" id="con">
+
    <!-- navigation links -->
    <div class="container shadow-sm">
       <nav aria-label="breadcrumb">
@@ -22,30 +22,39 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                Courses</a>
             </li>
-            {% comment %} 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
+            
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
+            
+                       
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
+           
+            <li class="breadcrumb-item active" aria-current="page">{{quiz.title}}</li>
          </ol>
       </nav>
    </div>
    <!-- navigation links end -->
    <div class="container">
-      <div class="container shadow-sm p-3 bg-info bg-opacity-10 border border-info rounded">
-         <h4> {{quiz.title}} Summary</h4>
-         <p>
-            {{quiz.description}}
-         </p>
-         <p>Starts : {{quiz.start}}</p>
-         <p>Ends : {{quiz.end}}</p>
-         <p>Total Questions : {{quiz.total_questions}} </p>
-         <p>Marks : {{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</p>
-         <p>Duration : {{ quiz.duration}} hours</p>
+      <div class="shadow p-3 rounded">
+        
+         <div class="row">
+            <div class="col-md-6">
+               <p class=" fw-bold fs-5"> {{quiz.title}} Summary</p>
+               <p class="text-muted">
+                  {{quiz.description}}
+               </p>
+               <p>Total Questions : <span class="fw-bold">{{quiz.total_questions}}</span></p>
+               <p>Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span></p>
+            </div>
+            <div class="col-md-6 my-4">
+               <p>Started : <span class="fw-bold">{{quiz.starts}}</span></p>
+               <p>Ended : <span class="fw-bold">{{quiz.ends}}</span></p>
+               <p>Duration : <span class="fw-bold">{{ quiz.duration}} Hours</span></p>
+            </div>
+         </div>
+        
+        
     
 
          
@@ -55,7 +64,7 @@
       <div class="questionInd container mb-2 shadow-sm p-3 border rounded {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
          <div>
             <div class="d-flex justify-content-between mb-3">
-               <div>
+               <div class="fw-bold">
                   <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
                </div>
                {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
@@ -81,13 +90,10 @@
       </div>
       {% endfor %}
    </div>
-</div>
+
 
 
 <script>
-   $(document).ready(function () {
-      $('#con').css('min-height', $(window).height());
-   });
 
 
 let questionInd = document.querySelectorAll('.questionInd');

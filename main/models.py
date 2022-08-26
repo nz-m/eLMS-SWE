@@ -1,4 +1,3 @@
-import string
 from django.db import models
 # Create your models here.
 
@@ -8,13 +7,15 @@ class Student(models.Model):
     name = models.CharField(max_length=100, null=False)
     email = models.EmailField(max_length=100, null=True, blank=True)
     password = models.CharField(max_length=255, null=False)
-    department = models.CharField(max_length=100, null=False)
     role = models.CharField(
         default="Student", max_length=100, null=False, blank=True)
     course = models.ManyToManyField(
         'Course', related_name='students', blank=True)
     photo = models.ImageField(upload_to='profile_pics', blank=True,
                               null=False, default='profile_pics/default_student.png')
+    department = models.ForeignKey(
+        'Department', on_delete=models.CASCADE, null=False, blank=False)
+
 
     def delete(self, *args, **kwargs):
         if self.photo != 'profile_pics/default_student.png':
@@ -33,7 +34,8 @@ class Faculty(models.Model):
     name = models.CharField(max_length=100, null=False)
     email = models.EmailField(max_length=100, null=True, blank=True)
     password = models.CharField(max_length=255, null=False)
-    department = models.CharField(max_length=100, null=False)
+    department = models.ForeignKey(
+        'Department', on_delete=models.CASCADE, null=False)
     role = models.CharField(
         default="Faculty", max_length=100, null=False, blank=True)
     photo = models.ImageField(upload_to='profile_pics', blank=True,
@@ -50,11 +52,25 @@ class Faculty(models.Model):
     def __str__(self):
         return self.name
 
+class Department(models.Model):
+    department_id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100, null=False)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Departments'
+    def faculty_count(self):
+        return Faculty.objects.filter(department=self).count()
+    def students_count(self):
+        return Student.objects.filter(department=self).count()
+
+    def __str__(self):
+        return self.name
 
 class Course(models.Model):
     code = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255, null=False, unique=True)
-    department = models.CharField(max_length=100, null=False)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     faculty = models.ForeignKey(
         Faculty, on_delete=models.SET_NULL, null=True, blank=True)
     studentKey = models.IntegerField(null=False, unique=True)

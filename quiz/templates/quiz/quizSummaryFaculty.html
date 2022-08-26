@@ -1,7 +1,6 @@
-
 {% extends 'index.html' %}
-{% block title %}Attendance | {{ course.name }} {% endblock title %}
-{% comment %} {% block profile %}
+{% block title %}{{quiz.title}} | {{ course.name }} {% endblock title %}
+{% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
@@ -12,131 +11,226 @@
 {% endblock courses %}
 {% block allCourses %}
 {% url 'courses' %}
-{% endblock %} {% endcomment %}
+{% endblock %}
 {% block content %}
-<div class="container" id="con">
-   <!-- navigation links -->
-   <div class="container shadow-sm">
-      <nav aria-label="breadcrumb">
-         <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-               Courses</a>
-            </li>
-            {% comment %} 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            {% comment %}             
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            {% endcomment %}
-            <li class="breadcrumb-item active" aria-current="page">Attendace</li>
-         </ol>
-      </nav>
+<!-- navigation links -->
+<div class=" container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+         <li class="breadcrumb-item active" aria-current="page">
+            {{quiz.title}}
+         </li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+
+<div class="container shadow-sm rounded">
+   <div class="row">
+      <div class="col-6">
+         <div class="fs-5 fw-bold"> {{quiz.title}} - Summary</div>
+         <div>
+            <p class="text-break word-break opacity-75"> {{quiz.description}} </p>
+         </div>
+
+
+         {% if quiz.start < time %}
+         <div>
+            <p>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span></p>
+            <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
+            {% if quiz.publish_status %}
+            <p class="text-success fw-bold">
+               Marks Published!
+            </p>
+            {% else %}
+            <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
+               <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
+            </form>
+            {% endif %}
+         </div>
+      </div>
+
+    
+
+      <div class="col-6 my-4 border-start">
+         <p>Start : <span class="fw-bold"> {{quiz.starts}} </span> </p>
+         <p>End : <span class="fw-bold"> {{ quiz.ends }} </span></p>
+         {% if quiz.total_marks %}
+         <p>Total Marks :<span class="fw-bold"> {{ quiz.total_marks }}</span></p>
+         {% endif %}
+         <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span></p>
+      </div>
+      
    </div>
-   <!-- navigation links end -->
-</div>
-
-
-
-
-
-<div class="container shadow-sm">
-    <div class="h4"> Quiz -1 Summery</div>
-    <div>
-        <p class="text-break word-break"> Title : Lorem ipsum dolor </p>
-    </div>
-    <p>starts</p>
-    <p>ends</p>
-
-    <h2>Show these if quiz started</h2>
-    <p>Student Attempted : 4/5</p>
-    <p>Total Questions : 5</p>
-    <p>Total Attempted : 4</p>
-    <p>Highest Marks : 12</p>
-
-
-</div>
-<div class="container shadow-sm">
-    <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
-            Question-1
-        </button>
-      </p>
-
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, maiores!</p>
-      <p>A : hi</p>
-      <p>B : hello</p>
-      <p>C : hey</p>
-      <p>D : hey</p>
-      <p class="fw-bold">Answer : Hello</p>
-      <p>Correct answer recieved : 4/6 </p>
-      <p>This was 2nd</p>
-      
-      <div class="collapse" id="collapseExample2">
-
-    <h2> Show chart if quiz started ans disble edit button</h2>
-    <div class="chart col-6 d-flex">
-        <canvas id="canvas2"></canvas>
-    </div>
-    </div>
-    <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-            Question-3
-        </button>
-      </p>
-
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, maiores!</p>
-      <p>A : hi</p>
-      <p>B : hello</p>
-      <p>C : hey</p>
-      <p>D : hey</p>
-      <p class="fw-bold">Answer : Hello</p>
-      <p>Correct answer recieved : 4/6 </p>
-      <p>This was 2nd</p>
-      
-      <div class="collapse" id="collapseExample3">
-
-    <h2> Show chart if quiz started ans disble edit button</h2>
-    <div class="chart col-6 d-flex">
-        <canvas id="canvas3"></canvas>
-    </div>
-</div>
-
-
-
-
    
-
+   
+      <div>
+         <button id="showMarks"  class="btn btn-sm btn-success my-2 px-3">Show marks</button>
+      </div>
+     
+   </div>
+   <div class="container p-3 shadow" id="allmarks">
+      <div class="fw-bold">Marks of students</div>
+      {% if quiz.attempted_students %}
+      <table class="table text-center">
+         <thead>
+            <tr>
+               <th scope="col">Sl</th>
+               <th scope="col">Name</th>
+               <th scope="col">ID</th>
+               <th scope="col">Marks</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for student in students %}
+            <tr>
+               <th scope="row">{{forloop.counter}}</th>
+               <td>{{student.name}}</td>
+               <td>{{student.student_id}}</td>
+               {% if student.attempted %}
+               <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
+               {% else %}
+               <td>Not Attempted</td>
+               {% endif %}
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      {% else %}
+      <div class="text-center">No students have attempted this quiz</div>
+      {% endif %}
+   </div>
 </div>
+<div class="container">
+   {% for question in questions %}
+   <div class="d-grid gap-2">
+      <button class="bt alert alert-info" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
+      <span class="fw-bold">Question {{forloop.counter}} - </span> {{question.question}}
+      </button>
+   </div>
+   <div class="collapse" id="question{{question.id}}">
+      <div class="row shadow p-3 mb-3 mx-2 rounded">
+         <div class="col-lg-6 col-md-6 col-sm-12 border-end">
+            <p>A : {{question.option1}}</p>
+            <p>B : {{question.option2}}</p>
+            <p>C : {{question.option3}}</p>
+            <p>D : {{question.option4}}</p>
+            <p class="fw-bold">Answer : {{question.answer}}</p>
+            <p>Marks : {{question.marks}}</p>
+            <p>Correct answer recieved : {{ question.total_correct_answers }} </p>
+            <p>Wrong answer recieved : {{ question.total_wrong_answers }} </p>
+         </div>
+         <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="chart">
+               <canvas id="canvas{{question.id}}"></canvas>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endfor %}
+</div>
+{% else %}
+<p class="fw-bold">
+Quiz not started yet
+</p>
+{% endif %}
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
+<script>
+   var color = [
+   '#FFCD56',
+   '#36A2EB',
+   '#FF4069',
+   '#6CBB3C',
+   ]
+   
+   {% for question in questions %}
+    var data{{question.id}} = {
+        labels: [
+        'A',
+        'B',
+        'C',
+        'D'
+        ],
+        datasets: [{
+            data: [{{question.A}}, {{question.B}}, {{question.C}}, {{question.D}}],
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1,
+            hoverBorderColor: 'deepskyblue',
+            hoverBorderWidth: 1,
+            hoverBorderRadius: 5,
+            hoverBorderDash: [5, 5],
+            hoverBorderDashOffset: 0.0,
+   
+   
+        }]
+    };
+    {% endfor %}
+    {% for question in questions %}
+    var ctx{{question.id}} = document.getElementById('canvas{{question.id}}').getContext('2d');
+    var myChart{{question.id}} = new Chart(ctx{{question.id}}, {
+        type: 'doughnut',
+        data: data{{question.id}},
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Responeses',
+                }
+            },
+        
+            animation : true,
+            animationSteps : 60,
+            animationEasing : 'easeOutBounce',
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                }
+            },
+          
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        startAtZero: true
+   
+   
+                    }
+                }]
+            }
+   
+        }
+    });
+    {% endfor %}
+    
+   
+   $(document).ready(function () {
+    $('.bt').click(function () {
+        $('html, body').animate({
+            scrollTop: $(document).height()
+         }, '1000');
+      });
+   });
+   
+   
+   $('#allmarks').hide();
+   $('#showMarks').click(function () {
+      $(this).text(function (i, text) {
+         return text === "Hide marks" ?  "Show marks" : "Hide marks";
+      });
+      $('#allmarks').toggle('slow');
+     
+   });
+     
+</script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

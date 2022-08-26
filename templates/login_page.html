@@ -14,55 +14,58 @@
       <link rel="stylesheet" href="{% static 'styles/style.css' %}">
    </head>
    <body>
-      <div class="container-fluid ps-md-0">
-         <div class="row g-0">
-            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-            <div class="col-md-8 col-lg-6">
-               <div class="login d-flex align-items-center py-5">
-                  <div class="container">
-                     <div class="row">
-                        <div class="col-md-9 col-lg-8 mx-auto">
-                           <h3 class="login-heading mb-4">Welcome back!</h3>
-                           <!-- Sign In Form -->
-                           <form method="POST">
-                              {% csrf_token %}
-                              <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="id" placeholder="11111" name="id"
-                                    required>
-                                 <label for="id">ID</label>
-                              </div>
-                              <div class="form-floating mb-3">
-                                 <input type="password" class="form-control" id="password" placeholder="Password"
-                                    name="password" required>
-                                 <label for="password">Password</label>
-                              </div>
-                              <div class="d-grid">
-                                 <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
-                                    type="submit">Sign in</button>
-                                 <div class="text-center">
-                                    <a href="/admin" style="text-decoration: none" target="_blank">Login as
-                                    admin</a>
-                                 </div>
-                              </div>
-                           </form>
-                           {% if messages %}
-                           <!-- Error Alert -->
-                           <div class="alert alert-danger alert-dismissible fade show my-2">
-                              <strong>Error!</strong> {% for message in messages %}
-                              <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                              {% endfor %}
-                              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                           </div>
-                           {% endif %}
-                        </div>
+      <div class="login d-flex align-items-center py-5">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6 mx-auto p-4 login-shadow rounded">
+                  <p class="text-center fw-bold mb-4 fs-5">Sign in to eLMS</p>
+                  <!-- Sign In Form -->
+                  <form method="POST">
+                     {% csrf_token %}
+                     <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="id" placeholder="11111" name="id"
+                           required>
+                        <label for="id">ID</label>
+                     </div>
+                     <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                           name="password" required>
+                        <label for="password">Password</label>
+                     </div>
+                     <div class="d-grid">
+                        <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                           type="submit">Sign in</button>
+                     </div>
+                  </form>
+                  <div class="p-3 d-flex justify-content-center">
+                     <div class="mx-3">
+                        <a class="text-secondary" href="/admin" style="text-decoration: none;" target="_blank">Login as
+                        admin</a>
+                     </div>
+                     <div class="dropdown mx-3">
+                        <a class="text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Login as guest
+                        </a>
+                        <ul class="dropdown-menu">
+                           <li><a class="dropdown-item" href="/guest">Teacher</a></li>
+                           <li><a class="dropdown-item" href="/guestStudent">Student</a></li>
+                        </ul>
                      </div>
                   </div>
+                  {% if messages %}
+                  <!-- Error Alert -->
+                  <div class="alert alert-danger alert-dismissible fade show my-2">
+                     <strong>Error!</strong> {% for message in messages %}
+                     <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                     {% endfor %}
+                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                  {% endif %}
                </div>
             </div>
          </div>
       </div>
       <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
-
       <script>
          if (window.history.replaceState) {
              window.history.replaceState(null, null, window.location.href);

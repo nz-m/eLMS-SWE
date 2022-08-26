@@ -1,8 +1,7 @@
 
+import datetime
 from django.db import models
 from main.models import Student, Course
-from datetime import datetime
-from django.utils import timezone
 
 
 # Create your models here.
@@ -17,15 +16,19 @@ class Quiz(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     publish_status = models.BooleanField(default=False, null=True, blank=True)
+    started = models.BooleanField(default=False, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Quizzes"
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
-
     def duration(self):
         return self.end - self.start
+    def duration_in_seconds(self):
+        return (self.end - self.start).total_seconds()
+        
 
     def total_questions(self):
         return Question.objects.filter(quiz=self).count()
@@ -38,6 +41,9 @@ class Quiz(models.Model):
 
     def ends(self):
         return self.end.strftime("%a, %d-%b-%y at %I:%M %p")
+
+    def attempted_students(self):
+        return Student.objects.filter(studentanswer__quiz=self).distinct().count()
 
 
 class Question(models.Model):
@@ -62,6 +68,12 @@ class Question(models.Model):
             'D': self.option4,
         }
         return case[self.answer]
+
+    def total_correct_answers(self):
+        return StudentAnswer.objects.filter(question=self, answer=self.answer).count()
+
+    def total_wrong_answers(self):
+        return StudentAnswer.objects.filter(question=self).exclude(answer=self.answer).count()
 
 
 class StudentAnswer(models.Model):

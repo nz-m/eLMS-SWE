@@ -25,6 +25,7 @@ def context_list(course):
             else:
                 dis.author = Faculty.objects.get(faculty_id=dis.sent_by_id)
     except:
+
         discussions = []
 
     return discussions
@@ -95,3 +96,5 @@ def send_fac(request, code, fac_id):
                 return redirect('discussion', code=code)
     else:
         return render(request, 'error.html')
+
+

@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.static import serve
+from main import views
+
 
 admin.site.site_header = "eLMS Administration"
 admin.site.site_title = "eLMS Administration Portal"
@@ -27,6 +28,8 @@ admin.site.index_title = "Welcome to eLMS Administration Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
+    path('guest/',views.guest, name='guest'),
+    path('guestStudent/',views.guestStudent, name='guestStudent'),
     path('', include('main.urls')),
     path('', include('discussion.urls')),
     path('', include('attendance.urls')),

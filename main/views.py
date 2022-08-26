@@ -211,17 +211,18 @@ def error(request):
 # Display user profile(student & faculty)
 def profile(request, id):
     try:
-        if request.session['student_id'] == str(id):
+        if request.session['student_id'] == id:
             student = Student.objects.get(student_id=id)
             return render(request, 'main/profile.html', {'student': student})
         else:
             return redirect('std_login')
     except:
         try:
-            if request.session['faculty_id'] == str(id):
+            if request.session['faculty_id'] == id:
                 faculty = Faculty.objects.get(faculty_id=id)
                 return render(request, 'main/faculty_profile.html', {'faculty': faculty})
             else:
+                print('Invalid faculty id')
                 return redirect('std_login')
         except:
             return render(request, 'error.html')
@@ -536,7 +537,6 @@ def courses(request):
             'accessed': accessed
         }
 
-
         return render(request, 'main/all-courses.html', context)
 
     else:
@@ -557,7 +557,6 @@ def access(request, code):
         else:
             return render(request, 'main/access.html', {'course': course, 'student': student})
 
-           
     else:
         return redirect('std_login')
 
@@ -567,8 +566,8 @@ def search(request):
         if request.method == 'GET':
 
             q = request.GET['q']
-            courses = Course.objects.filter(Q(code__icontains=q) | Q(name__icontains=q) | Q(
-                department__icontains=q) | Q(faculty__name__icontains=q))
+            courses = Course.objects.filter(Q(code__icontains=q) | Q(
+                name__icontains=q) | Q(faculty__name__icontains=q))
 
             if request.session.get('student_id'):
                 student = Student.objects.get(
@@ -600,3 +599,15 @@ def search(request):
                 return redirect('courses')
     else:
         return redirect('std_login')
+
+
+def guest(request):
+    request.session.flush()
+    request.session['faculty_id'] = 123456
+    return redirect('facultyCourses')
+
+
+def guestStudent(request):
+    request.session.flush()
+    request.session['student_id'] = 654321
+    return redirect('myCourses')
