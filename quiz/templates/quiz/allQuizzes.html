@@ -53,7 +53,7 @@
         <tr>
            <th scope="row">{{ forloop.counter }}</th>
            <td>
-            <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}} {% if quiz.started %} <span class="fw-bold text-success"> (Started!)</span> {% endif %}</a>
+            <a class="fw-bold" href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}} {% if quiz.started %} <span class="fw-normal text-success"> (Started!)</span> {% endif %}</a>
            </td>
            <td>{{ quiz.starts}} </td>
            <td>{{ quiz.ends}}</td>

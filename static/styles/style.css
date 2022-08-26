@@ -44,11 +44,6 @@ body {
   min-height: 100vh;
 }
 
-.bg-image {
-  background-image: url("../images/online_study.svg");
-  background-size: cover;
-  background-position: center;
-}
 
 .login-heading {
   font-weight: 300;
@@ -128,4 +123,7 @@ a {
 
 .shadow {
   box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px !important;
+}
+.login-shadow{
+  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }

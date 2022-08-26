@@ -32,7 +32,7 @@
 <!-- navigation links end -->
 <div class="container">
    <div class="shadow rounded p-3">
-      <h2>{{assignment.title}}</h2>
+      <p class="px-2 fw-bold fs-5">{{assignment.title}}</p>
       <div class="p-2 text-break">{{assignment.description}}</div>
       <h6 class="p-2 fw-bold">Deadline: <span class="px-2 text-danger"> {{assignment.deadline}} </span></h6>
       {% if assignment.file %}
@@ -56,7 +56,7 @@
    <table class="table shadow rounded">
       <thead class="table-dark">
          <tr>
-            <th class="text-center" scope="col">#</th>
+            <th class="text-center" scope="col">SL</th>
             <th class="text-center" scope="col">Student ID</th>
             <th class="text-center" scope="col">Student name</th>
             <th class="text-center" scope="col">Submitted file</th>
@@ -66,7 +66,7 @@
       </thead>
       <tbody>
          {% if not submissions %}
-         <td class="text-center text-muted fst-italic" colspan="6">No one submitted yet</th>
+         <td class="text-center text-muted fst-italic" colspan="6">No one has submitted yet</th>
             {% else %}
             {% for submission in submissions %}
          <tr>

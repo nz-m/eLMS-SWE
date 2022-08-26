@@ -53,9 +53,9 @@
    <!-- announcement section starts -->
    <div class="course-section p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
       <div class="d-flex justify-content-between border-bottom border-1 mb-2">
-         <h4 class="fw-bold announcementCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
+         <h5 class="fw-bold announcementCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
             alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
-         </h4>
+         </h5>
          <a
             href="{% url 'addAnnouncement' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
             alt="" height="32"></a>
@@ -111,7 +111,8 @@
          <!-- individual announcement ends-->
          {% empty %}
       
-         <h6 style="text-align:center">No announcements given yet</h6>
+         <p class="fs-6 text-center text-muted">No announcements posted yet</p>
+
       
          {% endfor %}
       </div>
@@ -120,8 +121,8 @@
    <!-- assignment section starts -->
    <div class="course-section p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5">
       <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
-         <h4 class="fw-bold assignmentCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
-            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
+         <h5 class="fw-bold assignmentCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
+            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h5>
          <a style="height:2rem"
          
          href="{% url 'addAssignment' course.code %}">
@@ -132,30 +133,26 @@
       <div class="add-announcement">
          {% for assignment in assignments %}
          <!-- individual assignment starts -->
-         <a class="text-bold fs-5" href="{% url 'submission' course.code assignment.id %}">
+         <a class="text-bold" href="{% url 'submission' course.code assignment.id %}">
          {{assignment.title}}</a>
          <div class="d-flex justify-content-between">
             <div class="text-muted">
                <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
             </div>
-            <div class="fs-6" style="color:grey;">
+            <div class="text-muted">
                {{assignment.post_date}}
             </div>
          </div>
-         <div class="fs-6">
-            <p>Submission ends : {{ assignment.due_date }}</p>
-         </div>
-         
          <!-- individual assignment ends -->
          {% empty %}
          
-         <h6 style="text-align:center">No assignments given yet</h6>
+         <p class="text-center text-muted fs-6">No assignments given yet</p>
          
          {% endfor %}
       </div>
       <div class="text-center fs-6">
          {% if assignments %}
-         <p>Showing {{ assignments.count}} of {{course.assignment_set.count}}
+         <p class="text-muted" >Showing {{ assignments.count}} of {{course.assignment_set.count}}
             {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
          </p>
          <a href=" {% url 'allAssignments' course.code %} ">Show all</a>
@@ -166,8 +163,8 @@
    <!-- course material section starts -->
    <div class="course-section p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
       <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
-         <h4 class="fw-bold materialCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
-            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h4>
+         <h5 class="fw-bold materialCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
+            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
          <a
             href="{% url 'addCourseMaterial' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
                alt="" height="32"></a>
@@ -215,7 +212,7 @@
          
          {% empty %}
          
-         <h6 style="text-align:center">Course materials not available</h6>
+         <p class="text-center text-muted fs-6">Course materials not available</p>
          
          {% endfor %}
          <!-- individual material ends -->

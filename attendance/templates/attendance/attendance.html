@@ -45,7 +45,7 @@
         <div>
             <form method="POST" action="{% url 'createRecord' course.code %}">
                 {% csrf_token %} 
-               <input name="dateCreate" type="date" class="border border-secondary px-2 rounded">
+               <input name="dateCreate" type="date" class="border border-secondary px-2 rounded" required>
                <button type="submit" class="btn btn-sm btn-primary mx-1 px-3">
                    Create Attendance Record
                </button>
@@ -55,7 +55,7 @@
 
     </div>
     {% if error %}
-    <p>
+    <p class="alert alert-warning text-center">
 {{error}}
     </p>
     {% endif %}
@@ -69,7 +69,7 @@
     <div>
         <form action="{% url 'loadAttendance' course.code %}"  method="post">
             {% csrf_token %}
-            <input type="date" name="date">
+            <input type="date" name="date" required>
             <button type="submit" class="btn btn-sm btn-success">Load</button>
         </form>
     </div>
@@ -113,14 +113,15 @@
            </tr>
              {% endfor %}
              <tr>
-                <input type="hidden" name="datehidden" value="{{date}}">
+                <input type="hidden" name="datehidden" value="{{date}}" requireed>
              </tr>
        </tbody>
    </table>
    <div class="d-flex flex-row-reverse p-2 border" style="background-color: rgb(250, 250, 250);">
        <span>
-       </span>
-       <button type="submit" class="btn btn-sm btn-danger">Discard</button>
+
+       </span> 
+       <a href=" {% url 'faculty' course.code %}" class="btn btn-sm btn-danger">Discard</a>
        <button type="submit" class="btn btn-sm btn-primary px-3 mx-1">Save</button>
     </form>
    </div>

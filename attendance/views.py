@@ -48,20 +48,23 @@ def loadAttendance(request, code):
 
 def submitAttendance(request, code):
     if is_faculty_authorised(request, code):
-        students = Student.objects.filter(course__code=code)
-        course = Course.objects.get(code=code)
-        if request.method == 'POST':
-            date = request.POST['datehidden']
-            # get value of radio button for each student
-            for student in students:
-                attendance = Attendance.objects.get(
-                    student=student, course=course, date=date)
-                if request.POST.get(str(student.student_id)) == '1':
-                    attendance.status = True
-                else:
-                    attendance.status = False
-                attendance.save()
-            return redirect('/attendance/' + str(code))
+        try:
+            students = Student.objects.filter(course__code=code)
+            course = Course.objects.get(code=code)
+            if request.method == 'POST':
+                date = request.POST['datehidden']
+                # get value of radio button for each student
+                for student in students:
+                    attendance = Attendance.objects.get(
+                        student=student, course=course, date=date)
+                    if request.POST.get(str(student.student_id)) == '1':
+                        attendance.status = True
+                    else:
+                        attendance.status = False
+                    attendance.save()
+                return redirect('/attendance/' + str(code))
 
-        else:
-            return render(request, 'attendance/attendance.html', {'code': code})
+            else:
+                return render(request, 'attendance/attendance.html', {'code': code, 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course)})
+        except :
+            return render(request, 'attendance/attendance.html', {'code': code, 'error': "Not saved!", 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course)})

@@ -53,12 +53,10 @@
                <button class="btn btn-sm btn-success" type="submit">Publish Marks</button>
             </form>
             {% endif %}
-            <div>
-               <button id="showMarks"  class="btn btn-sm btn-success my-2">Show marks</button>
-            </div>
          </div>
       </div>
 
+    
 
       <div class="col-6 my-4 border-start">
          <p>Start : <span class="fw-bold"> {{quiz.starts}} </span> </p>
@@ -72,48 +70,53 @@
       
    </div>
    
-      <div class="container pb-2" id="allmarks">
-         <div class="fw-bold">Marks of students</div>
-         {% if quiz.attempted_students %}
-         <table class="table text-center">
-            <thead>
-               <tr>
-                  <th scope="col">Sl</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Marks</th>
-               </tr>
-            </thead>
-            <tbody>
-               {% for student in students %}
-               <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{student.name}}</td>
-                  <td>{{student.student_id}}</td>
-                  {% if student.attempted %}
-                  <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
-                  {% else %}
-                  <td>Not Attempted</td>
-                  {% endif %}
-               </tr>
-               {% endfor %}
-            </tbody>
-         </table>
-         {% else %}
-         <div class="text-center">No students have attempted this quiz</div>
-         {% endif %}
+   
+      <div>
+         <button id="showMarks"  class="btn btn-sm btn-success my-2">Show marks</button>
       </div>
+     
+   </div>
+   <div class="container p-3 shadow" id="allmarks">
+      <div class="fw-bold">Marks of students</div>
+      {% if quiz.attempted_students %}
+      <table class="table text-center">
+         <thead>
+            <tr>
+               <th scope="col">Sl</th>
+               <th scope="col">Name</th>
+               <th scope="col">ID</th>
+               <th scope="col">Marks</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for student in students %}
+            <tr>
+               <th scope="row">{{forloop.counter}}</th>
+               <td>{{student.name}}</td>
+               <td>{{student.student_id}}</td>
+               {% if student.attempted %}
+               <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
+               {% else %}
+               <td>Not Attempted</td>
+               {% endif %}
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      {% else %}
+      <div class="text-center">No students have attempted this quiz</div>
+      {% endif %}
    </div>
 </div>
 <div class="container">
    {% for question in questions %}
-   <div class="d-grid gap-2 mb-1">
+   <div class="d-grid gap-2">
       <button class="bt alert alert-info" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
       <span class="fw-bold">Question {{forloop.counter}} - </span> {{question.question}}
       </button>
    </div>
    <div class="collapse" id="question{{question.id}}">
-      <div class="row">
+      <div class="row shadow p-3 mb-3 mx-2 rounded">
          <div class="col-lg-6 col-md-6 col-sm-12 border-end">
             <p>A : {{question.option1}}</p>
             <p>B : {{question.option2}}</p>
@@ -180,7 +183,7 @@ Quiz not started yet
             plugins: {
                 title: {
                     display: true,
-                    text: 'Question - {{forloop.counter}} responeses',
+                    text: 'Responeses',
                 }
             },
         
