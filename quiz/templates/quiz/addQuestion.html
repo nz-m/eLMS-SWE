@@ -32,6 +32,7 @@
    <!-- navigation links end -->
 </div>
 <div class="container shadow-sm rounded p-4" style="max-width: 768px;">
+         <h5 class="text-center">Add Question-{{quiz.title}}</h5>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">

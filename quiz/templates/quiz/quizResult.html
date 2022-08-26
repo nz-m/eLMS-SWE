@@ -36,16 +36,25 @@
    </div>
    <!-- navigation links end -->
    <div class="container">
-      <div class="container shadow-sm p-3 bg-info bg-opacity-10 border border-info rounded">
-         <h4> {{quiz.title}} Summary</h4>
-         <p>
-            {{quiz.description}}
-         </p>
-         <p>Starts : {{quiz.start}}</p>
-         <p>Ends : {{quiz.end}}</p>
-         <p>Total Questions : {{quiz.total_questions}} </p>
-         <p>Marks : {{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</p>
-         <p>Duration : {{ quiz.duration}} hours</p>
+      <div class="shadow-sm p-3 bg-info bg-opacity-10 border border-info rounded">
+        
+         <div class="row">
+            <div class="col-md-6">
+               <h4> {{quiz.title}} Summary</h4>
+               <p>
+                  {{quiz.description}}
+               </p>
+               <p>Total Questions : {{quiz.total_questions}} </p>
+               <p>Marks : {{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</p>
+            </div>
+            <div class="col-md-6 my-4">
+               <p>Starts : {{quiz.starts}}</p>
+               <p>Ends : {{quiz.ends}}</p>
+               <p>Duration : {{ quiz.duration}} hours</p>
+            </div>
+         </div>
+        
+        
     
 
          

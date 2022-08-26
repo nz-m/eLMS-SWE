@@ -30,10 +30,10 @@
    <!-- navigation links end -->
 </div>
 
-<div class="container shadow">
+<div class="container shadow rounded">
   <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
      <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
-     <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}">New</a>
+     <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}"> New</a>
   </div>
   {% if quizzes %}
   <table class="table">
@@ -53,17 +53,19 @@
         <tr>
            <th scope="row">{{ forloop.counter }}</th>
            <td>
-            <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
+            <a href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}} {% if quiz.started %} <span class="fw-bold text-success"> (Started!)</span> {% endif %}</a>
            </td>
-           <td>{{ quiz.starts}}</td>
+           <td>{{ quiz.starts}} </td>
            <td>{{ quiz.ends}}</td>
            <td>{{ quiz.total_questions}}</td>
            <td>
-            {% if quiz.status == 'Not Started' %}
+              {% if quiz.started == 0 %}
               <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}">Add question
-              </a>
+            </a>
+             
               {% else %}
-               <button disabled class="btn btn-sm btn-success">Add question</button>
+              <button disabled class="btn btn-sm btn-success" style="text-decoration: line-through;">Add question</button>
+              
             {% endif %}
            </td>
         </tr>

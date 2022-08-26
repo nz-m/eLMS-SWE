@@ -1,7 +1,7 @@
 
+import datetime
 from django.db import models
 from main.models import Student, Course
-
 
 
 # Create your models here.
@@ -16,6 +16,7 @@ class Quiz(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     publish_status = models.BooleanField(default=False, null=True, blank=True)
+    started = models.BooleanField(default=False, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Quizzes"

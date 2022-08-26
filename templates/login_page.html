@@ -39,12 +39,33 @@
                               <div class="d-grid">
                                  <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
                                     type="submit">Sign in</button>
-                                 <div class="text-center">
-                                    <a href="/admin" style="text-decoration: none" target="_blank">Login as
+                              </div>
+
+                           </form>
+                           <div class="p-3 border d-flex justify-content-center rounded">
+                              
+                                 <div class="mx-3">
+                                    <a class="text-secondary" href="/admin" style="text-decoration: none;" target="_blank">Login as
                                     admin</a>
                                  </div>
-                              </div>
-                           </form>
+                               
+                             
+                            
+
+                                 <div class="dropdown mx-3">
+                                    <a class="text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                       Login as guest
+                                    </a>
+                                  
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item" href="/guest">Teacher</a></li>
+                                      <li><a class="dropdown-item" href="/guestStudent">Student</a></li>
+                                    </ul>
+                                  </div>
+                             
+                            
+
+                           </div>
                            {% if messages %}
                            <!-- Error Alert -->
                            <div class="alert alert-danger alert-dismissible fade show my-2">

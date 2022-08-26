@@ -28,8 +28,11 @@
    </nav>
 </div>
 <!-- navigation links end -->
-<div class="container container-announcement">
+<div class="container container-announcement shadow p-4 rounded">
    <form action="" method="POST" enctype="multipart/form-data">
+      <div class="fw-bold text-start mb-3">
+         Create Assignment
+      </div>
       {% csrf_token %}
       <div class="mb-3">
          <label for="title" class="form-label">Title:</label>

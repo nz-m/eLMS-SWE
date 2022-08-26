@@ -13,88 +13,96 @@
 {% url 'courses' %}
 {% endblock %}
 {% block content %}
-
-   <!-- navigation links -->
-   <div class=" container shadow-sm">
-      <nav aria-label="breadcrumb">
-         <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-               Courses</a>
-            </li>
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-               <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-                  href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
-            <li class="breadcrumb-item active" aria-current="page">
-               {{quiz.title}}
-            </li>
-         </ol>
-      </nav>
-   </div>
-   <!-- navigation links end -->
+<!-- navigation links -->
+<div class=" container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+         <li class="breadcrumb-item active" aria-current="page">
+            {{quiz.title}}
+         </li>
+      </ol>
+   </nav>
 </div>
-<div class="container shadow-sm">
-   Need to fix the alignment
-   <div class="h4"> {{quiz.title}} Summary</div>
-   <div>
-      <p class="text-break word-break"> {{quiz.description}} </p>
-   </div>
-   <p>Start : {{quiz.starts}}</p>
-   <p>End : {{ quiz.ends }}</p>
-   <p>Total Questions : {{ quiz.total_questions}}</p>
-   {% if quiz.total_marks %}
-   <p>Total Marks : {{ quiz.total_marks }}</p>
-   {% endif %}
-   
-   <p>Quiz Duration : {{ quiz.duration }}</p>
-   {% if quiz.start < time %}
+<!-- navigation links end -->
 
-   <div>
-      <p>Student Participated : {{ quiz.attempted_students}}/{{total_students}}</p>
+<div class="container shadow-sm rounded">
+   <div class="row">
+      <div class="col-6">
+         <div class="h4"> {{quiz.title}} - Summary</div>
+         <div>
+            <p class="text-break word-break opacity-75"> {{quiz.description}} </p>
+         </div>
 
 
-      {% if quiz.publish_status %}
-      <p class="text-success fw-bold">
-         Marks Published!
-      </p>
-      {% else %}
-      <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-         <button class="btn btn-sm btn-success" type="submit">Publish Marks</button>
-      </form>
-      {% endif %}
-         
-<div>
-   <button id="showMarks"  class="btn btn-sm btn-success mb-2"> Show all marks</button>
-</div>
-
-<div class="container pb-2" id="allmarks">
-   <div class="fw-bold">Marks of students</div>
-   <table class="table text-center">
-      <thead>
-        <tr>
-          <th scope="col">Sl</th>
-          <th scope="col">Name</th>
-          <th scope="col">ID</th>
-          <th scope="col">Marks</th>
-        </tr>
-      </thead>
-      <tbody>
-         {% for student in students %}
-        <tr>
-          <th scope="row">{{forloop.counter}}</th>
-          <td>{{student.name}}</td>
-          <td>{{student.student_id}}</td>
-          {% if student.attempted %}
-          <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
+         {% if quiz.start < time %}
+         <div>
+            <p>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span></p>
+            {% if quiz.publish_status %}
+            <p class="text-success fw-bold">
+               Marks Published!
+            </p>
             {% else %}
-            <td>Not Attempted</td>
-          {% endif %}
-        </tr>
-         {% endfor %}
+            <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
+               <button class="btn btn-sm btn-success" type="submit">Publish Marks</button>
+            </form>
+            {% endif %}
+            <div>
+               <button id="showMarks"  class="btn btn-sm btn-success my-2">Show marks</button>
+            </div>
+         </div>
+      </div>
+
+
+      <div class="col-6 my-4 border-start">
+         <p>Start : <span class="fw-bold"> {{quiz.starts}} </span> </p>
+         <p>End : <span class="fw-bold"> {{ quiz.ends }} </span></p>
+         <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
+         {% if quiz.total_marks %}
+         <p>Total Marks :<span class="fw-bold"> {{ quiz.total_marks }}</span></p>
+         {% endif %}
+         <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }}</span></p>
+      </div>
       
-      </tbody>
-    </table>
-</div>
+   </div>
+   
+      <div class="container pb-2" id="allmarks">
+         <div class="fw-bold">Marks of students</div>
+         {% if quiz.attempted_students %}
+         <table class="table text-center">
+            <thead>
+               <tr>
+                  <th scope="col">Sl</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Marks</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for student in students %}
+               <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{student.name}}</td>
+                  <td>{{student.student_id}}</td>
+                  {% if student.attempted %}
+                  <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
+                  {% else %}
+                  <td>Not Attempted</td>
+                  {% endif %}
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+         {% else %}
+         <div class="text-center">No students have attempted this quiz</div>
+         {% endif %}
+      </div>
    </div>
 </div>
 <div class="container">
@@ -124,16 +132,13 @@
       </div>
    </div>
    {% endfor %}
- 
 </div>
-
-
 {% else %}
-Quiz not stated yet
+<p class="fw-bold">
+Quiz not started yet
+</p>
 {% endif %}
 
-
-</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    var color = [
@@ -161,8 +166,8 @@ Quiz not stated yet
             hoverBorderRadius: 5,
             hoverBorderDash: [5, 5],
             hoverBorderDashOffset: 0.0,
-
-
+   
+   
         }]
     };
     {% endfor %}
@@ -195,31 +200,31 @@ Quiz not stated yet
                 yAxes: [{
                     ticks: {
                         startAtZero: true
-
-
+   
+   
                     }
                 }]
             }
-
+   
         }
     });
     {% endfor %}
     
    
    // scroll to bottom of page on button click
- $(document).ready(function () {
+   $(document).ready(function () {
     $('.bt').click(function () {
         $('html, body').animate({
             scrollTop: $(document).height()
          }, '1000');
       });
    });
-
- 
+   
+   
    $('#allmarks').hide();
    $('#showMarks').click(function () {
       $(this).text(function (i, text) {
-         return text === "Hide all marks" ?  "Show all marks" : "Hide all marks";
+         return text === "Hide marks" ?  "Show marks" : "Hide marks";
       });
       $('#allmarks').toggle('slow');
      

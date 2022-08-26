@@ -1,15 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.btn {
+  border-radius: 3px !important;
+}
+
+.btn-primary {
+  background-color: #0b6ab8 !important;
+  border-color: #0b6ab8 !important;
+
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #0e5ea0 !important;
+  border-color: #0e5ea0 !important;
+}
+
 
 body {
   margin: 0;
   padding: 0;
-
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
 }
+
 .navbar-mod {
   background-color: rgb(10, 10, 48);
   color: white !important;
@@ -101,3 +126,6 @@ a {
   border: 2px solid rgb(10, 10, 48) !important;
 }
 
+.shadow {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px !important;
+}

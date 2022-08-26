@@ -33,21 +33,21 @@
          <div class="card border-0 rounded-2 shadow">
             <div class="card-body p-4">
                <div class="text-center">
-                  <div class="h4 fw-light mb-3">Add course material</div>
+                  <div class="fw-bold text-start mb-3">Add course material</div>
                   <form action="" method="POST" enctype="multipart/form-data">
                      {% csrf_token %}
                      <!-- title Input -->
-                     <div class="form-floating mb-3">
+                     <div class="mb-2">
                         <input class="form-control" id="title" name="title" maxlength="255" type="text"
                            placeholder="Title" required />
-                        <label for="title">Title</label>
+                        <label for="title"></label>
                      </div>
                      <!-- description Input -->
-                     <div class="form-floating mb-3">
+                     <div class="mb-2">
                         <textarea class="form-control" id="content" name="content" type="text"
                            placeholder="Description" style="height: 10rem;" maxlength="2000"
                            required></textarea>
-                        <label for="content">Description</label>
+                        <label for="content"></label>
                      </div>
                      <!-- file input -->
                      <div class="mb-3">

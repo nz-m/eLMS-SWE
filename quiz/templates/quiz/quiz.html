@@ -1,9 +1,7 @@
 {% extends 'index.html' %}
-
 {% block title %}Create Quiz | {{ course.name }} {% endblock title %}
-
- {% block profile %}
- {% url 'profile' faculty.faculty_id %}
+{% block profile %}
+{% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
  {{faculty.name}}
@@ -41,8 +39,8 @@
 
 <div class="container d-flex justify-content-center" id="form">
 
-    <div class="col-lg-8 col-md-8 border shadow border-light rounded pb-4 px-3">
-        <span class="d-flex fs-4 my-4 justify-content-center border-bottom border-success p-2">
+    <div class="border shadow-sm border-light rounded pb-4 px-3 col-md-8">
+        <span class="d-flex fs-4 my-4 justify-content-center p-2">
             Create Quiz
         </span>
         <form action="{% url 'quiz' course.code %}" method="POST">
@@ -50,7 +48,6 @@
             <div class="mb-3 formInputR">
                 <label for="title" class="form-label">Quiz Title</label>
                 <input type="text" class="form-control" id="title" name='title' required>
-
             </div>
             <div class="mb-3 formInput">
                 <label for="Instructions" class="form-label">Instructions</label>

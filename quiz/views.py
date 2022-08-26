@@ -60,15 +60,13 @@ def allQuizzes(request, code):
     if is_faculty_authorised(request, code):
         course = Course.objects.get(code=code)
         quizzes = Quiz.objects.filter(course=course)
-        time = datetime.datetime.now()
         for quiz in quizzes:
             quiz.total_questions = Question.objects.filter(quiz=quiz).count()
-            if quiz.start > time:
-                quiz.status = 'Not Started'
-
-            elif quiz.end < time:
-                quiz.status = 'ended'
-
+            if quiz.start < datetime.datetime.now():
+                quiz.started = True
+            else:
+                quiz.started = False
+            quiz.save()
         return render(request, 'quiz/allQuizzes.html', {'course': course, 'quizzes': quizzes, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
     else:
         return redirect('std_login')
