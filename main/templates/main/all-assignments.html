@@ -17,7 +17,7 @@
 <div class="site-section">
    <!-- navigation links -->
    <div class="container shadow-sm">
-      <nav aria-label="breadcrumb">
+      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'facultyCourses' %}">My
@@ -41,8 +41,11 @@
          <div class="d-flex flex-row justify-content-between edit">
             <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
                alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
-            <a class="btn btn-outline-primary" href="{% url 'addAssignment' course.code  %}"><span
-               class="mx-2">+</span></a>
+               <a style="height:2rem"
+               href="{% url 'addAssignment' course.code %}">
+               <img src="{% static 'images/icon/iconBlack.png' %}"
+                  alt="" height="32">
+               </a>
          </div>
          <div class="add-announcement">
             {% for assignment in assignments %}

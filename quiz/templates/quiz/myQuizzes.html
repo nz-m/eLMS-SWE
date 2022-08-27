@@ -18,7 +18,7 @@
 <div class="container" id="con">
    <!-- navigation links -->
    <div class="container shadow-sm">
-      <nav aria-label="breadcrumb">
+      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
            
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
@@ -102,14 +102,14 @@
                                 
                                 <tr>
                                     <th scope="row">{{forloop.counter}}</th>
-                                    <td>
+                                    <td class="fw-bold">
                                     
                                         <a href="{% url 'quizResult' course.code quizP.id %}">{{quizP.title}}</a>
                                         
                                     </td>
                                     <td>{{quizP.ends}}</td>
-                                    <td>{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
-                                    <td> {{ quizP.percentage}}%</td>
+                                    <td class="fw-bold marks">{{quizP.total_marks_obtained}}/ {{ quizP.total_marks}}</td>
+                                    <td class="fw-bold percentage"> {{ quizP.percentage}}%</td>
                                 </tr>
 
 
@@ -120,8 +120,8 @@
                                     {{quizP.title}}
                                     </td>
                                     <td>{{quizP.ends}}</td>
-                                    <td class="text-center text-warning">Not Published</td>
-                                    <td class="text-center text-warning">Not Published</td>
+                                    <td class="text-center text-warning fw-bold">Not Published</td>
+                                    <td class="text-center text-warning fw-bold">Not Published</td>
                                 </tr>
 
 
@@ -134,15 +134,15 @@
                 {{quizP.title}}
                 </td>
                 <td>{{quizP.ends}}</td>
-                <td class="text-center text-danger">Not attempted</td>
-                <td class="text-center text-danger">Not attempted</td>
+                <td class="text-center text-danger fw-bold">Did not attempt</td>
+                <td class="text-center text-danger fw-bold">Did not attempt</td>
             </tr>
                         
                 {% endif %}
             {% endfor %}
             {% else %}
             <tr>
-                <th scope="col" class="text-center">Not previous quiz attempted</th>
+                <th scope="col" class="text-center">No previous quiz attempts</th>
             </tr>
             {% endif %}
         </tbody>

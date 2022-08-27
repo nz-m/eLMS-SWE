@@ -15,7 +15,7 @@
 {% block content %}
 <!-- navigation links -->
 <div class=" container shadow-sm">
-   <nav aria-label="breadcrumb">
+   <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
       <ol class="breadcrumb p-3">
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
             Courses</a>
@@ -31,17 +31,14 @@
    </nav>
 </div>
 <!-- navigation links end -->
-
-<div class="container shadow-sm rounded">
+<div class="container shadow-sm rounded border p-3">
+   {% if quiz.start < time %}
    <div class="row">
       <div class="col-6">
          <div class="fs-5 fw-bold"> {{quiz.title}} - Summary</div>
          <div>
             <p class="text-break word-break opacity-75"> {{quiz.description}} </p>
          </div>
-
-
-         {% if quiz.start < time %}
          <div>
             <p>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span></p>
             <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
@@ -56,9 +53,6 @@
             {% endif %}
          </div>
       </div>
-
-    
-
       <div class="col-6 my-4 border-start">
          <p>Start : <span class="fw-bold"> {{quiz.starts}} </span> </p>
          <p>End : <span class="fw-bold"> {{ quiz.ends }} </span></p>
@@ -67,16 +61,12 @@
          {% endif %}
          <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span></p>
       </div>
-      
    </div>
-   
-   
-      <div>
-         <button id="showMarks"  class="btn btn-sm btn-success my-2 px-3">Show marks</button>
-      </div>
-     
+   <div class="d-flex justify-content-center">
+      <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show marks</button>
    </div>
-   <div class="container p-3 shadow" id="allmarks">
+</div>
+   <div class="container p-3 border rounded" id="allmarks">
       <div class="fw-bold">Marks of students</div>
       {% if quiz.attempted_students %}
       <table class="table text-center">
@@ -107,41 +97,41 @@
       <div class="text-center">No students have attempted this quiz</div>
       {% endif %}
    </div>
-</div>
-<div class="container">
-   {% for question in questions %}
-   <div class="d-grid gap-2">
-      <button class="bt alert alert-info" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
-      <span class="fw-bold">Question {{forloop.counter}} - </span> {{question.question}}
-      </button>
-   </div>
-   <div class="collapse" id="question{{question.id}}">
-      <div class="row shadow p-3 mb-3 mx-2 rounded">
-         <div class="col-lg-6 col-md-6 col-sm-12 border-end">
-            <p>A : {{question.option1}}</p>
-            <p>B : {{question.option2}}</p>
-            <p>C : {{question.option3}}</p>
-            <p>D : {{question.option4}}</p>
-            <p class="fw-bold">Answer : {{question.answer}}</p>
-            <p>Marks : {{question.marks}}</p>
-            <p>Correct answer recieved : {{ question.total_correct_answers }} </p>
-            <p>Wrong answer recieved : {{ question.total_wrong_answers }} </p>
-         </div>
-         <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="chart">
-               <canvas id="canvas{{question.id}}"></canvas>
+
+   <div class="container">
+      {% for question in questions %}
+      <div class="d-grid gap-2">
+         <button class="bt alert alert-info border" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
+         <span class="fw-bold">{{forloop.counter}}. {{question.question}}</span> 
+         </button>
+      </div>
+      <div class="collapse" id="question{{question.id}}">
+         <div class="row p-3 mb-3 mx-2 rounded border">
+            <div class="col-lg-6 col-md-6 col-sm-12 border-end">
+               <p>A : {{question.option1}}</p>
+               <p>B : {{question.option2}}</p>
+               <p>C : {{question.option3}}</p>
+               <p>D : {{question.option4}}</p>
+               <p class="fw-bold">Answer : {{question.answer}}</p>
+               <p>Marks : {{question.marks}}</p>
+               <p>Correct answer recieved : {{ question.total_correct_answers }} </p>
+               <p>Wrong answer recieved : {{ question.total_wrong_answers }} </p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+               <div class="chart">
+                  <canvas id="canvas{{question.id}}"></canvas>
+               </div>
             </div>
          </div>
       </div>
+      {% endfor %}
    </div>
-   {% endfor %}
+   {% else %}
+   <div class="fw-bold text-center">
+      Quiz not started yet
+   </div>
+   {% endif %}
 </div>
-{% else %}
-<p class="fw-bold">
-Quiz not started yet
-</p>
-{% endif %}
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    var color = [
