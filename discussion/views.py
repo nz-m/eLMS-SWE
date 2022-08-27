@@ -96,5 +96,3 @@ def send_fac(request, code, fac_id):
                 return redirect('discussion', code=code)
     else:
         return render(request, 'error.html')
-
-

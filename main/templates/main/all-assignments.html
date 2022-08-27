@@ -41,11 +41,11 @@
          <div class="d-flex flex-row justify-content-between edit">
             <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
                alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
-               <a style="height:2rem"
+            <a style="height:2rem"
                href="{% url 'addAssignment' course.code %}">
-               <img src="{% static 'images/icon/iconBlack.png' %}"
-                  alt="" height="32">
-               </a>
+            <img src="{% static 'images/icon/iconBlack.png' %}"
+               alt="" height="32">
+            </a>
          </div>
          <div class="add-announcement">
             {% for assignment in assignments %}

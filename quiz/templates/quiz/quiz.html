@@ -4,7 +4,7 @@
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
- {{faculty.name}}
+{{faculty.name}}
 {% endblock user %}
 {% block courses %}
 {% url 'facultyCourses' %}
@@ -18,110 +18,97 @@
    <div class="container shadow-sm">
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
-           
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-                  Courses</a>
+               Courses</a>
             </li>
-             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-                  href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>             
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-                  href="{% url 'allQuizzes' course.code %}">All quizzes</a></li> 
+               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+               href="{% url 'allQuizzes' course.code %}">All quizzes</a></li>
             <li class="breadcrumb-item active" aria-current="page">Create Quiz</li>
          </ol>
       </nav>
    </div>
    <!-- navigation links end -->
-
-   
-
- 
 </div>
-
 <div class="container d-flex justify-content-center" id="form">
-
-    <div class="border shadow-sm border-light rounded pb-4 px-3 col-md-8">
-        <span class="d-flex fs-4 my-4 justify-content-center p-2">
-            Create Quiz
-        </span>
-        <form action="{% url 'quiz' course.code %}" method="POST">
-            {% csrf_token %}
-            <div class="mb-3 formInputR">
-                <label for="title" class="form-label">Quiz Title</label>
-                <input type="text" class="form-control" id="title" name='title' required>
-            </div>
-            <div class="mb-3 formInput">
-                <label for="Instructions" class="form-label">Instructions</label>
-                <textarea class="form-control" id="Instructions" name="description"></textarea>
-            </div>
-
-            <div class="mb-3 formInputR">
-                <label for="start" class="form-label">Start</label>
-                <input type="datetime-local" class="form-control" id="start" name="start" required>
-            </div>
-            <div class="mb-3 formInput">
-                <label for="end" class="form-label">End</label>
-                <input type="datetime-local" class="form-control" id="end" name="end" required>
-            </div>
-
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox" name="checkbox">
-                <label class="form-check-label" for="checkbox">
-                    Publish grade after submission
-                </label>
-              </div>
-
-            <div class="d-flex justify-content-end p-2 border" style="background-color: rgb(250,250,250);">
-                <button type="submit" class="btn btn-sm btn-primary mx-2">Proceed</button>
-                <a href="{% url 'allQuizzes' course.code %}" type="button" class="btn btn-sm btn-danger">Discard</a>
-
-            </div>
-        </form>
-    </div>
-
-
+   <div class="border shadow-sm border-light rounded pb-4 px-3 col-md-8">
+      <span class="d-flex fs-4 my-4 justify-content-center p-2">
+      Create Quiz
+      </span>
+      <form action="{% url 'quiz' course.code %}" method="POST">
+         {% csrf_token %}
+         <div class="mb-3 formInputR">
+            <label for="title" class="form-label">Quiz Title</label>
+            <input type="text" class="form-control" id="title" name='title' required>
+         </div>
+         <div class="mb-3 formInput">
+            <label for="Instructions" class="form-label">Instructions</label>
+            <textarea class="form-control" id="Instructions" name="description"></textarea>
+         </div>
+         <div class="mb-3 formInputR">
+            <label for="start" class="form-label">Start</label>
+            <input type="datetime-local" class="form-control" id="start" name="start" required>
+         </div>
+         <div class="mb-3 formInput">
+            <label for="end" class="form-label">End</label>
+            <input type="datetime-local" class="form-control" id="end" name="end" required>
+         </div>
+         <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="" id="checkbox" name="checkbox">
+            <label class="form-check-label" for="checkbox">
+            Publish grade after submission
+            </label>
+         </div>
+         <div class="d-flex justify-content-end p-2 border" style="background-color: rgb(250,250,250);">
+            <button type="submit" class="btn btn-sm btn-primary mx-2">Proceed</button>
+            <a href="{% url 'allQuizzes' course.code %}" type="button" class="btn btn-sm btn-danger">Discard</a>
+         </div>
+      </form>
+   </div>
 </div>
 <script>
-    //change value of checkbox if checked
-    $('#checkbox').change(function() {
-        if ($(this).is(":checked")) {
-            $('#checkbox').val("True");
-        } else {
-            $('#checkbox').val("False");
-        }
-    });
-    // check if end date is after start date
-    $('#end').change(function() {
-        var start = new Date($('#start').val());
-        var end = new Date($('#end').val());
-        if (end < start) {
-            alert("End date must be after start date");
-            $('#end').val("");
-        }
-    });
-
-    anime(
-     // fade in from left to center 
-        {
-            targets: '.formInput',
-            translateX: [-1000, 0],
-            easing: 'easeInOutQuart',
-            duration: 1000,
-            delay: 500,
-            opacity: [0, 1]
-        }
-     
-    );
-    anime(
-        // fade in from right to center 
-           {
-               targets: '.formInputR',
-               translateX: [1000, 0],
-               easing: 'easeInOutQuart',
-               duration: 1000,
-               delay: 250,
-               opacity: [0, 1]
-           }
-        
-       );
+   //change value of checkbox if checked
+   $('#checkbox').change(function() {
+       if ($(this).is(":checked")) {
+           $('#checkbox').val("True");
+       } else {
+           $('#checkbox').val("False");
+       }
+   });
+   // check if end date is after start date
+   $('#end').change(function() {
+       var start = new Date($('#start').val());
+       var end = new Date($('#end').val());
+       if (end < start) {
+           alert("End date must be after start date");
+           $('#end').val("");
+       }
+   });
+   
+   anime(
+    // fade in from left to center 
+       {
+           targets: '.formInput',
+           translateX: [-1000, 0],
+           easing: 'easeInOutQuart',
+           duration: 1000,
+           delay: 500,
+           opacity: [0, 1]
+       }
+    
+   );
+   anime(
+       // fade in from right to center 
+          {
+              targets: '.formInputR',
+              translateX: [1000, 0],
+              easing: 'easeInOutQuart',
+              duration: 1000,
+              delay: 250,
+              opacity: [0, 1]
+          }
+       
+      );
 </script>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% block title %}Add Question {{quiz.title}} | {{ course.name }} {% endblock title %}
- {% block profile %}
+{% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
 {% block user %}
@@ -14,37 +14,34 @@
 {% endblock %} 
 {% block content %}
 <div class="container" id="con">
-   <!-- navigation links -->
-   <div class="container shadow-sm">
-      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-         <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-               Courses</a>
-            </li> 
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-               <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-                  href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> Add Question-{{quiz.title}}</li>
-         </ol>
-      </nav>
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+         <li class="breadcrumb-item active" aria-current="page"> Add Question-{{quiz.title}}</li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container">
+   {% if messages %}
+   {% for message in messages %}
+   <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <span class="fw-bold"> {{ message }}</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
    </div>
-   <!-- navigation links end -->
-   <div class="container">
-   
-      {% if messages %}
-          {% for message in messages %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="fw-bold"> {{ message }}</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-          {% endfor %}
-      {% endif %}
-      </div>
-   
-   
+   {% endfor %}
+   {% endif %}
+</div>
 <div class="container shadow-sm rounded p-4" style="max-width: 768px;">
-         <p class="text-center fw-bold">Add Question-{{quiz.title}}</p>
+   <p class="text-center fw-bold">Add Question-{{quiz.title}}</p>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">
@@ -94,18 +91,14 @@
          <button name="saveAdd" class="btn btn-sm btn-success px-2 mx-2" type="submit">Save and add another</button>
          <button name="saveOnly" class="btn btn-sm btn-primary px-3 mx-2" type="submit">Save</button>
          <a href="{% url 'allQuizzes' course.code %}" class="btn btn-sm btn-outline-danger me-auto">Cancel</a>
-
       </div>
    </form>
 </div>
-
 <script>
-
-$(document).ready(function(){
-  setTimeout(function(){
-    $(".alert").alert('close');
-  },2500);
-});
+   $(document).ready(function(){
+     setTimeout(function(){
+       $(".alert").alert('close');
+     },2500);
+   });
 </script>
-
 {% endblock %}

@@ -16,7 +16,6 @@ class Student(models.Model):
     department = models.ForeignKey(
         'Department', on_delete=models.CASCADE, null=False, blank=False)
 
-
     def delete(self, *args, **kwargs):
         if self.photo != 'profile_pics/default_student.png':
             self.photo.delete()
@@ -52,6 +51,7 @@ class Faculty(models.Model):
     def __str__(self):
         return self.name
 
+
 class Department(models.Model):
     department_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, null=False)
@@ -59,13 +59,16 @@ class Department(models.Model):
 
     class Meta:
         verbose_name_plural = 'Departments'
+
     def faculty_count(self):
         return Faculty.objects.filter(department=self).count()
+
     def students_count(self):
         return Student.objects.filter(department=self).count()
 
     def __str__(self):
         return self.name
+
 
 class Course(models.Model):
     code = models.IntegerField(primary_key=True)

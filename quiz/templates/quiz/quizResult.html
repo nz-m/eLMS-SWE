@@ -14,99 +14,78 @@
 {% url 'courses' %}
 {% endblock %} 
 {% block content %}
-
-   <!-- navigation links -->
-   <div class="container shadow-sm">
-      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-         <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-               Courses</a>
-            </li>
-            
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            
-                       
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
-           
-            <li class="breadcrumb-item active" aria-current="page">{{quiz.title}}</li>
-         </ol>
-      </nav>
-   </div>
-   <!-- navigation links end -->
-   <div class="container">
-      <div class="shadow p-3 rounded">
-        
-         <div class="row">
-            <div class="col-md-6">
-               <p class=" fw-bold fs-5"> {{quiz.title}} Summary</p>
-               <p class="text-muted">
-                  {{quiz.description}}
-               </p>
-               <p>Total Questions : <span class="fw-bold">{{quiz.total_questions}}</span></p>
-               <p>Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span></p>
-            </div>
-            <div class="col-md-6 my-4">
-               <p>Started : <span class="fw-bold">{{quiz.starts}}</span></p>
-               <p>Ended : <span class="fw-bold">{{quiz.ends}}</span></p>
-               <p>Duration : <span class="fw-bold">{{ quiz.duration}} Hours</span></p>
-            </div>
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'course' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
+         <li class="breadcrumb-item active" aria-current="page">{{quiz.title}}</li>
+      </ol>
+   </nav>
+</div>
+<!-- navigation links end -->
+<div class="container">
+   <div class="shadow p-3 rounded">
+      <div class="row">
+         <div class="col-md-6">
+            <p class=" fw-bold fs-5"> {{quiz.title}} Summary</p>
+            <p class="text-muted">
+               {{quiz.description}}
+            </p>
+            <p>Total Questions : <span class="fw-bold">{{quiz.total_questions}}</span></p>
+            <p>Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span></p>
          </div>
-        
-        
-    
-
-         
+         <div class="col-md-6 my-4">
+            <p>Started : <span class="fw-bold">{{quiz.starts}}</span></p>
+            <p>Ended : <span class="fw-bold">{{quiz.ends}}</span></p>
+            <p>Duration : <span class="fw-bold">{{ quiz.duration}} Hours</span></p>
+         </div>
       </div>
-      {% for question in questions  %}
-      {% comment %} show all question with correct ans checked {% endcomment %}
-      <div class="questionInd container mb-2 shadow-sm p-3 border rounded {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
-         <div>
-            <div class="d-flex justify-content-between mb-3">
-               <div class="fw-bold">
-                  <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
-               </div>
-               {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
+   </div>
+   {% for question in questions  %}
+   {% comment %} show all question with correct ans checked {% endcomment %}
+   <div class="questionInd container mb-2 shadow-sm p-3 border rounded {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
+      <div>
+         <div class="d-flex justify-content-between mb-3">
+            <div class="fw-bold">
+               <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
             </div>
-            <div>
-               
-               <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
-               <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
-               <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
-               <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
-            </div>
+            {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
          </div>
          <div>
-            {% if  not question.student_answer %}
-  
+            <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
+         </div>
+      </div>
+      <div>
+         {% if  not question.student_answer %}
          <span> You did not answer!</span>
          {% endif %}
-
-         </div>
-         <div>
-            Correct answer  <span class="fw-bold text-italic"> {{ question.answer }} : {{question.get_answer}}</span>
-         </div>
       </div>
-      {% endfor %}
+      <div>
+         Correct answer  <span class="fw-bold text-italic"> {{ question.answer }} : {{question.get_answer}}</span>
+      </div>
    </div>
-
-
-
+   {% endfor %}
+</div>
 <script>
-
-
-let questionInd = document.querySelectorAll('.questionInd');
-anime({
-   targets: questionInd,
-   opacity: [0, 1],
-   easing: 'easeInOutQuad',
-   duration: 1500,
-   delay: function (el, i) {
-      return i * 250;
-   }
-});
-
-
+   let questionInd = document.querySelectorAll('.questionInd');
+   anime({
+      targets: questionInd,
+      opacity: [0, 1],
+      easing: 'easeInOutQuad',
+      duration: 1500,
+      delay: function (el, i) {
+         return i * 250;
+      }
+   });
 </script>
 {% endblock %}

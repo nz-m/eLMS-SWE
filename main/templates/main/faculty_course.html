@@ -31,23 +31,38 @@
    <div class="course-section p-3 m-3 shadow d-flex justify-content-between align-items-center courseCls">
       <h3 id="courseTitle" class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
       <div class="dropdown">
-            <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
+         <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
             alt="Options" height="32">
          <ul class="dropdown-menu">
-           <li class="border-bottom"><a class="dropdown-item" href="{% url 'discussion' course.code %}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots mx-2" viewBox="0 0 16 16">
-            <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
-            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-          </svg> Discussion</a></li>
-           <li class="border-bottom"><a class="dropdown-item" href="{% url 'attendance' course.code %}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check mx-2" viewBox="0 0 16 16">
-            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-          </svg> Attendance</a></li>
-           <li><a class="dropdown-item" href="{% url 'allQuizzes' course.code %}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text mx-2" viewBox="0 0 16 16">
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-            <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
-          </svg>  Quiz</a></li>
+            <li class="border-bottom">
+               <a class="dropdown-item" href="{% url 'discussion' course.code %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots mx-2" viewBox="0 0 16 16">
+                     <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                     <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+                  Discussion
+               </a>
+            </li>
+            <li class="border-bottom">
+               <a class="dropdown-item" href="{% url 'attendance' course.code %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check mx-2" viewBox="0 0 16 16">
+                     <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                     <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                  </svg>
+                  Attendance
+               </a>
+            </li>
+            <li>
+               <a class="dropdown-item" href="{% url 'allQuizzes' course.code %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text mx-2" viewBox="0 0 16 16">
+                     <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                     <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                  </svg>
+                  Quiz
+               </a>
+            </li>
          </ul>
-       </div>
+      </div>
    </div>
    <!-- course name ends -->
    <!-- announcement section starts -->
@@ -72,8 +87,8 @@
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                      <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                   </svg>
-               Delete
+                  </svg>
+                  Delete
                </button>
                <!-- Popup -->
                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -98,22 +113,21 @@
                   </div>
                </div>
                <a class="btn btn-sm btn-outline-primary px-3"
-                  href="{% url 'editAnnouncement' course.code announcement.id %}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  href="{% url 'editAnnouncement' course.code announcement.id %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                   </svg> &nbsp; Edit</a>
+                  </svg>
+                  &nbsp; Edit
+               </a>
             </div>
             <div class="add-announcement" style="color:grey;">
                {{announcement.post_date}}
             </div>
          </div>
-         
          <!-- individual announcement ends-->
          {% empty %}
-      
          <p class="fs-6 text-center text-muted">No announcements posted yet</p>
-
-      
          {% endfor %}
       </div>
    </div>
@@ -124,7 +138,7 @@
          <h5 class="fw-bold assignmentCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
             alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h5>
          <a style="height:2rem"
-         href="{% url 'addAssignment' course.code %}">
+            href="{% url 'addAssignment' course.code %}">
          <img src="{% static 'images/icon/iconBlack.png' %}"
             alt="" height="32">
          </a>
@@ -144,9 +158,7 @@
          </div>
          <!-- individual assignment ends -->
          {% empty %}
-         
          <p class="text-center text-muted fs-6">No assignments given yet</p>
-         
          {% endfor %}
       </div>
       <div class="text-center fs-6">
@@ -166,12 +178,11 @@
             alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
          <a
             href="{% url 'addCourseMaterial' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
-               alt="" height="32"></a>
+            alt="" height="32"></a>
       </div>
       <div class="add-announcement">
          {% for material in materials  %}
          <!-- individual material starts -->
-      
          <a class="add-announcement" href="{{ material.file.url }}">{{material.title}}</a><br>
          <div class="fs-6 text-break mb-2">{{material.description}}</div>
          <!-- Popup -->
@@ -201,18 +212,15 @@
                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                </svg>
-            Remove
+               </svg>
+               Remove
             </button>
             <div class="add-announcement" style="color:grey;">
                {{material.post_date}}
             </div>
          </div>
-         
          {% empty %}
-         
          <p class="text-center text-muted fs-6">Course materials not available</p>
-         
          {% endfor %}
          <!-- individual material ends -->
       </div>
@@ -220,61 +228,60 @@
    <!-- course material section ends-->
 </div>
 <script>
-    
-      anime(
-     
-         {
-          targets: '.assignmentCls',
-            translateX: [
-               { value: '-100%', duration: 0 },
-               { value: '0', duration: 1000 }
-            ],
-            opacity: [
-               { value: 0, duration: 0 },
-               { value: 1, duration: 1000 }
-            ],
-            easing: 'easeInOutQuad',
-            delay: function (el, i) {
-               return i * 100;
-            }
+   anime(
+   
+      {
+       targets: '.assignmentCls',
+         translateX: [
+            { value: '-100%', duration: 0 },
+            { value: '0', duration: 1000 }
+         ],
+         opacity: [
+            { value: 0, duration: 0 },
+            { value: 1, duration: 1000 }
+         ],
+         easing: 'easeInOutQuad',
+         delay: function (el, i) {
+            return i * 100;
          }
-      
+      }
+   
+   );
+   anime(
+      {
+         targets: '.announcementCls',
+         translateX: [
+            { value: '-100%', duration: 0 },
+            { value: '0', duration: 1000 }
+         ],
+         opacity: [
+            { value: 0, duration: 0 },
+            { value: 1, duration: 1000 }
+         ],
+         easing: 'easeInOutQuad',
+         delay: function (el, i) {
+            return i * 100;
+         }
+      }
       );
+   
       anime(
-         {
-            targets: '.announcementCls',
-            translateX: [
-               { value: '-100%', duration: 0 },
-               { value: '0', duration: 1000 }
-            ],
-            opacity: [
-               { value: 0, duration: 0 },
-               { value: 1, duration: 1000 }
-            ],
-            easing: 'easeInOutQuad',
-            delay: function (el, i) {
-               return i * 100;
-            }
+      {
+         targets: '.materialCls',
+         translateX: [
+            { value: '-100%', duration: 0 },
+            { value: '0', duration: 1000 }
+         ],
+         opacity: [
+            { value: 0, duration: 0 },
+            { value: 1, duration: 1000 }
+         ],
+         easing: 'easeInOutQuad',
+         delay: function (el, i) {
+            return i * 100;
          }
-         );
-    
-         anime(
-         {
-            targets: '.materialCls',
-            translateX: [
-               { value: '-100%', duration: 0 },
-               { value: '0', duration: 1000 }
-            ],
-            opacity: [
-               { value: 0, duration: 0 },
-               { value: 1, duration: 1000 }
-            ],
-            easing: 'easeInOutQuad',
-            delay: function (el, i) {
-               return i * 100;
-            }
-         }
-         ); 
-
+      }
+      ); 
+   
 </script>
 {% endblock %}

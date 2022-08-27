@@ -13,134 +13,80 @@
 {% url 'courses' %}
 {% endblock %} 
 {% block content %}
-
-   <!-- navigation links -->
-   <div class="container shadow-sm">
-      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-         <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
-               Courses</a>
-            </li>
-            <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>    
-            <li class="breadcrumb-item active" aria-current="page">Quizzes</li>
-         </ol>
-      </nav>
-   </div>
-   <!-- navigation links end -->
-
-
-   <div class="container">
-   {% if messages %}
-       {% for message in messages %}
-       <div class="alert alert-success alert-dismissible fade show" role="alert">
-         <span class="fw-bold"> {{ message }}</span>
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-       </div>
-       {% endfor %}
-   {% endif %}
-   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="container shadow rounded">
-  <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
-     <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
-     <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}"> New</a>
-  </div>
-  {% if quizzes %}
-  <table class="table">
-     <thead class="text-center">
-        <tr>
-           <th scope="col">SL</th>
-           <th scope="col">Quiz</th>
-           <th scope="col">Starts</th>
-           <th scope="col">Ends</th>
-           <th scope="col">Questions</th>
-           <th scope="col"></th>
-
-        </tr>
-     </thead>
-     <tbody class="table-group-divider text-wrap text-break text-center">
-      {% for quiz in quizzes %}
-        <tr>
-           <th scope="row">{{ forloop.counter }}</th>
-           <td>
-            <a class="fw-bold" href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}} {% if quiz.started %} <span class="fw-normal text-success"> (Started!)</span> {% endif %}</a>
-           </td>
-           <td>{{ quiz.starts}} </td>
-           <td>{{ quiz.ends}}</td>
-           <td>{{ quiz.total_questions}}</td>
-           <td>
-              {% if quiz.started == 0 %}
-              <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}">Add question
-            </a>
-             
-              {% else %}
-              <button disabled class="btn btn-sm btn-success" style="text-decoration: line-through;">Add question</button>
-              
-            {% endif %}
-           </td>
-        </tr>
-        {% endfor %}
-   
-     </tbody>
-  </table>
-  {% else %}
-  <div >
-       <p class="text-center fw-bold pb-3">No quizzes found</p>
-  </div>
-
-  {% endif %}
+<!-- navigation links -->
+<div class="container shadow-sm">
+   <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
+            Courses</a>
+         </li>
+         <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
+            href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
+         <li class="breadcrumb-item active" aria-current="page">Quizzes</li>
+      </ol>
+   </nav>
 </div>
-
-
-
-   <script>
-
-      $(document).ready(function(){
-        setTimeout(function(){
-          $(".alert").alert('close');
-        },2500);
-      });
-      </script>
-
-
+<!-- navigation links end -->
+<div class="container">
+   {% if messages %}
+   {% for message in messages %}
+   <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <span class="fw-bold"> {{ message }}</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   {% endfor %}
+   {% endif %}
+</div>
+<div class="container shadow rounded">
+   <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
+      <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
+      <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}"> New</a>
+   </div>
+   {% if quizzes %}
+   <table class="table">
+      <thead class="text-center">
+         <tr>
+            <th scope="col">SL</th>
+            <th scope="col">Quiz</th>
+            <th scope="col">Starts</th>
+            <th scope="col">Ends</th>
+            <th scope="col">Questions</th>
+            <th scope="col"></th>
+         </tr>
+      </thead>
+      <tbody class="table-group-divider text-wrap text-break text-center">
+         {% for quiz in quizzes %}
+         <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>
+               <a class="fw-bold" href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}} {% if quiz.started %} <span class="fw-normal text-success"> (Started!)</span> {% endif %}</a>
+            </td>
+            <td>{{ quiz.starts}} </td>
+            <td>{{ quiz.ends}}</td>
+            <td>{{ quiz.total_questions}}</td>
+            <td>
+               {% if quiz.started == 0 %}
+               <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}">Add question
+               </a>
+               {% else %}
+               <button disabled class="btn btn-sm btn-success" style="text-decoration: line-through;">Add question</button>
+               {% endif %}
+            </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+   {% else %}
+   <div >
+      <p class="text-center fw-bold pb-3">No quizzes found</p>
+   </div>
+   {% endif %}
+</div>
+<script>
+   $(document).ready(function(){
+     setTimeout(function(){
+       $(".alert").alert('close');
+     },2500);
+   });
+</script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

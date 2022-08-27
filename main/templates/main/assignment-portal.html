@@ -110,18 +110,13 @@
            document.getElementById("timeRemain").innerHTML = "Closed!";
            document.getElementById("timeRemain").style.color = "red";
            document.getElementById("fileSubmit").style.display = 'none';
-           
-           
-
        }
-   }, 1000);
-
-{% if submission.file %}
-$(document).ready(function(){
+   }, 1000); 
+   {% if submission.file %}
+   $(document).ready(function(){
       $('#timer').hide(); 
-}
-);
-{% endif %}
-
+   }
+   );
+   {% endif %} 
 </script>
 {% endblock %}
