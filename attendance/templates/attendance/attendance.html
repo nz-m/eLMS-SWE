@@ -18,16 +18,13 @@
 <div class="container" id="con">
    <!-- navigation links -->
    <div class="container shadow-sm">
-      <nav aria-label="breadcrumb">
+      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
-           
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'facultyCourses' %}">My
                   Courses</a>
             </li>
              <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                   href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-           
-
             <li class="breadcrumb-item active" aria-current="page">Attendance</li>
          </ol>
       </nav>
@@ -41,11 +38,11 @@
 <div class="container">
 
 
-    <div class="d-flex flex-row p-2 border justify-content-end" style="background-color:rgb(250,250,250)">
+    <div class="shadow d-flex flex-row p-2 border justify-content-end" style="background-color:rgb(250,250,250)">
         <div>
             <form method="POST" action="{% url 'createRecord' course.code %}">
                 {% csrf_token %} 
-               <input name="dateCreate" type="date" class="border border-secondary px-2 rounded" required>
+               <input name="dateCreate" type="date" class="border border-secondary px-2" required>
                <button type="submit" class="btn btn-sm btn-primary mx-1 px-3">
                    Create Attendance Record
                </button>
@@ -54,11 +51,25 @@
          
 
     </div>
-    {% if error %}
-    <p class="alert alert-warning text-center">
-{{error}}
-    </p>
-    {% endif %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+              <span class="fw-bold"> {{ message }}</span>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <span class="fw-bold"> {{ error }}</span>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+      
+        </div>
+     
 
     <p>
         {% if attendace %}
@@ -76,7 +87,7 @@
    <table class="table my-3 text-center">
        <thead class="table-dark">
            <tr>
-               <th scope="col">#</th>
+               <th scope="col">SL</th>
                <th scope="col">Name</th>
                <th scope="col">ID</th>
                <th scope="col">Total Absence</th>
