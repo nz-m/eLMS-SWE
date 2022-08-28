@@ -236,6 +236,7 @@ def addAnnouncement(request, code):
             announcement = Announcement(course_code=course, title=request.POST['title'],
                                         description=request.POST['content'])
             announcement.save()
+            messages.success(request, 'Announcement posted successfully.')
             return redirect('/faculty/' + str(code))
         else:
             return render(request, 'main/announcement.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
@@ -275,6 +276,7 @@ def updateAnnouncement(request, code, id):
             announcement.title = request.POST['title']
             announcement.description = request.POST['content']
             announcement.save()
+            messages.success(request, 'Announcement updated successfully.')
             return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
@@ -298,6 +300,7 @@ def addAssignment(request, code):
                                         description=description, deadline=deadline, marks=marks, file=file)
 
                 assignment.save()
+                messages.success(request, 'Assignment ' + assignment.title + ' posted successfully.')
                 return redirect('/faculty/' + str(code))
             except:
 

@@ -14,6 +14,16 @@
 {% url 'courses' %}
 {% endblock %}
 {% block content %}
+{% comment %} alert {% endcomment %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+   <span class="fw-bold"> {{ message }}</span>
+   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
 <!-- navigation links -->
 <div class="container shadow-sm">
    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -282,6 +292,10 @@
          }
       }
       ); 
-   
+      $(document).ready(function(){
+         setTimeout(function(){
+           $(".alert").alert('close');
+         },3000);
+       });
 </script>
 {% endblock %}
