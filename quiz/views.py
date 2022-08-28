@@ -162,7 +162,11 @@ def studentAnswer(request, code, quiz_id):
             answer = request.POST.get(str(question.id))
             student_answer = StudentAnswer(student=student, quiz=quiz, question=question,
                                            answer=answer, marks=question.marks if answer == question.answer else 0)
-            student_answer.save()
+            # prevent duplicate answers & multiple attempts
+            try:
+                student_answer.save()
+            except:
+                redirect('myQuizzes', code=code)
         return redirect('myQuizzes', code=code)
     else:
         return redirect('std_login')

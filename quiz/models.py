@@ -1,5 +1,3 @@
-
-import datetime
 from django.db import models
 from main.models import Student, Course
 
@@ -87,3 +85,6 @@ class StudentAnswer(models.Model):
 
     def __str__(self):
         return self.student.name + ' ' + self.quiz.title + ' ' + self.question.question
+
+    class Meta:
+        unique_together = ('student', 'quiz', 'question')
