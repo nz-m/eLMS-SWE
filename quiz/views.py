@@ -9,6 +9,7 @@ from django.contrib import messages
 def quiz(request, code):
     try:
         course = Course.objects.get(code=code)
+        quizzes = Quiz.objects.filter(course=course)
         if is_faculty_authorised(request, code):
             if request.method == 'POST':
                 title = request.POST.get('title')
@@ -19,9 +20,8 @@ def quiz(request, code):
                 quiz = Quiz(title=title, description=description, start=start,
                             end=end, publish_status=publish_status, course=course)
                 quiz.save()
-                messages.success(request, 'New Quiz Added!',
-                                 extra_tags='addedQuiz')
-                return redirect('addQuestion', code=code, quiz_id=quiz.id)
+                messages.success(request, 'New Quiz Added!')
+                return render(request, 'quiz/allQuizzes.html', {'course': course, 'quizzes': quizzes, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
 
             else:
                 return render(request, 'quiz/quiz.html', {'course': course, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
@@ -37,24 +37,28 @@ def addQuestion(request, code, quiz_id):
         course = Course.objects.get(code=code)
         if is_faculty_authorised(request, code):
             quiz = Quiz.objects.get(id=quiz_id)
-            if request.method == 'POST':
-                question = request.POST.get('question')
-                option1 = request.POST.get('option1')
-                option2 = request.POST.get('option2')
-                option3 = request.POST.get('option3')
-                option4 = request.POST.get('option4')
-                answer = request.POST.get('answer')
-                marks = request.POST.get('marks')
-                question = Question(question=question, option1=option1, option2=option2,
-                                    option3=option3, option4=option4, answer=answer, quiz=quiz, marks=marks)
-                question.save()
-                messages.success(request, 'New Question Added!',
-                                 extra_tags='addedQuestion')
-            else:
+            if quiz.start > datetime.datetime.now():
+                if request.method == 'POST':
+                    question = request.POST.get('question')
+                    option1 = request.POST.get('option1')
+                    option2 = request.POST.get('option2')
+                    option3 = request.POST.get('option3')
+                    option4 = request.POST.get('option4')
+                    answer = request.POST.get('answer')
+                    marks = request.POST.get('marks')
+                    question = Question(question=question, option1=option1, option2=option2,
+                                        option3=option3, option4=option4, answer=answer, quiz=quiz, marks=marks)
+                    question.save()
+                    messages.success(request, 'New Question Added!')
+                else:
+                    return render(request, 'quiz/addQuestion.html', {'course': course, 'quiz': quiz, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
+                if 'saveOnly' in request.POST:
+                    return redirect('allQuizzes', code=code)
                 return render(request, 'quiz/addQuestion.html', {'course': course, 'quiz': quiz, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
-            if 'saveOnly' in request.POST:
+            else:
+                messages.error(
+                    request, 'Quiz has already started! You cannot add questions anymore.')
                 return redirect('allQuizzes', code=code)
-            return render(request, 'quiz/addQuestion.html', {'course': course, 'quiz': quiz, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
         else:
             return redirect('std_login')
     except:
