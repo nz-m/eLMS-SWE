@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
-
 * {
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
@@ -44,7 +43,6 @@ body {
   min-height: 100vh;
 }
 
-
 .login-heading {
   font-weight: 300;
 }
@@ -57,22 +55,6 @@ a {
   font-size: 0.9rem;
   letter-spacing: 0.05rem;
   padding: 0.75rem 1rem;
-}
-
-.course-section {
-  font-size: 1.5rem;
-  border-radius: 5px;
-}
-
-.course_name {
-  font-size: 1.3rem;
-  font-weight: bold;
-  padding: 0.4rem 0.2rem;
-}
-
-.course_content {
-  font-size: 1.3rem;
-  color: #000;
 }
 
 .card-header,
@@ -100,10 +82,8 @@ a {
   min-width: 380px;
 }
 
-
-.add-announcement {
-  text-decoration: none;
-  font-size: medium;
+a {
+  text-decoration: none !important;
 }
 
 .profile {
@@ -124,6 +104,7 @@ a {
 .shadow {
   box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px !important;
 }
-.login-shadow{
+
+.login-shadow {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }

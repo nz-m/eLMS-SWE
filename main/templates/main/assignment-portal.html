@@ -22,7 +22,7 @@
          </li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-         <li class="breadcrumb-item active" aria-current="page">Assignment <span>
+         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Assignment <span>
             ({{ assignment.title }})</span> 
          </li>
       </ol>
@@ -30,14 +30,7 @@
 </div>
 <!-- navigation links end -->
 <div class="container shadow p-3">
-   {% if messages %}
-   <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-      {% endfor %}
-   </ul>
-   {% endif %}
-   <div class="assignment-contex" id="links">
+   <div class="assignment-contex assignment-info" id="links">
       <h2>{{assignment.title}}</h2>
       <div class="p-2 text-break">{{assignment.description}}</div>
       <h6 class="p-2 fw-bold">Deadline: <span class="px-2 text-danger"> {{assignment.post_date}} </span></h6>
@@ -118,5 +111,16 @@
    }
    );
    {% endif %} 
+
+   let assignment = document.querySelectorAll('.assignment-info');
+   anime({
+      targets: assignment,
+      opacity: [0, 1],
+      easing: 'easeInOutQuad',
+      duration: 1500,
+      delay: function (el, i) {
+         return i * 250;
+      }
+   });
 </script>
 {% endblock %}

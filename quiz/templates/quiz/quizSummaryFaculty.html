@@ -24,7 +24,7 @@
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
-         <li class="breadcrumb-item active" aria-current="page">
+         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">
             {{quiz.title}}
          </li>
       </ol>
@@ -76,6 +76,7 @@
             <th scope="col">Name</th>
             <th scope="col">ID</th>
             <th scope="col">Marks</th>
+            <th scope="col">Submitted at</th>
          </tr>
       </thead>
       <tbody>
@@ -86,8 +87,10 @@
             <td>{{student.student_id}}</td>
             {% if student.attempted %}
             <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
+            <td>{{student.submitted_at}}</td>
             {% else %}
-            <td>Not Attempted</td>
+            <td>Did not attempt</td>
+            <td>Did not attempt</td>
             {% endif %}
          </tr>
          {% endfor %}

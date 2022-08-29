@@ -236,7 +236,7 @@ def addAnnouncement(request, code):
             announcement = Announcement(course_code=course, title=request.POST['title'],
                                         description=request.POST['content'])
             announcement.save()
-            messages.success(request, 'Announcement posted successfully.')
+            messages.success(request, 'Announcement posted.')
             return redirect('/faculty/' + str(code))
         else:
             return render(request, 'main/announcement.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
@@ -249,6 +249,7 @@ def deleteAnnouncement(request, code, id):
         try:
             announcement = Announcement.objects.get(course_code=code, id=id)
             announcement.delete()
+            messages.warning(request, 'Announcement deleted successfully.')
             return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
@@ -276,7 +277,7 @@ def updateAnnouncement(request, code, id):
             announcement.title = request.POST['title']
             announcement.description = request.POST['content']
             announcement.save()
-            messages.success(request, 'Announcement updated successfully.')
+            messages.info(request, 'Announcement updated successfully.')
             return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
@@ -300,7 +301,8 @@ def addAssignment(request, code):
                                         description=description, deadline=deadline, marks=marks, file=file)
 
                 assignment.save()
-                messages.success(request, 'Assignment ' + assignment.title + ' posted successfully.')
+                messages.success(request, 'Assignment ' +
+                                 assignment.title + ' posted successfully.')
                 return redirect('/faculty/' + str(code))
             except:
 
@@ -387,7 +389,7 @@ def addSubmission(request, code, id):
     try:
         course = Course.objects.get(code=code)
         if is_student_authorised(request, code):
-            # function to check if assignment is open
+            #check if assignment is open
             assignment = Assignment.objects.get(course_code=course.code, id=id)
             if assignment.deadline < datetime.datetime.now():
 
@@ -494,6 +496,7 @@ def addCourseMaterial(request, code):
                 course_material = Material(course_code=course, title=request.POST['title'],
                                            description=request.POST['content'], file=request.FILES['file'])
                 course_material.save()
+                messages.success(request, 'New course material added')
                 return redirect('/faculty/' + str(code))
             except:
                 return render(request, 'main/course-material.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
@@ -508,6 +511,7 @@ def deleteCourseMaterial(request, code, id):
         course = Course.objects.get(code=code)
         course_material = Material.objects.get(course_code=course, id=id)
         course_material.delete()
+        messages.warning(request, 'Course material deleted')
         return redirect('/faculty/' + str(code))
     else:
         return redirect('std_login')
@@ -556,6 +560,7 @@ def access(request, code):
                 student.save()
                 return redirect('/my/')
             else:
+                messages.error(request, 'Invalid key')
                 return HttpResponseRedirect(request.path_info)
         else:
             return render(request, 'main/access.html', {'course': course, 'student': student})

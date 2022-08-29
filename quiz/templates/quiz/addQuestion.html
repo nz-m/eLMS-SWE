@@ -17,7 +17,7 @@
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-   <span class="fw-bold"> {{ message }}</span>
+   <span> {{ message }}</span>
    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
@@ -36,18 +36,18 @@
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
-         <li class="breadcrumb-item active" aria-current="page"> Add Question-{{quiz.title}}</li>
+         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page"> Add Question-{{quiz.title}}</li>
       </ol>
    </nav>
 </div>
 {% comment %} navigation links end  {% endcomment %}
 
-<div class="container shadow-sm rounded p-4" style="max-width: 768px;">
-   <p class="text-center fw-bold">Add Question-{{quiz.title}}</p>
+<div class="container shadow-sm rounded p-4 animate__animated animate__zoomInLeft" style="max-width: 768px;">
+   <p class="text-center">Add Question for <span class="fw-bold">{{quiz.title}}</span></p>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">
-         <label for="textarea" class="col-sm-2 col-form-label fw-bold">Question</label>
+         <label for="textarea" class="col-sm-2 col-form-label fw-bold">Question {{quiz.question_sl}}</label>
          <div class="col-sm-10">
             <textarea class="form-control" id="textarea" style="height: 150px;" name="question" required></textarea>
          </div>

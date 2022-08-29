@@ -17,7 +17,7 @@
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-{% if 'success' in message.tags %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
-   <span class="fw-bold"> {{ message }}</span>
+   <span> {{ message }}</span>
    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
@@ -33,7 +33,7 @@
          </li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-         <li class="breadcrumb-item active" aria-current="page">Quizzes</li>
+         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Quizzes</li>
       </ol>
    </nav>
 </div>

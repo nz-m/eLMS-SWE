@@ -1,3 +1,4 @@
+from venv import create
 from django.db import models
 from main.models import Student, Course
 
@@ -31,6 +32,9 @@ class Quiz(models.Model):
 
     def total_questions(self):
         return Question.objects.filter(quiz=self).count()
+
+    def question_sl(self):
+        return Question.objects.filter(quiz=self).count() + 1
 
     def total_marks(self):
         return Question.objects.filter(quiz=self).aggregate(total_marks=models.Sum('marks'))['total_marks']
@@ -82,9 +86,12 @@ class StudentAnswer(models.Model):
     answer = models.CharField(max_length=1, choices=(
         ('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')), default='', null=True, blank=True)
     marks = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.student.name + ' ' + self.quiz.title + ' ' + self.question.question
 
     class Meta:
         unique_together = ('student', 'quiz', 'question')
+
+

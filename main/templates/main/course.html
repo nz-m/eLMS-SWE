@@ -14,7 +14,7 @@
 {% url 'courses' %}
 {% endblock allCourses %}
 {% block content %}
-<div class="site-section">
+<div>
    <!-- navigation links -->
    <div class="container shadow-sm">
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -22,7 +22,7 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)" href="{% url 'myCourses' %}">My
                Courses</a>
             </li>
-            <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active"
+            <li class="breadcrumb-item fw-bold animate__animated animate__backInRight"><a class="breadcrumb-item active"
                aria-current="page">{{ course.name }}</a></li>
          </ol>
       </nav>
@@ -30,8 +30,8 @@
    <!-- navigation links end -->
    <div class="container d-flex flex-wrap flex-column">
       <!-- course name starts -->
-      <div class="course-section p-3 m-3 shadow d-flex justify-content-between align-items-center">
-         <h3 class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
+      <div class="rounded p-3 m-3 shadow d-flex justify-content-between">
+         <h5 class="mt-2 fw-bold">{{course.department}}-{{course.code}} : {{course.name}}</h5>
          <div class="dropdown">
             <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
                alt="Options" height="32">
@@ -59,8 +59,8 @@
       </div>
       <!-- course name ends -->
       <!-- announcement section starts -->
-      <div class="course-section p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
-         <div class="fw-bold announcementCls fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
+      <div class="rounded p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
+         <div class="fw-bold animate__animated animate__zoomInDown fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
             alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
          </div>
          <div>
@@ -68,30 +68,30 @@
             <!-- individual announcement starts -->
             <h6 class="fw-bold">{{announcement.title}}</h6>
             <div class="fs-6 text-break opacity-75">{{announcement.description}}</div>
-            <div class="announcement-cont d-flex flex-row-reverse">
-               <div class="add-announcement" style="color:grey;">
+            <div class="d-flex flex-row-reverse">
+               <div  style="color:grey;">
                   {{announcement.post_date}}
                </div>
             </div>
             <!-- individual announcement ends-->
             {% empty %}
-            <p class="fs-6 text-center text-muted">No announcements posted yet</p>
+            <p class="fs-6 text-center text-muted">No announcement has been posted</p>
             {% endfor %}
          </div>
       </div>
       <!-- announcement section ends -->
       <!-- assignment section starts -->
-      <div class="course-section p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5 mb-2">
-         <div class="fw-bold fs-5 text-center assignmentCls border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
+      <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5 mb-2">
+         <div class="fw-bold fs-5 text-center animate__animated animate__zoomInDown border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
             alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</div>
-         <div class="add-announcement">
+         <div >
             {% for assignment in assignments %}
             <!-- individual assignment starts -->
-            <a class="add-announcement fw-bold"
+            <a class="fw-bold"
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="d-flex justify-content-between">
                <h6> Due Date : {{ assignment.due_date}} </h6>
-               <div class="add-announcement" style="color:grey;">
+               <div  style="color:grey;">
                   {{assignment.post_date}}
                </div>
             </div>
@@ -101,28 +101,28 @@
             {% endfor %}
          </div>
          {% if assignments %}
-         <div class="text-center fs-6 text-muted">
-            <p>Showing {{ assignments.count}} of {{course.assignment_set.count}}
+         <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
+            <span class="mt-2">Showing {{ assignments.count}} of {{course.assignment_set.count}}
                {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
-            </p>
+            </span>
             <a class="fs-6" href=" {% url 'student-assignments' course.code %} ">Show all</a>
          </div>
          {% endif %}
       </div>
       <!-- assignment section ends -->
       <!-- course material section starts -->
-      <div class="course-section p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
+      <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
          <!-- section title -->
-         <div class="fw-bold materialCls fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
+         <div class="fw-bold animate__animated animate__zoomInDown fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
             alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</div>
          <!-- section title ends -->
-         <div class="add-announcement">
+         <div>
             {% for material in materials  %}
             <!-- individual material starts -->
-            <a class="add-announcement" href="{{ material.file.url }}">{{material.title}}</a><br>
+            <a  href="{{ material.file.url }}">{{material.title}}</a><br>
             <div class="d-flex justify-content-between text-break">
                <p>{{ material.description }}</p>
-               <div class="add-announcement" style="color:grey;">
+               <div  style="color:grey;">
                   {{material.post_date}}
                </div>
             </div>
@@ -135,61 +135,4 @@
       <!-- course material section ends -->
    </div>
 </div>
-<script>
-   anime(
-   
-      {
-       targets: '.assignmentCls',
-         translateX: [
-            { value: '-100%', duration: 0 },
-            { value: '0', duration: 1000 }
-         ],
-         opacity: [
-            { value: 0, duration: 0 },
-            { value: 1, duration: 1000 }
-         ],
-         easing: 'easeInOutQuad',
-         delay: function (el, i) {
-            return i * 100;
-         }
-      }
-   
-   );
-   anime(
-      {
-         targets: '.announcementCls',
-         translateX: [
-            { value: '-100%', duration: 0 },
-            { value: '0', duration: 1000 }
-         ],
-         opacity: [
-            { value: 0, duration: 0 },
-            { value: 1, duration: 1000 }
-         ],
-         easing: 'easeInOutQuad',
-         delay: function (el, i) {
-            return i * 100;
-         }
-      }
-      );
-   
-      anime(
-      {
-         targets: '.materialCls',
-         translateX: [
-            { value: '-100%', duration: 0 },
-            { value: '0', duration: 1000 }
-         ],
-         opacity: [
-            { value: 0, duration: 0 },
-            { value: 1, duration: 1000 }
-         ],
-         easing: 'easeInOutQuad',
-         delay: function (el, i) {
-            return i * 100;
-         }
-      }
-      ); 
-   
-</script>
 {% endblock %}

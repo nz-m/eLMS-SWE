@@ -25,7 +25,7 @@
                href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'allQuizzes' course.code %}">All quizzes</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Create Quiz</li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Create Quiz</li>
          </ol>
       </nav>
    </div>
@@ -38,19 +38,19 @@
       </span>
       <form action="{% url 'quiz' course.code %}" method="POST">
          {% csrf_token %}
-         <div class="mb-3 formInputR">
+         <div class="mb-3">
             <label for="title" class="form-label">Quiz Title</label>
             <input type="text" class="form-control" id="title" name='title' required>
          </div>
-         <div class="mb-3 formInput">
+         <div class="mb-3">
             <label for="Instructions" class="form-label">Instructions</label>
             <textarea class="form-control" id="Instructions" name="description"></textarea>
          </div>
-         <div class="mb-3 formInputR">
+         <div class="mb-3">
             <label for="start" class="form-label">Start</label>
             <input type="datetime-local" class="form-control" id="start" name="start" required>
          </div>
-         <div class="mb-3 formInput">
+         <div class="mb-3">
             <label for="end" class="form-label">End</label>
             <input type="datetime-local" class="form-control" id="end" name="end" required>
          </div>
@@ -85,30 +85,16 @@
            $('#end').val("");
        }
    });
+   let addQuiz = document.getElementById('form');
+   anime({
+      targets: addQuiz,
+      opacity: [0, 1],
+      easing: 'easeInOutQuad',
+      duration: 1500,
+      delay: function (el, i) {
+         return i * 250;
+      }
+   });
    
-   anime(
-    // fade in from left to center 
-       {
-           targets: '.formInput',
-           translateX: [-1000, 0],
-           easing: 'easeInOutQuart',
-           duration: 1000,
-           delay: 500,
-           opacity: [0, 1]
-       }
-    
-   );
-   anime(
-       // fade in from right to center 
-          {
-              targets: '.formInputR',
-              translateX: [1000, 0],
-              easing: 'easeInOutQuart',
-              duration: 1000,
-              delay: 250,
-              opacity: [0, 1]
-          }
-       
-      );
 </script>
 {% endblock %}

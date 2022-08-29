@@ -18,7 +18,7 @@
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-   <span class="fw-bold"> {{ message }}</span>
+   <span> {{ message }}</span>
    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
@@ -30,7 +30,7 @@
       <ol class="breadcrumb p-3">
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'facultyCourses' %}">My Courses</a></li>
-         <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active"
+         <li class="breadcrumb-item fw-bold animate__animated animate__backInRight"><a class="breadcrumb-item active"
             aria-current="page">{{ course.name }}</a></li>
       </ol>
    </nav>
@@ -38,8 +38,8 @@
 <!-- navigation links end -->
 <div class="container d-flex flex-wrap flex-column">
    <!-- course name starts -->
-   <div class="course-section p-3 m-3 shadow d-flex justify-content-between align-items-center courseCls">
-      <h3 id="courseTitle" class="course_name">{{course.department}}-{{course.code}} : {{course.name}}</h3>
+   <div class="rounded p-3 m-3 shadow d-flex justify-content-between align-items-center">
+      <h5 id="courseTitle" class="mt-2 fw-bold">{{course.department}}-{{course.code}} : {{course.name}}</h5>
       <div class="dropdown">
          <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
             alt="Options" height="32">
@@ -76,9 +76,9 @@
    </div>
    <!-- course name ends -->
    <!-- announcement section starts -->
-   <div class="course-section p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
-      <div class="d-flex justify-content-between border-bottom border-1 mb-2">
-         <h5 class="fw-bold announcementCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
+   <div class="rounded p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
+      <div class="animate__animated animate__zoomInDown d-flex justify-content-between border-bottom border-1 mb-2">
+         <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
             alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
          </h5>
          <a
@@ -90,10 +90,10 @@
          <!-- individual announcement starts -->
          <h6 class="fw-bold">{{announcement.title}}</h6>
          <div class="fs-6 text-break opacity-75">{{announcement.description}}</div>
-         <div class="announcement-cont d-flex justify-content-between">
+         <div class="d-flex justify-content-between mb-2">
             <div>
                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop">
+                  data-bs-target="#announcement{{announcement.id}}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                      <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -101,7 +101,7 @@
                   Delete
                </button>
                <!-- Popup -->
-               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+               <div class="modal fade" id="announcement{{announcement.id}}" data-bs-backdrop="static" data-bs-keyboard="false"
                   tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                      <div class="modal-content">
@@ -137,14 +137,14 @@
          </div>
          <!-- individual announcement ends-->
          {% empty %}
-         <p class="fs-6 text-center text-muted">No announcements posted yet</p>
+         <p class="fs-6 text-center text-muted">No announcement has been posted</p>
          {% endfor %}
       </div>
    </div>
    <!-- announcement section ends -->
    <!-- assignment section starts -->
-   <div class="course-section p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5">
-      <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
+   <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5">
+      <div class="animate__animated animate__zoomInLeft d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
          <h5 class="fw-bold assignmentCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
             alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h5>
          <a style="height:2rem"
@@ -153,10 +153,10 @@
             alt="" height="32">
          </a>
       </div>
-      <div class="add-announcement">
+      <div>
          {% for assignment in assignments %}
          <!-- individual assignment starts -->
-         <a class="text-bold" href="{% url 'submission' course.code assignment.id %}">
+         <a class="fs-6 fw-bold" href="{% url 'submission' course.code assignment.id %}">
          {{assignment.title}}</a>
          <div class="d-flex justify-content-between">
             <div class="text-muted">
@@ -171,32 +171,32 @@
          <p class="text-center text-muted fs-6">No assignments given yet</p>
          {% endfor %}
       </div>
-      <div class="text-center fs-6">
+      <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
          {% if assignments %}
-         <p class="text-muted" >Showing {{ assignments.count}} of {{course.assignment_set.count}}
+         <span class="mt-2" >Showing {{ assignments.count}} of {{course.assignment_set.count}}
             {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
-         </p>
-         <a href=" {% url 'allAssignments' course.code %} ">Show all</a>
+         </span>
+         <a href="{% url 'allAssignments' course.code %}">Show all</a>
          {% endif %}
       </div>
    </div>
    <!-- assignment section ends -->
    <!-- course material section starts -->
-   <div class="course-section p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
-      <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
-         <h5 class="fw-bold materialCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
+   <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
+      <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2 animate__animated animate__zoomInUp">
+         <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
             alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
          <a
             href="{% url 'addCourseMaterial' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
             alt="" height="32"></a>
       </div>
-      <div class="add-announcement">
+      <div>
          {% for material in materials  %}
          <!-- individual material starts -->
-         <a class="add-announcement" href="{{ material.file.url }}">{{material.title}}</a><br>
+         <a class="fw-bold" href="{{ material.file.url }}">{{material.title}}</a><br>
          <div class="fs-6 text-break mb-2">{{material.description}}</div>
          <!-- Popup -->
-         <div class="modal fade" id="materialDel" data-bs-backdrop="static" data-bs-keyboard="false"
+         <div class="modal fade" id="materialDel{{material.id}}" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="materialBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                <div class="modal-content">
@@ -218,14 +218,14 @@
          </div>
          <div class="d-flex flex-row justify-content-between">
             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-               data-bs-target="#materialDel">
+               data-bs-target="#materialDel{{material.id}}">
                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                </svg>
                Remove
             </button>
-            <div class="add-announcement" style="color:grey;">
+            <div style="color:grey;">
                {{material.post_date}}
             </div>
          </div>
@@ -238,64 +238,10 @@
    <!-- course material section ends-->
 </div>
 <script>
-   anime(
-   
-      {
-       targets: '.assignmentCls',
-         translateX: [
-            { value: '-100%', duration: 0 },
-            { value: '0', duration: 1000 }
-         ],
-         opacity: [
-            { value: 0, duration: 0 },
-            { value: 1, duration: 1000 }
-         ],
-         easing: 'easeInOutQuad',
-         delay: function (el, i) {
-            return i * 100;
-         }
-      }
-   
-   );
-   anime(
-      {
-         targets: '.announcementCls',
-         translateX: [
-            { value: '-100%', duration: 0 },
-            { value: '0', duration: 1000 }
-         ],
-         opacity: [
-            { value: 0, duration: 0 },
-            { value: 1, duration: 1000 }
-         ],
-         easing: 'easeInOutQuad',
-         delay: function (el, i) {
-            return i * 100;
-         }
-      }
-      );
-   
-      anime(
-      {
-         targets: '.materialCls',
-         translateX: [
-            { value: '-100%', duration: 0 },
-            { value: '0', duration: 1000 }
-         ],
-         opacity: [
-            { value: 0, duration: 0 },
-            { value: 1, duration: 1000 }
-         ],
-         easing: 'easeInOutQuad',
-         delay: function (el, i) {
-            return i * 100;
-         }
-      }
-      ); 
       $(document).ready(function(){
          setTimeout(function(){
            $(".alert").alert('close');
-         },3000);
+         },4500);
        });
 </script>
 {% endblock %}
