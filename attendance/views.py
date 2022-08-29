@@ -46,7 +46,7 @@ def loadAttendance(request, code):
             attendance = Attendance.objects.filter(course=course, date=date)
             # check if attendance record exists for the date
             if attendance.exists():
-                return render(request, 'attendance/attendance.html', {'code': code, 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course), 'attendance': attendance})
+                return render(request, 'attendance/attendance.html', {'code': code, 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course), 'attendance': attendance, 'date': date})
             else:
                 return render(request, 'attendance/attendance.html', {'code': code, 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course), 'error': 'Could not load. Attendance record does not exist for the date ' + date})
 
@@ -61,7 +61,6 @@ def submitAttendance(request, code):
             course = Course.objects.get(code=code)
             if request.method == 'POST':
                 date = request.POST['datehidden']
-                # get value of radio button for each student
                 for student in students:
                     attendance = Attendance.objects.get(
                         student=student, course=course, date=date)
@@ -70,9 +69,11 @@ def submitAttendance(request, code):
                     else:
                         attendance.status = False
                     attendance.save()
+                messages.success(
+                    request, 'Attendance record submitted successfully for the date ' + date)
                 return redirect('/attendance/' + str(code))
 
             else:
                 return render(request, 'attendance/attendance.html', {'code': code, 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course)})
         except:
-            return render(request, 'attendance/attendance.html', {'code': code, 'error': "Not saved!", 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course)})
+            return render(request, 'attendance/attendance.html', {'code': code, 'error': "Error! could not save", 'students': students, 'course': course, 'faculty': Faculty.objects.get(course=course)})
