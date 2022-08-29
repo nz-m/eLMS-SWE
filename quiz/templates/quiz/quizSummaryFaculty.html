@@ -42,15 +42,6 @@
          <div>
             <p>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span></p>
             <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
-            {% if quiz.publish_status %}
-            <p class="text-success fw-bold">
-               Marks Published!
-            </p>
-            {% else %}
-            <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-               <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
-            </form>
-            {% endif %}
          </div>
       </div>
       <div class="col-6 my-4 border-start">
@@ -62,6 +53,17 @@
          <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span></p>
       </div>
    </div>
+   {% if quiz.publish_status %}
+   <p class="text-success fw-bold d-flex justify-content-center mb-2">
+      Marks Published!
+   </p>
+   {% else %}
+   <div class="d-flex justify-content-center mb-2">
+   <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
+      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
+   </form>
+</div>
+   {% endif %}
    <div class="d-flex justify-content-center">
       <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show marks</button>
    </div>
@@ -76,7 +78,7 @@
             <th scope="col">Name</th>
             <th scope="col">ID</th>
             <th scope="col">Marks</th>
-            <th scope="col">Submitted at</th>
+            <th scope="col">Submitted on</th>
          </tr>
       </thead>
       <tbody>
@@ -87,7 +89,7 @@
             <td>{{student.student_id}}</td>
             {% if student.attempted %}
             <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
-            <td>{{student.submitted_at}}</td>
+            <td>{{student.submission_time}}</td>
             {% else %}
             <td>Did not attempt</td>
             <td>Did not attempt</td>

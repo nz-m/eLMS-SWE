@@ -203,7 +203,7 @@ def quizResult(request, code, quiz_id):
             quiz.time_taken = student_answer.created_at - quiz.start
             quiz.time_taken = quiz.time_taken.total_seconds()
             quiz.time_taken = round(quiz.time_taken, 2)
-            quiz.submitted_at = student_answer.created_at
+            quiz.submission_time = student_answer.created_at
         return render(request, 'quiz/quizResult.html', {'course': course, 'quiz': quiz, 'questions': questions, 'student': student})
     else:
         return redirect('std_login')
@@ -250,7 +250,7 @@ def quizSummary(request, code, quiz_id):
             student_answers = StudentAnswer.objects.filter(
                 student=student, quiz=quiz)
             for student_answer in student_answers:
-                student.submitted_at = student_answer.created_at
+                student.submission_time = student_answer.created_at
 
         context = {'course': course, 'quiz': quiz, 'questions': questions, 'time': time, 'total_students': total_students,
                    'students': students, 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])}

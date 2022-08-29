@@ -82,9 +82,6 @@ a {
   min-width: 380px;
 }
 
-a {
-  text-decoration: none !important;
-}
 
 .profile {
   width: 50%;
@@ -107,4 +104,14 @@ a {
 
 .login-shadow {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
+.searchbar {
+border-radius: 3px;
+border: none !important;
+}
+.searchbar:focus {
+border: none !important;
+}
+.searchbar:hover {
+border: none !important;
 }
