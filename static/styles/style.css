@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
 
 * {
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
 }
+
+.timer {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
 
 html {
   scroll-behavior: smooth;
@@ -74,7 +80,7 @@ a {
 }
 
 .container {
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
 }
 
 .container-announcement {
@@ -105,13 +111,16 @@ a {
 .login-shadow {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
+
 .searchbar {
-border-radius: 3px;
-border: none !important;
+  border-radius: 3px;
+  border: none !important;
 }
+
 .searchbar:focus {
-border: none !important;
+  border: none !important;
 }
+
 .searchbar:hover {
-border: none !important;
+  border: none !important;
 }

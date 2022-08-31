@@ -47,7 +47,7 @@
    <!-- navigation links end -->
 </div>
 <div class="container">
-   <div class="shadow d-flex flex-row p-2 border justify-content-end" style="background-color:rgb(250,250,250)">
+   <div class="d-flex rounded flex-row p-2 border justify-content-end" style="background-color:rgb(250,250,250)">
       <div>
          <form method="POST" action="{% url 'createRecord' course.code %}">
             {% csrf_token %} 
@@ -110,7 +110,7 @@
             </tr>
       </tbody>
    </table>
-   <div class="d-flex flex-row-reverse p-2 border" style="background-color: rgb(250, 250, 250);">
+   <div class="d-flex flex-row-reverse p-2 border rounded" style="background-color: rgb(250, 250, 250);">
    <span>
    </span> 
    <a href=" {% url 'faculty' course.code %}" class="btn btn-sm btn-danger">Discard</a>

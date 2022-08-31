@@ -40,7 +40,7 @@
             </p>
             <p>Total Questions : <span class="fw-bold">{{quiz.total_questions}}</span></p>
             <p>Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span></p>
-            <p>Time taken : <span id="timetaken"></span></p>
+            <p>Time taken : <span id="timetaken" class="fw-bold"></span></p>
          </div>
          <div class="col-md-6">
             <p>Started : <span class="fw-bold">{{quiz.starts}}</span></p>
@@ -52,7 +52,7 @@
    </div>
    {% for question in questions  %}
    {% comment %} show all question with correct ans checked {% endcomment %}
-   <div class="questionInd container mb-2 shadow-sm p-3 border rounded border-2 border-opacity-50 {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
+   <div class="questionInd container mb-2 shadow-sm p-3 border rounded border-2 border-opacity-75 {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
       <div>
          <div class="d-flex justify-content-between mb-3">
             <div class="fw-bold">
@@ -61,10 +61,10 @@
             {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
          </div>
          <div>
-            <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
-            <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
-            <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
-            <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success fw-bold" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger fw-bold" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'B' %} class="alert alert-success fw-bold" {% elif question.student_answer != question.answer and question.student_answer == 'B' %} class="alert alert-danger fw-bold" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">B : {{question.option2}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'C' %} class="alert alert-success fw-bold" {% elif question.student_answer != question.answer and question.student_answer == 'C' %} class="alert alert-danger fw-bold" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">C : {{question.option3}} </p>
+            <p {% if question.student_answer == question.answer and question.answer == 'D' %} class="alert alert-success fw-bold" {% elif question.student_answer != question.answer and question.student_answer == 'D' %} class="alert alert-danger fw-bold" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">D : {{question.option4}} </p>
          </div>
       </div>
       <div>
@@ -107,8 +107,13 @@
        if (seconds < 10) {
            seconds = "0" + seconds;
        }
-       var time = hours + ':' + minutes + ':' + seconds;
-       return time;
+       if (hours == 0 && minutes == 0) {
+           return seconds + " seconds";
+       } else if (hours == 0) {
+           return minutes + ':' + seconds + " minutes";
+       } else {
+           return hours + ':' + minutes + ':' + seconds + " hours";
+       }
    }
    document.getElementById('timetaken').innerHTML = convertTime(time_taken);
 </script>

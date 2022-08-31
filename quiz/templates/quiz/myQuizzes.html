@@ -97,8 +97,8 @@
                   {{quizP.title}}
                </td>
                <td>{{quizP.ends}}</td>
-               <td class="text-center text-warning fw-bold">Not Published</td>
-               <td class="text-center text-warning fw-bold">Not Published</td>
+               <td colspan="2" class="text-center"> <span class="text-dark bg-warning fw-bold rounded-5 px-3 py-1" style="font-size:smaller">Not Published</span></td>
+               
             </tr>
             {% endif %}
             {% else %}
@@ -108,8 +108,7 @@
                   {{quizP.title}}
                </td>
                <td>{{quizP.ends}}</td>
-               <td class="text-center text-danger fw-bold">Did not attempt</td>
-               <td class="text-center text-danger fw-bold">Did not attempt</td>
+               <td colspan="2" class="text-center"> <span class="text-light bg-danger fw-bold rounded-5 px-2 py-1" style="font-size:smaller">Did not attempt</span></td>
             </tr>
             {% endif %}
             {% endfor %}
