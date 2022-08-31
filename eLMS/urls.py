@@ -28,8 +28,6 @@ admin.site.index_title = "Welcome to eLMS Administration Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('guest/',views.guest, name='guest'),
-    path('guestStudent/',views.guestStudent, name='guestStudent'),
     path('', include('main.urls')),
     path('', include('discussion.urls')),
     path('', include('attendance.urls')),

@@ -608,14 +608,3 @@ def search(request):
     else:
         return redirect('std_login')
 
-
-def guest(request):
-    request.session.flush()
-    request.session['faculty_id'] = 123456
-    return redirect('facultyCourses')
-
-
-def guestStudent(request):
-    request.session.flush()
-    request.session['student_id'] = 654321
-    return redirect('myCourses')
