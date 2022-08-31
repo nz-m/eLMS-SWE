@@ -88,6 +88,13 @@
      setTimeout(function(){
        $(".alert").alert('close');
      },4000);
+     $('.table tbody tr').hover(function () {
+      $(this).addClass('bg-warning bg-opacity-10');
+   }, function () {
+      $(this).removeClass('bg-warning bg-opacity-10');
+
    });
+   });
+
 </script>
 {% endblock %}

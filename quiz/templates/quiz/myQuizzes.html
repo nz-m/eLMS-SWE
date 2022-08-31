@@ -121,4 +121,15 @@
       </table>
    </div>
 </div>
+
+<script>
+   $(document).ready(function () {
+      $('.table tbody tr').hover(function () {
+         $(this).addClass('bg-warning bg-opacity-10');
+      }, function () {
+         $(this).removeClass('bg-warning bg-opacity-10');
+
+      });
+   });
+</script>
 {% endblock %}
