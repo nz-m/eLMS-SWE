@@ -77,14 +77,15 @@
        }
    });
    // check if end date is after start date
-   $('#end').change(function() {
-       var start = new Date($('#start').val());
-       var end = new Date($('#end').val());
-       if (end < start) {
-           alert("End date must be after start date");
-           $('#end').val("");
+   $('#form').on('submit', function(e) {
+       var start = $('#start').val();
+       var end = $('#end').val();
+       if (start > end) {
+           e.preventDefault();
+           alert('End date must be after start date');
        }
    });
+
    let addQuiz = document.getElementById('form');
    anime({
       targets: addQuiz,

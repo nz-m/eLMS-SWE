@@ -30,7 +30,7 @@
          </nav>
       </div>
       <!-- navigation links end -->
-      <div class="container pt-2 shadow rounded shadow-sm">
+      <div class="container pt-2 border shadow-sm rounded shadow-sm">
          <div class="p-3 mb-3">
             <div class="row">
                <div class="col-md-12 text-center">
@@ -170,6 +170,11 @@
    </div>
 </div>
 <script>
+
+$('.form-check-label').click(function(){
+   $(this).parent().find('input').prop('checked', true);
+});
+
 $('#questions').hide();
 $('#attempt').hide();
 $('.progress').hide();
@@ -207,6 +212,7 @@ document.getElementById("Startseconds").innerHTML = seconds;
 if (distance < 0) {
    clearInterval(x);
    $('#endTimerSection').removeClass('d-none');
+   $('#endTimerSection').addClass('animate__animated animate__zoomInDown');
    $('#start').show();
    $('#attempt').show();
    $('.progress').show();
@@ -260,5 +266,6 @@ var percentage = percentage.toFixed(2);
 
 $('#progressBar').css('width', percentage + '%');
 $('#progressBar').text('Time elapsed: ' + percentage + '%');}, 200);
+
 </script>
 {% endblock %}
