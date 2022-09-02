@@ -42,8 +42,9 @@ def addQuestion(request, code, quiz_id):
                 option4 = request.POST.get('option4')
                 answer = request.POST.get('answer')
                 marks = request.POST.get('marks')
+                explanation = request.POST.get('explanation')
                 question = Question(question=question, option1=option1, option2=option2,
-                                    option3=option3, option4=option4, answer=answer, quiz=quiz, marks=marks)
+                                    option3=option3, option4=option4, answer=answer, quiz=quiz, marks=marks, explanation=explanation)
                 question.save()
                 messages.success(request, 'Question added successfully')
             else:
@@ -72,7 +73,8 @@ def allQuizzes(request, code):
     else:
         return redirect('std_login')
 
-#REFACTOR THIS
+
+# REFACTOR THIS
 def myQuizzes(request, code):
     if is_student_authorised(request, code):
         course = Course.objects.get(code=code)
@@ -196,7 +198,7 @@ def quizResult(request, code, quiz_id):
             student_answer = StudentAnswer.objects.get(
                 student=student, question=question)
             question.student_answer = student_answer.answer
-        
+
         student_answers = StudentAnswer.objects.filter(
             student=student, quiz=quiz)
         for student_answer in student_answers:
@@ -207,6 +209,7 @@ def quizResult(request, code, quiz_id):
         return render(request, 'quiz/quizResult.html', {'course': course, 'quiz': quiz, 'questions': questions, 'student': student})
     else:
         return redirect('std_login')
+
 
 # REFACTOR THIS
 def quizSummary(request, code, quiz_id):

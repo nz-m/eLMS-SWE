@@ -59,10 +59,10 @@
    </p>
    {% else %}
    <div class="d-flex justify-content-center mb-2">
-   <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
-   </form>
-</div>
+      <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
+         <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
+      </form>
+   </div>
    {% endif %}
    <div class="d-flex justify-content-center">
       <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show marks</button>
@@ -110,16 +110,33 @@
       </button>
    </div>
    <div class="collapse" id="question{{question.id}}">
-      <div class="row p-3 mb-3 mx-2 rounded border">
+      <div class="row p-3 mb-3 mx-2 rounded border shadow-sm">
          <div class="col-lg-6 col-md-6 col-sm-12 border-end">
             <p>A : {{question.option1}}</p>
             <p>B : {{question.option2}}</p>
             <p>C : {{question.option3}}</p>
             <p>D : {{question.option4}}</p>
-            <p class="fw-bold">Answer : {{question.answer}}</p>
-            <p>Marks : {{question.marks}}</p>
-            <p>Correct answer recieved : {{ question.total_correct_answers }} </p>
-            <p>Wrong answer recieved : {{ question.total_wrong_answers }} </p>
+            <div class="row">
+               <div class="col-6">
+                  <p style="font-size: 15px;" class="text-success fw-bold margin-p-bottom">Correct answers : {{ question.total_correct_answers }} </p>
+               </div>
+               <div class="col-6">
+                  <p style="font-size: 15px;" class="text-danger fw-bold margin-p-bottom">Wrong answers  : {{ question.total_wrong_answers }} </p>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-6">
+                  <p style="font-size: 15px;" class="margin-p-bottom">Answer : <span class="fw-bold">{{question.answer}}</span></p>
+               </div>
+               <div class="col-6">
+                  <p style="font-size: 15px;" class="margin-p-bottom">Marks : <span class="fw-bold">{{question.marks}}</span></p>
+               </div>
+            </div>
+            {% if question.explanation %}
+            <div class="mt-3 bg-warning bg-opacity-10 py-2 border-start border-3 border-warning rounded" style="font-size:smaller">
+               <span class="fw-bold px-2">Explanation : </span>{{question.explanation}}
+            </div>
+            {% endif %}
          </div>
          <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="chart">

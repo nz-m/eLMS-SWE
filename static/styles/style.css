@@ -36,8 +36,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
 }
 
 .navbar-mod {
@@ -123,4 +121,10 @@ a {
 
 .searchbar:hover {
   border: none !important;
+}
+.margin-p-bottom{
+  margin-bottom: 0.5rem !important;
+}
+.margin-p-top{
+  margin-top: 0.5rem !important;
 }

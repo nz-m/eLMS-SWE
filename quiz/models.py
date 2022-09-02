@@ -59,6 +59,7 @@ class Question(models.Model):
     option4 = models.TextField(null=False, blank=False, default='')
     answer = models.CharField(max_length=1, choices=(
         ('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')), default='A')
+    explanation = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.question
@@ -93,5 +94,3 @@ class StudentAnswer(models.Model):
 
     class Meta:
         unique_together = ('student', 'quiz', 'question')
-
-

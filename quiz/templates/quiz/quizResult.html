@@ -69,16 +69,20 @@
       </div>
       <div>
          {% if  not question.student_answer %}
-         <span> You did not answer!</span>
+         <span class="fw-bold" style="font-size:15px"> You did not answer!</span>
          {% endif %}
       </div>
-      <div>
-         Correct answer  <span class="fw-bold text-italic"> {{ question.answer }} : {{question.get_answer}}</span>
+      <div style="font-size: 14px;">
+         Correct answer is <span class="fw-bold "> {{ question.answer }} : {{question.get_answer}}</span>
       </div>
+      {% if question.explanation %}
+      <div class="mt-2 bg-info bg-opacity-10 p-2 border-start border-2 border-info" style="font-size:smaller">
+         <span class="fw-bold">Explanation : </span>{{question.explanation}}
+      </div>
+      {% endif %}
    </div>
    {% endfor %}
 </div>
-
 <script>
    let questionInd = document.querySelectorAll('.questionInd');
    anime({
@@ -90,8 +94,8 @@
          return i * 250;
       }
    });
-
-
+   
+   
    let time_taken = {{ quiz.time_taken }};
    function convertTime(timetaken) {
        var hours = Math.floor(timetaken / 3600);

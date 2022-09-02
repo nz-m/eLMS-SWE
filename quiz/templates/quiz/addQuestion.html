@@ -43,13 +43,13 @@
 {% comment %} navigation links end  {% endcomment %}
 
 <div class="container shadow-sm rounded p-4 animate__animated animate__zoomInLeft" style="max-width: 768px;">
-   <p class="text-center">Add Question for <span class="fw-bold">{{quiz.title}}</span></p>
+   <p class="text-start">Add Question for <span class="fw-bold">{{quiz.title}}</span></p>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">
          <label for="textarea" class="col-sm-2 col-form-label fw-bold">Question {{quiz.question_sl}}</label>
          <div class="col-sm-10">
-            <textarea class="form-control" id="textarea" style="height: 150px;" name="question" required></textarea>
+            <textarea class="form-control" id="textarea" style="height: 100px;" name="question" required></textarea>
          </div>
       </div>
       <div class="mb-3 row">
@@ -89,6 +89,12 @@
          <option value="C"> C</option>
          <option value="D"> D</option>
       </select>
+      <div class="mb-3 row">
+         <label for="explanantion" class="col-sm-2 col-form-label fw-bold">Explanantion</label>
+         <div class="col-sm-10">
+            <textarea class="form-control" id="explanantion" style="height: 60px;" name="explanation"></textarea>
+         </div>
+      </div>
       <div class="p-2 d-flex flex-row-reverse" style="background-color: rgb(250,250,250);">
          <button name="saveAdd" class="btn btn-sm btn-success px-2 mx-2" type="submit">Save and add another</button>
          <button name="saveOnly" class="btn btn-sm btn-primary px-3 mx-2" type="submit">Save</button>

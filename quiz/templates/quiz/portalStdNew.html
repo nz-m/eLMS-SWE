@@ -35,12 +35,12 @@
             <div class="row">
                <div class="col-md-12 text-center">
                   <p class="fw-bold fs-5"> {{quiz.title}}</p>
-                  <p>
+                  <p class=" text-secondary">
                      {{quiz.description}}
                   </p>
-                  <p>Total Questions : {{ total_questions }}</p>
-                  <p>Total Marks : {{quiz.total_marks}} </p>
-                  <p class="fs-6 fw-bold">Duration : <span>{{quiz.duration}} Hours</span></p>
+                  <p>Total Questions : <span class="fw-bold">{{ total_questions }}</span></p>
+                  <p>Total Marks : <span class="fw-bold">{{quiz.total_marks}}</span></p>
+                  <p class="fs-6">Duration : <span class="fw-bold">{{quiz.duration}} Hours</span></p>
                   <p class ="animate__animated animate__heartBeat fs-2 fw-bold text-success timer" id="start">Started!</p>
                   {% comment %}starting timer{% endcomment %}
             <div class="container fs-2 d-flex flex-column" id="StartdaysSectionDV">
