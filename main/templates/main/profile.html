@@ -24,7 +24,7 @@
 <div class="container shadow">
    <div class="row">
       <div class="col-12">
-         <div class="fw-bold fs-4 my-3 text-muted d-flex justify-content-center">
+         <div class="fw-bold fs-5 my-3 text-muted d-flex justify-content-center">
             <p>Student info</p>
          </div>
       </div>
@@ -36,8 +36,16 @@
       <div class="my-3">
          <h5>Name : {{student.name}}</h5>
          <h5>ID : <span class="mx-3 px-1"></span>{{student.student_id}}</h5>
-         <h5>Dept :<span class="mx-2"> {{student.department}}</h4>
+         <h5>Dept :<span class="mx-2"> {{student.department}}</h5>
       </div>
+   </div>
+   <div class="d-flex justify-content-end">
+      <button class="btn btn-sm btn-light border my-2 mx-1">
+      Change Profile Picture
+      </button>
+      <button class="btn btn-sm btn-light border my-2 mx-1">
+      Change Password
+      </button>
    </div>
 </div>
 {% endblock %}

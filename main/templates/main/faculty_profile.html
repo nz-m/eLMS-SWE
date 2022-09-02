@@ -22,10 +22,10 @@
    </nav>
 </div>
 <!-- navigation links end -->
-<div class="container shadow">
+<div class="container shadow-sm rounded">
    <div class="row">
       <div class="col-12">
-         <div class="h4 my-3 text-secondary d-flex justify-content-center">
+         <div class="fs-5 my-3 text-secondary d-flex justify-content-center">
             <p>Teacher info</p>
          </div>
       </div>
@@ -35,10 +35,21 @@
          <img src="/media/{{faculty.photo}}" alt="image" style="height: 10rem ; width:10rem">
       </div>
       <div class="my-3">
-         <h4>Name : {{faculty.name}}</h4>
-         <h4>ID : <span class="mx-3 px-1"></span>{{faculty.faculty_id}}</h4>
-         <h4>Dept :<span class="mx-2"></span>{{faculty.department}}</h4>
+         <h5>Name : {{faculty.name}}</h5>
+         <h5>ID : <span class="mx-3 px-1"></span>{{faculty.faculty_id}}</h5>
+         <h5>Dept :<span class="mx-2"></span>{{faculty.department}}</h5>
       </div>
+   </div>
+   <div class="d-flex justify-content-end">
+      <button class="btn btn-sm btn-light border my-2 mx-1">
+      Change Profile Picture
+      </button>
+      <button class="btn btn-sm btn-light border my-2 mx-1">
+      Change Password
+      </button>
+      <button class="btn btn-sm btn-light border my-2 mx-1">
+         Change Course Enroll Key
+      </button>
    </div>
 </div>
 {% endblock %}

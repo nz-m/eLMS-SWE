@@ -61,7 +61,7 @@
          <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>
-               <a class="fw-bold" href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}} {% if quiz.started %} <span class="fw-normal text-success"> (Started!)</span> {% endif %}</a>
+               <a class="fw-bold" {% if quiz.started %} style="color:#004481" {% endif %} href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
             </td>
             <td>{{ quiz.starts}} </td>
             <td>{{ quiz.ends}}</td>
@@ -88,13 +88,6 @@
      setTimeout(function(){
        $(".alert").alert('close');
      },4000);
-     $('.table tbody tr').hover(function () {
-      $(this).addClass('bg-warning bg-opacity-10');
-   }, function () {
-      $(this).removeClass('bg-warning bg-opacity-10');
-
    });
-   });
-
 </script>
 {% endblock %}
