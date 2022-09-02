@@ -43,7 +43,7 @@
 {% comment %} navigation links end  {% endcomment %}
 
 <div class="container shadow-sm rounded p-4 animate__animated animate__zoomInLeft" style="max-width: 768px;">
-   <p class="text-start">Add Question for <span class="fw-bold">{{quiz.title}}</span></p>
+   <p class="text-start">Add Question for <span class="fw-bold">"{{quiz.title}}"</span></p>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">

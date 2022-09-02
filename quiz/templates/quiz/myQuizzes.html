@@ -97,8 +97,7 @@
                   {{quizP.title}}
                </td>
                <td>{{quizP.ends}}</td>
-               <td colspan="2" class="text-center"> <span class="text-dark bg-warning fw-bold rounded-5 px-3 py-1" style="font-size:smaller">Not Published</span></td>
-               
+               <td colspan="2" class="text-center"> <span class="text-dark bg-warning bg-opacity-25 fw-bold rounded px-3 py-1" style="font-size:smaller">Not Published</span></td>
             </tr>
             {% endif %}
             {% else %}
@@ -108,7 +107,7 @@
                   {{quizP.title}}
                </td>
                <td>{{quizP.ends}}</td>
-               <td colspan="2" class="text-center"> <span class="text-light bg-danger fw-bold rounded-5 px-2 py-1" style="font-size:smaller">Did not attempt</span></td>
+               <td colspan="2" class="text-center"> <span class="text-light bg-danger bg-opacity-50 fw-bold rounded px-2 py-1" style="font-size:smaller">Did not attempt</span></td>
             </tr>
             {% endif %}
             {% endfor %}
@@ -121,14 +120,13 @@
       </table>
    </div>
 </div>
-
 <script>
    $(document).ready(function () {
       $('.table tbody tr').hover(function () {
          $(this).addClass('bg-warning bg-opacity-10');
       }, function () {
          $(this).removeClass('bg-warning bg-opacity-10');
-
+   
       });
    });
 </script>

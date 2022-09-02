@@ -40,17 +40,35 @@
             <p class="text-break word-break opacity-75"> {{quiz.description}} </p>
          </div>
          <div>
-            <p>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span></p>
-            <p>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+               groups
+               </span>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span>
+            </p>
+            <p><span class="material-symbols-outlined inline-icons me-2">
+               format_list_numbered
+               </span>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> 
+            </p>
          </div>
       </div>
       <div class="col-6 my-4 border-start">
-         <p>Start : <span class="fw-bold"> {{quiz.starts}} </span> </p>
-         <p>End : <span class="fw-bold"> {{ quiz.ends }} </span></p>
+         <p><span class="material-symbols-outlined inline-icons me-2">
+            av_timer
+            </span> Start : <span class="fw-bold"> {{quiz.starts}} </span> 
+         </p>
+         <p><span class="material-symbols-outlined inline-icons me-2">
+            timer_off
+            </span>End : <span class="fw-bold"> {{ quiz.ends }} </span>
+         </p>
          {% if quiz.total_marks %}
-         <p>Total Marks :<span class="fw-bold"> {{ quiz.total_marks }}</span></p>
+         <p><span class="material-symbols-outlined inline-icons me-2">
+            military_tech
+            </span>Total Marks :<span class="fw-bold"> {{ quiz.total_marks }}</span>
+         </p>
          {% endif %}
-         <p>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span></p>
+         <p><span class="material-symbols-outlined inline-icons me-2">
+            timelapse
+            </span>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span>
+         </p>
       </div>
    </div>
    {% if quiz.publish_status %}
@@ -159,7 +177,7 @@
    '#FFCD56',
    '#36A2EB',
    '#FF4069',
-   '#6CBB3C',
+   '#2CDEDB',
    ]
    {% for question in questions %}
     var data{{question.id}} = {

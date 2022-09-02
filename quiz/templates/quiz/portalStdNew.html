@@ -34,13 +34,19 @@
          <div class="p-3 mb-3">
             <div class="row">
                <div class="col-md-12 text-center">
-                  <p class="fw-bold fs-5"> {{quiz.title}}</p>
+                  <p class="fw-bold fs-5" style="color:navy"> {{quiz.title}}</p>
                   <p class=" text-secondary">
                      {{quiz.description}}
                   </p>
-                  <p>Total Questions : <span class="fw-bold">{{ total_questions }}</span></p>
-                  <p>Total Marks : <span class="fw-bold">{{quiz.total_marks}}</span></p>
-                  <p class="fs-6">Duration : <span class="fw-bold">{{quiz.duration}} Hours</span></p>
+                  <p><span class="material-symbols-outlined inline-icons me-2">
+                     format_list_numbered
+                     </span>Total Questions : <span class="fw-bold">{{ total_questions }}</span></p>
+                  <p><span class="material-symbols-outlined inline-icons me-2">
+                     military_tech
+                     </span>Total Marks : <span class="fw-bold">{{quiz.total_marks}}</span></p>
+                  <p class="fs-6"><span class="material-symbols-outlined inline-icons me-2">
+                     timelapse
+                     </span>Duration : <span class="fw-bold">{{quiz.duration}} Hours</span></p>
                   <p class ="animate__animated animate__heartBeat fs-2 fw-bold text-success timer" id="start">Started!</p>
                   {% comment %}starting timer{% endcomment %}
             <div class="container fs-2 d-flex flex-column" id="StartdaysSectionDV">

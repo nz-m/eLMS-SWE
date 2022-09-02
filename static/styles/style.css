@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
 
+
 * {
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
@@ -127,4 +128,7 @@ a {
 }
 .margin-p-top{
   margin-top: 0.5rem !important;
+}
+.inline-icons {
+  vertical-align: bottom;
 }

@@ -31,26 +31,26 @@
    </div>
    <!-- navigation links end -->
 </div>
-<div class="container d-flex justify-content-center" id="form">
+<div class="container d-flex justify-content-center mt-3" id="form">
    <div class="border shadow-sm border-light rounded pb-4 px-3 col-lg-8 col-sm-12 mt-3">
-      <span class="d-flex fs-4 my-4 justify-content-center p-2">
+      <span class="fw-bold fs-5 d-flex justify-content-center">
       Create Quiz
       </span>
       <form action="{% url 'quiz' course.code %}" method="POST">
          {% csrf_token %}
-         <div class="mb-3">
+         <div class="mb-3 mt-3 fw-bold">
             <label for="title" class="form-label">Quiz Title</label>
             <input type="text" class="form-control" id="title" name='title' required>
          </div>
-         <div class="mb-3">
+         <div class="mb-3 fw-bold">
             <label for="Instructions" class="form-label">Instructions</label>
             <textarea class="form-control" id="Instructions" name="description"></textarea>
          </div>
-         <div class="mb-3">
+         <div class="mb-3 fw-bold">
             <label for="start" class="form-label">Start</label>
             <input type="datetime-local" class="form-control" id="start" name="start" required>
          </div>
-         <div class="mb-3">
+         <div class="mb-3 fw-bold">
             <label for="end" class="form-label">End</label>
             <input type="datetime-local" class="form-control" id="end" name="end" required>
          </div>
