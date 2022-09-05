@@ -130,7 +130,7 @@
    </div>
 </div>
 <div class="container">
-   <div id="questions" class="">
+   <div id="questions">
       <form action="{% url 'studentAnswer' course.code quiz.id %}" method="post">
          {% csrf_token %}
          {% for question in questions  %}
@@ -253,10 +253,10 @@ document.getElementById("Endseconds").innerHTML = secondsEnd;
 
 if (distanceEnd < 0) {
     clearInterval(x);
-   $('#endTimerSection').addClass('d-none');
-   $('#attempt').show();
-   $('#subForm').click();
-   $('#start').html('Ended');
+    $('#attempt').hide();
+    $('#questions').hide();
+    $('#subForm').click();
+    $('#endTimerSection').addClass('d-none');
 }
 }, 1000);
 
