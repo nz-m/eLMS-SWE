@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Change Profile Picture</title>
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/favicon-16x16.png' %}">
+      <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
+      <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div style="min-height:85vh" class="row justify-content-center align-items-center">
+            <div class="col-lg-5 col-sm-12 p-5 rounded shadow">
+               <form action="{% url 'changePhotoFaculty' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="text-center">
+                     <h5 class="mb-3 fw-bold">Change Profile Picture</h5>
+                  </div>
+                  <div class="my-3 text-center">
+                     <img src="/media/{{faculty.photo}}" alt="image" class="rounded-circle" style="height: 10rem ; width:10rem">
+                  </div>
+                  <div class="mb-3">
+                     <label for="photo" class="form-label ">Photo</label>
+                     <input type="file" class="form-control" id="photo" name="photo" required>
+                  </div>
+                  <div class="d-grid">
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  <div class="text-center mt-3">
+                     <a href="{% url 'profile' faculty.faculty_id %}">Cancel</a>
+                  </div>
+               </form>
+               <p class="text-center mt-3"> <span class="text-muted">logged in as</span>  {{faculty.name}}</p>
+               {% if messages %}
+               <div class="alert alert-danger mt-3" role="alert">
+                  {% for message in messages %}
+                  {{ message }}
+                  {% endfor %}
+               </div>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
+      <script>
+         $(document).ready(function(){
+              $('#photo').change(function(){
+                var file = this.files[0];
+                var fileType = file["type"];
+                var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                if ($.inArray(fileType, ValidImageTypes) < 0) {
+                     alert("Please select a valid image file (jpg, jpeg, png, gif).");
+                     $('#photo').val('');
+                     return false;
+                }
+              });
+         });
+      </script>
+   </body>
+</html>

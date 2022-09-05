@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'discussion.apps.DiscussionConfig',
     'attendance.apps.AttendanceConfig',
     'quiz.apps.QuizConfig',
+    'django_cleanup.apps.CleanupConfig',
 
 ]
 

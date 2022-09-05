@@ -389,7 +389,7 @@ def addSubmission(request, code, id):
     try:
         course = Course.objects.get(code=code)
         if is_student_authorised(request, code):
-            #check if assignment is open
+            # check if assignment is open
             assignment = Assignment.objects.get(course_code=course.code, id=id)
             if assignment.deadline < datetime.datetime.now():
 
@@ -608,3 +608,108 @@ def search(request):
     else:
         return redirect('std_login')
 
+
+def changePasswordPrompt(request):
+    if request.session.get('student_id'):
+        student = Student.objects.get(student_id=request.session['student_id'])
+        return render(request, 'main/changePassword.html', {'student': student})
+    elif request.session.get('faculty_id'):
+        faculty = Faculty.objects.get(faculty_id=request.session['faculty_id'])
+        return render(request, 'main/changePasswordFaculty.html', {'faculty': faculty})
+    else:
+        return redirect('std_login')
+
+
+def changePhotoPrompt(request):
+    if request.session.get('student_id'):
+        student = Student.objects.get(student_id=request.session['student_id'])
+        return render(request, 'main/changePhoto.html', {'student': student})
+    elif request.session.get('faculty_id'):
+        faculty = Faculty.objects.get(faculty_id=request.session['faculty_id'])
+        return render(request, 'main/changePhotoFaculty.html', {'faculty': faculty})
+    else:
+        return redirect('std_login')
+
+
+def changePassword(request):
+    if request.session.get('student_id'):
+        student = Student.objects.get(
+            student_id=request.session['student_id'])
+        if request.method == 'POST':
+            if student.password == request.POST['oldPassword']:
+                # New and confirm password check is done in the client side
+                student.password = request.POST['newPassword']
+                student.save()
+                messages.success(request, 'Password was changed successfully')
+                return redirect('/profile/' + str(student.student_id))
+            else:
+                messages.error(
+                    request, 'Password is incorrect. Please try again')
+                return redirect('/changePassword/')
+        else:
+            return render(request, 'main/changePassword.html', {'student': student})
+    else:
+        return redirect('std_login')
+
+
+def changePasswordFaculty(request):
+    if request.session.get('faculty_id'):
+        faculty = Faculty.objects.get(
+            faculty_id=request.session['faculty_id'])
+        if request.method == 'POST':
+            if faculty.password == request.POST['oldPassword']:
+                # New and confirm password check is done in the client side
+                faculty.password = request.POST['newPassword']
+                faculty.save()
+                messages.success(request, 'Password was changed successfully')
+                return redirect('/facultyProfile/' + str(faculty.faculty_id))
+            else:
+                print('error')
+                messages.error(
+                    request, 'Password is incorrect. Please try again')
+                return redirect('/changePasswordFaculty/')
+        else:
+            print(faculty)
+            return render(request, 'main/changePasswordFaculty.html', {'faculty': faculty})
+    else:
+        return redirect('std_login')
+
+
+def changePhoto(request):
+    if request.session.get('student_id'):
+        student = Student.objects.get(
+            student_id=request.session['student_id'])
+        if request.method == 'POST':
+            if request.FILES['photo']:
+                student.photo = request.FILES['photo']
+                student.save()
+                messages.success(request, 'Photo was changed successfully')
+                return redirect('/profile/' + str(student.student_id))
+            else:
+                messages.error(
+                    request, 'Please select a photo')
+                return redirect('/changePhoto/')
+        else:
+            return render(request, 'main/changePhoto.html', {'student': student})
+    else:
+        return redirect('std_login')
+
+
+def changePhotoFaculty(request):
+    if request.session.get('faculty_id'):
+        faculty = Faculty.objects.get(
+            faculty_id=request.session['faculty_id'])
+        if request.method == 'POST':
+            if request.FILES['photo']:
+                faculty.photo = request.FILES['photo']
+                faculty.save()
+                messages.success(request, 'Photo was changed successfully')
+                return redirect('/facultyProfile/' + str(faculty.faculty_id))
+            else:
+                messages.error(
+                    request, 'Please select a photo')
+                return redirect('/changePhotoFaculty/')
+        else:
+            return render(request, 'main/changePhotoFaculty.html', {'faculty': faculty})
+    else:
+        return redirect('std_login')
