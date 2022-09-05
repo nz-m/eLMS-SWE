@@ -52,7 +52,8 @@
          <input type="file" class="form-control rounded" id="file" aria-describedby="file" aria-label="Upload"
             name="file" required>
       </div>
-      <div>
+         <p class="text-center" id="fileError"></p>
+      <div class="mb-3">
          <label class="form-label">Submission Ends:</label>
          <input class="rounded" type="datetime-local" id="datetime" name="datetime" required>
       </div>
@@ -61,4 +62,27 @@
       </div>
    </form>
 </div>
+<script>
+   let fileError = document.getElementById('fileError');
+   // File format & size validation
+   document.getElementById('file').addEventListener('change', function () {
+      var file = this.files[0];
+      var fileType = file.type;
+      var validTypes = ['image/gif', 'image/jpeg', 'image/png', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!validTypes.includes(fileType)) {
+         fileError.innerHTML = "Only pdf, png, jpg, jpeg, gif and word files are allowed";
+         fileError.classList.add("text-danger", "fw-bold", "border", "border-danger", "p-2", "rounded");
+         this.value = '';
+      }
+      else if (file.size > 10000000) {
+         fileError.innerHTML = "File size should be less than 10MB";
+         fileError.classList.add("text-danger", "fw-bold", "border", "border-danger", "p-2", "rounded");
+         this.value = '';
+      }
+      else {
+         fileError.innerHTML = "";
+         fileError.classList.remove("text-danger", "fw-bold", "border", "border-danger", "p-2", "rounded");
+      }
+   });
+</script>
 {% endblock %}

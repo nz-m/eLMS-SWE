@@ -229,7 +229,7 @@ def quizSummary(request, code, quiz_id):
                 question=question, answer='C').count()
             question.D = StudentAnswer.objects.filter(
                 question=question, answer='D').count()
-        # students who attempted the quiz and their marks
+        # students who have attempted the quiz and their marks
         students = Student.objects.filter(course=course)
         for student in students:
             student_answers = StudentAnswer.objects.filter(
@@ -243,7 +243,7 @@ def quizSummary(request, code, quiz_id):
             quiz.publish_status = True
             quiz.save()
             return redirect('quizSummary', code=code, quiz_id=quiz.id)
-        # check is student has attempted the quiz
+        # check if student has attempted the quiz
         for student in students:
             if StudentAnswer.objects.filter(student=student, quiz=quiz).count() > 0:
                 student.attempted = True

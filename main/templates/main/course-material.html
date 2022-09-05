@@ -53,6 +53,7 @@
                      <div class="mb-3">
                         <input class="form-control" id="file" type="file" name="file" required>
                      </div>
+                     <p class="fw-bold" id="fileError"></p>
                      <!-- submit button -->
                      <div class="d-grid col-12 mx-auto">
                         <button class="btn btn-primary" type="submit">Post</button>
@@ -64,4 +65,21 @@
       </div>
    </div>
 </div>
+
+<script>
+   // File size validation
+   let fileError = document.getElementById('fileError');
+   let file = document.getElementById('file');
+   file.addEventListener('change', function () {
+      let file = this.files[0];
+      if (file.size > 150000000) {
+         fileError.innerHTML = "File size can not be more than 150 MB";
+         fileError.style.color = 'red';
+         this.value = '';
+      }
+      else {
+         fileError.innerHTML = '';
+      }
+   });
+</script>
 {% endblock %}
