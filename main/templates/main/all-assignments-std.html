@@ -30,6 +30,11 @@
    </div>
    <!-- navigation links end -->
    <div class="container d-flex flex-wrap flex-column">
+        <!-- course name starts -->
+        <div class="course-section p-3 m-3 shadow-sm d-flex justify-content-center">
+         <div class="fw-bold fs-5 course_name">{{course.department}}-{{course.code}} : {{course.name}}</div>
+      </div>
+      <!-- course name ends -->
       <!-- assignment section starts -->
       <div class="course-section p-3 m-3 shadow">
          <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"

@@ -79,7 +79,7 @@
    <div class="rounded p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
       <div class="animate__animated animate__zoomInDown d-flex justify-content-between border-bottom border-1 mb-2">
          <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
-            alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
+            alt="" style="height:1.5rem; vertical-align: text-bottom;"><span style="margin-right: 0.6rem;"></span>Announcement
          </h5>
          <a
             href="{% url 'addAnnouncement' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
@@ -146,7 +146,7 @@
    <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5">
       <div class="animate__animated animate__zoomInLeft d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
          <h5 class="fw-bold assignmentCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
-            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h5>
+            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Assignment</h5>
          <a style="height:2rem"
             href="{% url 'addAssignment' course.code %}">
          <img src="{% static 'images/icon/iconBlack.png' %}"
@@ -185,7 +185,7 @@
    <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
       <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2 animate__animated animate__zoomInUp">
          <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
-            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
+            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
          <a
             href="{% url 'addCourseMaterial' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
             alt="" height="32"></a>

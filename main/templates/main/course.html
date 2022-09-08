@@ -61,7 +61,7 @@
       <!-- announcement section starts -->
       <div class="rounded p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
          <div class="fw-bold animate__animated animate__zoomInDown fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
-            alt="" style="height:1.5rem;"><span style="margin-right: 0.6rem;"></span>Announcement
+            alt="" style="height:1.5rem;vertical-align: text-top"><span style="margin-right: 0.6rem;"></span>Announcement
          </div>
          <div>
             {% for announcement in announcements %}
@@ -83,7 +83,7 @@
       <!-- assignment section starts -->
       <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5 mb-2">
          <div class="fw-bold fs-5 text-center animate__animated animate__zoomInDown border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
-            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</div>
+            alt="" style="height:1.5rem; vertical-align: text-top"><span style="margin-right: 0.6rem;"></span>Assignment</div>
          <div >
             {% for assignment in assignments %}
             <!-- individual assignment starts -->
@@ -114,7 +114,7 @@
       <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
          <!-- section title -->
          <div class="fw-bold animate__animated animate__zoomInDown fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
-            alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Course Material</div>
+            alt="" style="height:1.5rem;vertical-align: text-top"><span style="margin-right: 0.6rem;"></span>Course Material</div>
          <!-- section title ends -->
          <div>
             {% for material in materials  %}

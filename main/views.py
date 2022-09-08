@@ -571,8 +571,7 @@ def access(request, code):
 
 def search(request):
     if request.session.get('student_id') or request.session.get('faculty_id'):
-        if request.method == 'GET':
-
+        if request.method == 'GET' and request.GET['q']:
             q = request.GET['q']
             courses = Course.objects.filter(Q(code__icontains=q) | Q(
                 name__icontains=q) | Q(faculty__name__icontains=q))
@@ -601,10 +600,7 @@ def search(request):
             }
             return render(request, 'main/search.html', context)
         else:
-            if request.session.get('faculty_id'):
-                return redirect('/faculty/')
-            else:
-                return redirect('courses')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect('std_login')
 
