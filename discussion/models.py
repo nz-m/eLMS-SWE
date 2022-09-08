@@ -16,6 +16,9 @@ class StudentDiscussion(models.Model):
     def __str__(self):
         return self.content[:30]
 
+    def time(self):
+        return self.sent_at.strftime("%d-%b-%y, %I:%M %p")
+
 
 class FacultyDiscussion(models.Model):
     content = models.TextField(max_length=1600, null=False)
@@ -30,3 +33,6 @@ class FacultyDiscussion(models.Model):
 
     def __str__(self):
         return self.content[:30]
+
+    def time(self):
+        return self.sent_at.strftime("%d-%b-%y, %I:%M %p")

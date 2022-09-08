@@ -74,12 +74,11 @@
                   style="height: 4rem;width:4rem;">
                <div class="mx-2">
                   {% if discussion.author.role == "Faculty" %}
-                  <h6 class="d-inline bg-success text-light rounded px-2">{{discussion.sent_by}}</h6>
+                  <span class="fw-bold">{{discussion.sent_by}}</span><span class="fw-bold rounded text-success bg-success bg-opacity-10 mx-2 p-1" style="font-size:11px">Course teacher</span>
                   {% else %}
-                  
-                  <h6 class="d-inline fw-bold">{{discussion.sent_by}}</h6>
+                  <span class="d-inline fw-bold">{{discussion.sent_by}}</span>
                   {% endif %}
-                  <span class="text-muted mx-2">{{ discussion.sent_at }}</span>
+                  <span class="text-muted mx-2" style="font-size:smaller">{{ discussion.time }}</span>
                   <p class="text-wrap text-break my-2 px-2">{{discussion.content}}
                   </p>
                </div>
@@ -94,7 +93,6 @@
             No one has started a discussion yet
          </div>
          {% endif %}
-
       </div>
    </div>
 </div>
