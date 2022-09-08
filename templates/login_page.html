@@ -45,10 +45,20 @@
                            type="submit">Sign in</button>
                      </div>
                   </form>
-                     <div class="mx-3 text-center">
-                        <a class="text-secondary" href="/admin" style="text-decoration: none;" target="_blank">Login as
-                        admin</a>
+                  <div class="d-flex justify-content-between">
+                     <a href="/admin" target="_blank">Login as
+                     Admin</a>
+                     <div class="dropdown">
+                        <a class="dropdown-toggle" id="dropdownMenuButton1"
+                           data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                        Login as Guest
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li><a class="dropdown-item" href="/student">Student</a></li>
+                           <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
+                        </ul>
                      </div>
+                  </div>
                   {% if messages %}
                   <!-- Error Alert -->
                   <div class="alert alert-danger alert-dismissible fade show my-2">

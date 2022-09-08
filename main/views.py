@@ -222,7 +222,6 @@ def profile(request, id):
                 faculty = Faculty.objects.get(faculty_id=id)
                 return render(request, 'main/faculty_profile.html', {'faculty': faculty})
             else:
-                print('Invalid faculty id')
                 return redirect('std_login')
         except:
             return render(request, 'error.html')
@@ -709,3 +708,27 @@ def changePhotoFaculty(request):
             return render(request, 'main/changePhotoFaculty.html', {'faculty': faculty})
     else:
         return redirect('std_login')
+
+def guestStudent(request):
+    request.session.flush()
+    try:
+        student = Student.objects.get(name='Guest Student')
+        request.session['student_id'] = str(student.student_id)
+        return redirect('myCourses')
+    except:
+        messages.error(request, 'Guest Student not found')
+        return redirect('std_login')
+
+def guestFaculty(request):
+    request.session.flush()
+    try:
+        faculty = Faculty.objects.get(name='Guest Faculty')
+        request.session['faculty_id'] = str(faculty.faculty_id)
+        return redirect('facultyCourses')
+    except:
+        messages.error(request, 'Guest Faculty not found')
+        return redirect('std_login')
+        
+    
+
+    
