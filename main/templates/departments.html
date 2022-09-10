@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{% block title %} Departments | eLMS {% endblock title %}
+{% block profile %}
+{% if faculty  %} {% url 'profile' faculty.faculty_id %}
+{% else %} {% url 'profile' student.student_id %}
+{% endif %}
+{% endblock %}
+{% block user %}
+{% if faculty %} {{faculty.name}}
+{% else %} {{student.name}}
+{% endif %}
+{% endblock user %}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock %}
+{% block departments %}
+{% url 'departments' %}
+{% endblock %}
+{% block content %}
+<div class="container">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+      <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+         <ol class="breadcrumb p-3">
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">All Departments</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- navigation links end -->
+   <div class="row gy-5">
+      {% if deps %}
+      {% for dep in deps%}
+      <!-- individual card starts -->
+      <div class="col-sm-6 d-flex align-items-stretch justify-content-center animate__animated animate__zoomIn">
+         <div class="card shadow" style="width: 30rem !important;">
+            <div class="class-header text-center text-light border-bottom bg-dark rounded">
+               <h6 class="my-2"> Dept. of {{dep.name}}</h6>
+            </div>
+            <div class="card-body d-flex flex-column align-items-center">
+               <h5 class="card-title fw-bold">Department ID : {{dep.department_id}}</h5>
+               
+               <p class="card-text fw-bold">Department Info</p>
+               <p class="card-text">{{ dep.description}}</p>
+               
+               <a href="{% url 'dep_details' dep.department_id %}" class="btn btn-outline-dark"><span
+                  class="px-3">Enter</span></a>
+            </div>
+         </div>
+      </div>
+      <!-- individual card ends -->
+      {% endfor %}
+   </div>
+   {% else %}
+   <div class="text-center h4 text-secondary">No Department to show</div>
+   {% endif %}
+</div>
+{% endblock  %}
