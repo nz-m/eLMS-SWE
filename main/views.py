@@ -548,6 +548,78 @@ def courses(request):
     else:
         return redirect('std_login')
 
+def departments(request):
+    if request.session.get('student_id') or request.session.get('faculty_id'):
+
+        departments = Department.objects.all()
+        if request.session.get('student_id'):
+            student = Student.objects.get(
+                student_id=request.session['student_id'])
+        else:
+            student = None
+        if request.session.get('faculty_id'):
+            faculty = Faculty.objects.get(
+                faculty_id=request.session['faculty_id'])
+        else:
+            faculty = None
+        context = {
+            'faculty': faculty,
+            'student': student,
+            'deps': departments
+        }
+
+        return render(request, 'main/departments.html', context)
+
+    else:
+        return redirect('std_login')
+
+
+def dep_details(request, dep_id):
+    if request.session.get('student_id') or request.session.get('faculty_id'):
+
+        dep= Department.objects.get(department_id=dep_id)
+        sc = Department.students_count(dep)
+        fc = Department.faculty_count(dep)
+        cc = Department.course_count(dep)
+        courses = Course.objects.filter(department=dep_id)
+        studentCount = Course.objects.filter(department=dep_id).annotate(student_count=Count('students'))
+
+        studentCountDict = {}
+
+        for course in studentCount:
+            studentCountDict[course.code] = course.student_count
+
+        @register.filter
+        def get_item(dictionary, course_code):
+            return dictionary.get(course_code)
+
+        if request.session.get('student_id'):
+            student = Student.objects.get(
+                student_id=request.session['student_id'])
+        else:
+            student = None
+        if request.session.get('faculty_id'):
+            faculty = Faculty.objects.get(
+                faculty_id=request.session['faculty_id'])
+        else:
+            faculty = None
+        context = {
+            'faculty': faculty,
+            'student': student,
+            'courses': courses,
+            'deps' : dep,
+            'sc': sc,
+            'fc' : fc,
+            'cc' : cc,
+            'studentCount': studentCountDict
+        }
+
+        return render(request, 'main/dep_detail.html', context)
+
+    else:
+        return redirect('std_login')
+
+
 
 def access(request, code):
     if request.session.get('student_id'):
