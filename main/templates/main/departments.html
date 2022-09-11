@@ -30,31 +30,41 @@
       </nav>
    </div>
    <!-- navigation links end -->
-   <div class="row gy-5">
       {% if deps %}
-      {% for dep in deps%}
-      <!-- individual card starts -->
-      <div class="col-sm-6 d-flex align-items-stretch justify-content-center animate__animated animate__zoomIn">
-         <div class="card shadow" style="width: 30rem !important;">
-            <div class="class-header text-center text-light border-bottom bg-dark rounded">
-               <h6 class="my-2"> Dept. of {{dep.name}}</h6>
-            </div>
-            <div class="card-body d-flex flex-column align-items-center">
-               <h5 class="card-title fw-bold">Department ID : {{dep.department_id}}</h5>
-               
-               <p class="card-text fw-bold">Department Info</p>
-               <p class="card-text">{{ dep.description}}</p>
-               
-               <a href="{% url 'dep_details' dep.department_id %}" class="btn btn-outline-dark"><span
-                  class="px-3">Enter</span></a>
-            </div>
-         </div>
-      </div>
-      <!-- individual card ends -->
-      {% endfor %}
-   </div>
-   {% else %}
-   <div class="text-center h4 text-secondary">No Department to show</div>
+      <table class="table align-middle mb-0 bg-white text-center">
+         <thead class="bg-light">
+            <tr>
+               <th>Name</th>
+               <th>ID</th>
+               <th>No. of Students</th>
+               <th>Total Faculty</th>
+               <th>Total Courses</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for dep in deps%}
+            <tr>
+               <td>
+               {{dep.name}}
+               </td>
+               <td>
+                  {{dep.department_id}}
+               </td>
+               <td>
+                  {{dep.student_count}}
+               </td>
+               <td>
+                  {{dep.faculty_count}}
+               </td>
+               <td>
+                  {{dep.course_count}}
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      {% else %}
+   <div class="text-center h4 text-secondary">No Departments to show</div>
    {% endif %}
 </div>
 {% endblock  %}
