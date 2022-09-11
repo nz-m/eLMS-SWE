@@ -36,6 +36,7 @@ urlpatterns = [
     path('course-material/<int:code>/<int:id>/',
          views.deleteCourseMaterial, name='deleteCourseMaterial'),
     path('courses/', views.courses, name='courses'),
+    path('departments/', views.departments, name='departments'),
     path('access/<int:code>/', views.access, name='access'),
     path('changePasswordPrompt/', views.changePasswordPrompt,
          name='changePasswordPrompt'),
