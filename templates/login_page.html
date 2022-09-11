@@ -14,71 +14,74 @@
       <link rel="stylesheet" href="{% static 'styles/style.css' %}">
       <link rel="stylesheet" href="{% static 'styles/style-login.css' %}">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    </head>
-<body>
-    <div class="main">
-        <section class="sign-in">
+   </head>
+   <body>
+      <div class="main">
+         <section class="sign-in">
             <div class="container">
-                <div class="signin-content">
-                    <div class="signin-image">
-                        <figure><img src="{% static 'images/login-bg.jpg' %}" alt="sing up image"></figure>
-                    </div>
-                    <div class="signin-form">
-                        <h2 class="form-title">Sign in to eLMS</h2>
-                        <form method="POST" class="register-form" id="login-form">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="id"><span class="material-symbols-outlined" style="vertical-align:text-bottom">
-                                    person
-                                    </span></label>
-                                <input type="text" id="id" placeholder="Your ID" name="id"
-                                required>
-                            </div>
-                            <div class="form-group">
-                                <label for="your_pass"><span class="material-symbols-outlined" style="vertical-align:text-bottom">
-                                    lock
-                                    </span></label>
-                                <input type="password" id="password" placeholder="Password"
-                           name="password" required>
-                            </div>
-                            <div class="d-grid">
-                                <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
-                                   type="submit">Sign in</button>
-                             </div>
-                        </form>
-                        <div class="d-flex justify-content-between">
-                            <a href="/admin" target="_blank">Login as
-                            Admin</a>
-                            <div class="dropdown">
-                               <a class="dropdown-toggle" id="dropdownMenuButton1"
-                                  data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                               Login as Guest
-                               </a>
-                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="/student">Student</a></li>
-                                  <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
-                               </ul>
-                            </div>
-                         </div>
-                         {% if messages %}
-                         <!-- Error Alert -->
-                         <div class="alert alert-danger alert-dismissible fade show my-2">
-                            {% for message in messages %}
-                            {{ message }}
-                            {% endfor %}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                         </div>
-                         {% endif %}
-                    </div>
-                </div>
+               <div class="signin-content">
+                  <div class="signin-image">
+                     <figure><img src="{% static 'images/login-bg.jpg' %}" alt="sing up image"></figure>
+                  </div>
+                  <div class="signin-form">
+                     <h2 class="form-title">Sign in to eLMS</h2>
+                     <form method="POST" class="register-form" id="login-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                           <label for="id"><span class="material-symbols-outlined" style="vertical-align:text-bottom">
+                           person
+                           </span></label>
+                           <input type="text" id="id" placeholder="Your ID" name="id"
+                              required>
+                        </div>
+                        <div class="form-group">
+                           <label for="your_pass"><span class="material-symbols-outlined" style="vertical-align:text-bottom">
+                           lock
+                           </span></label>
+                           <input type="password" id="password" placeholder="Password"
+                              name="password" required>
+                        </div>
+                        <div class="d-grid">
+                           <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                              type="submit">Sign in</button>
+                        </div>
+                     </form>
+                     <div class="d-flex justify-content-around flex-wrap">
+                        <div class="">
+                           <div class="dropdown">
+                              <a class="dropdown-toggle" id="dropdownMenuButton1"
+                                 data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                              Sign in as Guest
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                 <li><a class="dropdown-item" href="/student">Student</a></li>
+                                 <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="">
+                           <a href="/admin">Sign in as Admin</a>
+                        </div>
+                     </div>
+                     {% if messages %}
+                     <!-- Error Alert -->
+                     <div class="alert alert-danger alert-dismissible fade show my-2">
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                     </div>
+                     {% endif %}
+                  </div>
+               </div>
             </div>
-        </section>
-    </div>
-    <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
-    <script>
-       if (window.history.replaceState) {
-           window.history.replaceState(null, null, window.location.href);
-       }     
-    </script>
-</body>
+         </section>
+      </div>
+      <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
+      <script>
+         if (window.history.replaceState) {
+             window.history.replaceState(null, null, window.location.href);
+         }     
+      </script>
+   </body>
 </html>

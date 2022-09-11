@@ -42,9 +42,10 @@
 <div class="container shadow rounded">
    <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
       <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
-      <a class="btn btn-sm btn-primary px-3" href="{% url 'quiz' course.code %}"> New</a>
+      <a class="btn btn-sm btn-success px-3" href="{% url 'quiz' course.code %}"> New</a>
    </div>
    {% if quizzes %}
+   <div class="table-responsive-sm">
    <table class="table">
       <thead class="text-center">
          <tr>
@@ -68,15 +69,16 @@
             <td>{{ quiz.total_questions}}</td>
             <td>
                {% if quiz.started == 0 %}
-                  <a class="btn btn-sm btn-success" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
+                  <a class="btn btn-sm btn-primary" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
                {% else %}
-               <button disabled class="btn btn-sm btn-success" style="text-decoration: line-through;">Add question</button>
+               <button disabled class="btn btn-sm btn-primary" style="text-decoration: line-through;">Add question</button>
                {% endif %}
             </td>
          </tr>
          {% endfor %}
       </tbody>
    </table>
+</div>
    {% else %}
    <div >
       <p class="text-center fw-bold pb-3">No quizzes found</p>

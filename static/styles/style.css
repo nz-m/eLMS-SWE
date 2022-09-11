@@ -1,16 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap");
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   box-sizing: border-box;
 }
 
 .timer {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
 }
-
 
 html {
   scroll-behavior: smooth;
@@ -23,7 +21,6 @@ html {
 .btn-primary {
   background-color: #0b6ab8 !important;
   border-color: #0b6ab8 !important;
-
 }
 
 .btn-primary:hover,
@@ -32,7 +29,6 @@ html {
   background-color: #0e5ea0 !important;
   border-color: #0e5ea0 !important;
 }
-
 
 body {
   margin: 0;
@@ -44,15 +40,14 @@ body {
   color: white !important;
 }
 .liner-gradient-sky {
-  background: #1488CC;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background: #1488cc;
+  background: -webkit-linear-gradient(to right, #2b32b2, #1488cc);
+  background: linear-gradient(to right, #2b32b2, #1488cc);
 }
 .liner-gradient-margo {
- background: #f8eecc;  /* fallback for old browsers */
- background: -webkit-linear-gradient(to right, #FFFFFF, #fff5d6);  /* Chrome 10-25, Safari 5.1-6 */
- background: linear-gradient(to right, #FFFFFF, #fff5d6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #f8eecc;
+  background: -webkit-linear-gradient(to right, #ffffff, #fff5d6);
+  background: linear-gradient(to right, #ffffff, #fff5d6);
 }
 
 .login {
@@ -98,7 +93,6 @@ a {
   min-width: 380px;
 }
 
-
 .profile {
   width: 50%;
   min-width: fit-content;
@@ -134,15 +128,20 @@ a {
 .searchbar:hover {
   border: none !important;
 }
-.margin-p-bottom{
+.margin-p-bottom {
   margin-bottom: 0.5rem !important;
 }
-.margin-p-top{
+.margin-p-top {
   margin-top: 0.5rem !important;
 }
 .inline-icons {
   vertical-align: bottom;
 }
-.gradBg{background: linear-gradient(0deg, rgba(255,247,233,1) 0%, rgba(255,255,255,1) 100%);
+.gradBg {
+  background: linear-gradient(
+    0deg,
+    rgba(255, 247, 233, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
   color: #482307;
 }
