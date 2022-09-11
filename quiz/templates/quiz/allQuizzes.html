@@ -39,46 +39,49 @@
 </div>
 <!-- navigation links end -->
 
-<div class="container shadow rounded">
+<div class="container shadow-sm rounded">
    <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
       <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
+      <div>
       <a class="btn btn-sm btn-success px-3" href="{% url 'quiz' course.code %}"> New</a>
    </div>
+   </div>
+
    {% if quizzes %}
-   <div class="table-responsive-sm">
-   <table class="table">
-      <thead class="text-center">
-         <tr>
-            <th scope="col">SL</th>
-            <th scope="col">Quiz</th>
-            <th scope="col">Starts</th>
-            <th scope="col">Ends</th>
-            <th scope="col">Questions</th>
-            <th scope="col"></th>
-         </tr>
-      </thead>
-      <tbody class="table-group-divider text-wrap text-break text-center">
-         {% for quiz in quizzes %}
-         <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>
-               <a class="fw-bold" {% if quiz.started %} style="color:#004481" {% endif %} href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
-            </td>
-            <td>{{ quiz.starts}} </td>
-            <td>{{ quiz.ends}}</td>
-            <td>{{ quiz.total_questions}}</td>
-            <td>
-               {% if quiz.started == 0 %}
-                  <a class="btn btn-sm btn-primary" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
-               {% else %}
-               <button disabled class="btn btn-sm btn-primary" style="text-decoration: line-through;">Add question</button>
-               {% endif %}
-            </td>
-         </tr>
-         {% endfor %}
-      </tbody>
-   </table>
-</div>
+  <div class="table-responsive">
+      <table class="table my-3 text-center" style="white-space: nowrap;">
+         <thead class="table-dark">
+               <tr>
+                  <th scope="col">SL</th>
+                  <th scope="col">Quiz</th>
+                  <th scope="col">Starts</th>
+                  <th scope="col">Ends</th>
+                  <th scope="col">Questions</th>
+                  <th scope="col">Action</th>
+               </tr>
+         </thead>
+         <tbody class="table-group-divider">
+            {% for quiz in quizzes %}
+            <tr>
+               <th scope="row">{{ forloop.counter }}</th>
+               <td>
+                  <a class="fw-bold" {% if quiz.started %} style="color:#004481" {% endif %} href="{% url 'quizSummary' course.code quiz.id %}">{{ quiz.title}}</a>
+               </td>
+               <td>{{ quiz.starts}} </td>
+               <td>{{ quiz.ends}}</td>
+               <td>{{ quiz.total_questions}}</td>
+               <td>
+                  {% if quiz.started == 0 %}
+                     <a class="btn btn-sm btn-primary" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
+                  {% else %}
+                  <button disabled class="btn btn-sm btn-primary" style="text-decoration: line-through;">Add question</button>
+                  {% endif %}
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
    {% else %}
    <div >
       <p class="text-center fw-bold pb-3">No quizzes found</p>

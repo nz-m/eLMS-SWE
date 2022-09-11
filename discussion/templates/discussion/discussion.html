@@ -1,8 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-
 {% block title %}Discussion | {{ course.name }} {% endblock title %}
-
 {% block profile %}
 {% if faculty  %} {% url 'profile' faculty.faculty_id %}
 {% else %} {% url 'profile' student.student_id %}
@@ -45,6 +43,7 @@
       </nav>
    </div>
    <!-- navigation links end -->
+
    <div class="container shadow p-3 rounded">
       <div class="d-flex flex-column m-3">
          {% if faculty %}
@@ -74,9 +73,11 @@
                   style="height: 4rem;width:4rem;">
                <div class="mx-2">
                   {% if discussion.author.role == "Faculty" %}
-                  <span class="fw-bold">{{discussion.sent_by}}</span><span class="fw-bold rounded text-success bg-success bg-opacity-10 mx-2 p-1" style="font-size:11px">Course teacher</span>
+                  <div class="d-inline-flex flex-wrap">
+                     <span class="fw-bold">{{discussion.sent_by}}</span><span class="fw-bold rounded text-success bg-success bg-opacity-10 mx-2 p-1" style="font-size:11px">Course teacher</span>
+                  </div>
                   {% else %}
-                  <span class="d-inline fw-bold">{{discussion.sent_by}}</span>
+                  <span class="fw-bold">{{discussion.sent_by}}</span>
                   {% endif %}
                   <span class="text-muted mx-2" style="font-size:smaller">{{ discussion.time }}</span>
                   <p class="text-wrap text-break my-2 px-2">{{discussion.content}}
@@ -90,7 +91,7 @@
          {% endfor %}
          {% else %}
          <div class="text-center fs-6 text-muted">
-            No one has started a discussion yet
+            Be the first to start the discussion
          </div>
          {% endif %}
       </div>
