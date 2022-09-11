@@ -31,11 +31,11 @@
 </div>
 <!-- navigation links end -->
 <div class="container">
-   <div class="shadow-sm px-3 pt-3 rounded border">
+   <div class="shadow-sm px-3 pt-3 rounded border text-light animate__animated animate__zoomIn" style="background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);">
       <div class="row">
          <div class="col-md-6">
             <p class=" fw-bold fs-5"> {{quiz.title}} Summary</p>
-            <p class="text-muted">
+            <p class="text-light">
                {{quiz.description}}
             </p>
             <p> <span class="material-symbols-outlined inline-icons me-2">
@@ -46,7 +46,7 @@
                military_tech
                </span> Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span>
             </p>
-            <p> <span class="material-symbols-outlined inline-icons">
+            <p> <span class="material-symbols-outlined inline-icons me-2">
                timer
                </span> Time taken : <span id="timetaken" class="fw-bold"></span>
             </p>
@@ -73,7 +73,7 @@
    </div>
    {% for question in questions  %}
    {% comment %} show all question with correct ans checked {% endcomment %}
-   <div class="questionInd container mb-2 shadow-sm p-3 border rounded {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
+   <div class="questionInd container mb-2 shadow-sm p-3 border border-2 rounded border-opacity-50 {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
       <div>
          <div class="d-flex justify-content-between mb-3">
             <div class="fw-bold">
