@@ -57,9 +57,8 @@
       <table class="table shadow rounded" style="white-space: nowrap;">
          <thead class="table-dark">
             <tr>
-               <th class="text-center" scope="col">SL</th>
+               <th class="text-center" scope="col" colspan="2">Student</th>
                <th class="text-center" scope="col">Student ID</th>
-               <th class="text-center" scope="col">Student name</th>
                <th class="text-center" scope="col">Submitted file</th>
                <th class="text-center" scope="col">Submitted on</th>
                <th class="text-center" scope="col" style="min-width: 150px;">Grade</th>
@@ -71,9 +70,10 @@
                {% else %}
                {% for submission in submissions %}
             <tr>
-               <td class="text-center">{{ forloop.counter }}</th>
-               <td class="text-center">{{ submission.student_id }}</th>
-               <td class="text-center">{{submission.student.name}}</td>
+               <td class="text-center"><img class="rounded-circle" src="/media/{{ submission.student.photo}}" alt="image"
+                  style="height: 2.5rem;"></td>
+               <td>{{submission.student.name}}</td>
+               <td class="text-center"><span>{{ submission.student_id }}</span></td>
                <td class="text-center"><a
                   class="fw-bold px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
                   style="text-decoration: none; font-size: smaller !important" download

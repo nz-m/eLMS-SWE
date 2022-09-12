@@ -74,8 +74,7 @@
    <table class="table my-3 text-center">
       <thead class="table-dark">
          <tr>
-            <th scope="col">SL</th>
-            <th scope="col">Name</th>
+            <th scope="col" colspan="2">Student</th>
             <th scope="col">ID</th>
             <th scope="col">Total Absence</th>
             <th scope="col">Total Present</th>
@@ -87,7 +86,8 @@
             {% csrf_token %}
             {% for attendance in attendance %}
             <tr class="text-center">
-               <th scope="row"> {{ forloop.counter }}</th>
+               <td><img class="align-self-baseline rounded-circle" src="/media/{{ attendance.student.photo}}" alt="image"
+                  style="height: 4rem;width:4rem;"></td>
                <td>{{attendance.student.name}}</td>
                <td>{{attendance.student.student_id}}</td>
                <td>{{attendance.total_absent}}</td>

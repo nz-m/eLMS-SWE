@@ -123,7 +123,9 @@ a {
   border-radius: 3px;
   border: none !important;
 }
-
+td,th {
+  vertical-align: middle !important;
+}
 .searchbar:focus {
   border: none !important;
 }

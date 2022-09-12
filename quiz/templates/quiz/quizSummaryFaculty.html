@@ -86,14 +86,15 @@
 <div class="d-flex justify-content-center my-3">
    <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show marks</button>
 </div>
-<div class="container p-3 border rounded" id="allmarks">
+<div class="container p-3 shadow-sm rounded" id="allmarks">
    <div class="fw-bold">Marks of students</div>
    {% if quiz.attempted_students %}
-   <table class="table text-center">
+<div class="table-responsive">
+   <table class="table text-center" style="white-space: nowrap;">
       <thead>
          <tr>
-            <th scope="col">Sl</th>
-            <th scope="col">Name</th>
+            <th scope="col">SL</th>
+            <th scope="col" colspan="2">Student</th>
             <th scope="col">ID</th>
             <th scope="col">Marks</th>
             <th scope="col">Submitted on</th>
@@ -102,8 +103,10 @@
       <tbody>
          {% for student in students %}
          <tr>
-            <th scope="row">{{forloop.counter}}</th>
-            <td>{{student.name}}</td>
+            <td>{{forloop.counter}}</td>
+            <td><img class="rounded-circle" src="/media/{{student.photo}}" alt="image"
+               style="height: 2.5rem;"></td>
+            <td class="fw-bold">{{student.name}}</td>
             <td>{{student.student_id}}</td>
             {% if student.attempted %}
             <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
@@ -116,6 +119,7 @@
          {% endfor %}
       </tbody>
    </table>
+</div>
    {% else %}
    <div class="text-center">No students have attempted this quiz</div>
    {% endif %}

@@ -37,8 +37,8 @@
    </nav>
 </div>
 <!-- navigation links end -->
-<div class="container rounded shadow-sm">
-   <div class="py-3 m-2 rounded d-flex justify-content-between flex-wrap">
+<div class="container rounded border">
+   <div class="py-1 m-2 rounded d-flex justify-content-between flex-wrap">
       <span></span>
       <h5 class="fw-bold text-center">Quizzes -  {{ course.name}}</h5>
       <div>
@@ -74,7 +74,7 @@
                   {% if quiz.started == 0 %}
                   <a class="btn btn-sm btn-primary" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
                   {% else %}
-                  <button disabled class="btn btn-sm btn-primary" style="text-decoration: line-through;">Add question</button>
+                  <button disabled class="btn btn-sm btn-primary">Add question</button>
                   {% endif %}
                </td>
             </tr>
