@@ -62,7 +62,7 @@
                <th class="text-center" scope="col">Student name</th>
                <th class="text-center" scope="col">Submitted file</th>
                <th class="text-center" scope="col">Submitted on</th>
-               <th class="text-center" style="width:15%" scope="col">Grade</th>
+               <th class="text-center" scope="col" style="min-width: 150px;">Grade</th>
             </tr>
          </thead>
          <tbody>
@@ -80,7 +80,7 @@
                   href="{{submission.file.url}}">Download</a></td>
                <td class="text-center">{{submission.submission_date}}</td>
                {% if submission %}
-               <td class="text-center">
+               <td class="text-center" style="min-width: 150px;">
                   <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
                      method="post">
                      {% csrf_token %}
@@ -95,7 +95,7 @@
                      </div>
                </td>
                {% else %}
-               <td class="text-center">
+               <td class="text-center" style="min-width: 150px;">
                <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
                   method="post">
                {% csrf_token %}
