@@ -254,6 +254,8 @@ document.getElementById("Endseconds").innerHTML = secondsEnd;
 if (distanceEnd < 0) {
    clearInterval(x);
    $('#subForm').click();
+   $('#subForm').hide();
+   $('#questions').hide();
    $('#containerSec').addClass('d-none');
 }
 }, 1000);
