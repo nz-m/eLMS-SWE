@@ -30,8 +30,8 @@
    </div>
    <!-- navigation links end -->
    <div class="container d-flex flex-wrap flex-column">
-        <!-- course name starts -->
-        <div class="course-section p-3 m-3 shadow-sm d-flex justify-content-center">
+      <!-- course name starts -->
+      <div class="course-section p-3 m-3 shadow-sm d-flex justify-content-center">
          <div class="fw-bold fs-5 course_name">{{course.department}}-{{course.code}} : {{course.name}}</div>
       </div>
       <!-- course name ends -->
@@ -46,9 +46,9 @@
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="fs-6 text-muted border-bottom d-flex justify-content-between">
                <div>
-                  {{assignment.datetime}}
+                  {{assignment.post_date}}
                </div>
-               <p> Due Date : {{ assignment.deadline}} </p>
+               <p> Due Date : {{ assignment.due_date}} </p>
             </div>
             <!-- individual assignment ends -->
             {% empty %}

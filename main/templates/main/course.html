@@ -31,6 +31,7 @@
    <div class="container d-flex flex-wrap flex-column">
       <!-- course name starts -->
       <div class="rounded p-3 m-3 shadow d-flex justify-content-between">
+         <span></span>
          <h5 class="mt-2 fw-bold">{{course.department}}-{{course.code}} : {{course.name}}</h5>
          <div class="dropdown">
             <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
@@ -90,7 +91,7 @@
             <a class="fw-bold"
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="d-flex justify-content-between">
-               <h6> Due Date : {{ assignment.due_date}} </h6>
+               <p style="font-size:15px"> Due Date : {{ assignment.due_date}} </p>
                <div  style="color:grey;">
                   {{assignment.post_date}}
                </div>
@@ -103,7 +104,7 @@
          {% if assignments %}
          <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
             <span class="mt-2">Showing {{ assignments.count}} of {{course.assignment_set.count}}
-               {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
+            {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
             </span>
             <a class="fs-6" href=" {% url 'student-assignments' course.code %} ">Show all</a>
          </div>

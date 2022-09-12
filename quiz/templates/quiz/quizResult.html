@@ -72,8 +72,7 @@
       </div>
    </div>
    {% for question in questions  %}
-   {% comment %} show all question with correct ans checked {% endcomment %}
-   <div class="questionInd container mb-2 shadow-sm p-3 border border-2 rounded border-opacity-50 {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
+   <div class="questionInd container mb-2 shadow-sm p-3 border border-2 rounded border-opacity-75 {% if question.student_answer == question.answer  %} border-success {% else %} border-danger {% endif %} ">
       <div>
          <div class="d-flex justify-content-between mb-3">
             <div class="fw-bold">

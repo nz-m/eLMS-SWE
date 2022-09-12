@@ -52,17 +52,13 @@
             <!-- individual assignment starts --> 
             <a class="text-bold fs-5" href="{% url 'submission' course.code assignment.id %}">
             {{assignment.title}}</a>
-            <div class="d-flex justify-content-between mt-3">
-               <div class="text-muted">
-                  <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
-               </div>
-               <div class="fs-6" style="color:grey;">
+            <div class="d-flex justify-content-between align-items-center">
+               <p style="margin-bottom:0;" class="text-muted">Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
+               <p class="fs-6 text-muted" style="margin-bottom:0;">
                   {{assignment.datetime}}
-               </div>
+               </p>
             </div>
-            <div class="fs-6">
-               <p>Submission ends : {{ assignment.deadline }}</p>
-            </div>
+            <p style="margin-bottom:0;">Submission ends : {{ assignment.deadline }}</p>
             <hr>
             <!-- individual assignment ends -->
             {% empty %}

@@ -23,7 +23,6 @@
 </div>
 {% endfor %}
 {% endif %}
-
 <!-- navigation links -->
 <div class="container shadow-sm">
    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -39,6 +38,7 @@
 <div class="container d-flex flex-wrap flex-column">
    <!-- course name starts -->
    <div class="rounded p-3 m-3 shadow d-flex justify-content-between align-items-center">
+      <span></span>
       <h5 id="courseTitle" class="mt-2 fw-bold">{{course.department}}-{{course.code}} : {{course.name}}</h5>
       <div class="dropdown">
          <img class="dropdown-toggle" id="drop" data-bs-toggle="dropdown" aria-expanded="false" src="{% static 'images/icon/dropDown.png' %}"
@@ -174,7 +174,7 @@
       <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
          {% if assignments %}
          <span class="mt-2" >Showing {{ assignments.count}} of {{course.assignment_set.count}}
-            {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
+         {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
          </span>
          <a href="{% url 'allAssignments' course.code %}">Show all</a>
          {% endif %}
@@ -238,10 +238,10 @@
    <!-- course material section ends-->
 </div>
 <script>
-      $(document).ready(function(){
-         setTimeout(function(){
-           $(".alert").alert('close');
-         },4500);
-       });
+   $(document).ready(function(){
+      setTimeout(function(){
+        $(".alert").alert('close');
+      },4500);
+    });
 </script>
 {% endblock %}

@@ -14,7 +14,7 @@ class Student(models.Model):
     photo = models.ImageField(upload_to='profile_pics', blank=True,
                               null=False, default='profile_pics/default_student.png')
     department = models.ForeignKey(
-        'Department', on_delete=models.CASCADE, null=False, blank=False,related_name='students')
+        'Department', on_delete=models.CASCADE, null=False, blank=False, related_name='students')
 
     def delete(self, *args, **kwargs):
         if self.photo != 'profile_pics/default_student.png':
@@ -76,7 +76,8 @@ class Department(models.Model):
 class Course(models.Model):
     code = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255, null=False, unique=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=False, related_name='courses')
+    department = models.ForeignKey(
+        Department, on_delete=models.CASCADE, null=False, related_name='courses')
     faculty = models.ForeignKey(
         Faculty, on_delete=models.SET_NULL, null=True, blank=True)
     studentKey = models.IntegerField(null=False, unique=True)
@@ -155,7 +156,17 @@ class Submission(models.Model):
         hours = difference.seconds//3600
         minutes = (difference.seconds//60) % 60
         seconds = difference.seconds % 60
-        return str(days) + " days, " + str(hours) + " hours, " + str(minutes) + " minutes, " + str(seconds) + " seconds"
+
+        if days == 0:
+            if hours == 0:
+                if minutes == 0:
+                    return str(seconds) + " seconds"
+                else:
+                    return str(minutes) + " minutes " + str(seconds) + " seconds"
+            else:
+                return str(hours) + " hours " + str(minutes) + " minutes " + str(seconds) + " seconds"
+        else:
+            return str(days) + " days " + str(hours) + " hours " + str(minutes) + " minutes " + str(seconds) + " seconds"
 
     def submission_date(self):
         return self.datetime.strftime("%d-%b-%y, %I:%M %p")

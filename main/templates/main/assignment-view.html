@@ -53,58 +53,68 @@
 </div>
 <!--Student grading table-->
 <div class="container assignment-info">
-   <table class="table shadow rounded">
-      <thead class="table-dark">
-         <tr>
-            <th class="text-center" scope="col">SL</th>
-            <th class="text-center" scope="col">Student ID</th>
-            <th class="text-center" scope="col">Student name</th>
-            <th class="text-center" scope="col">Submitted file</th>
-            <th class="text-center" scope="col">Submitted on</th>
-            <th class="text-center w-25" scope="col">Grade</th>
-         </tr>
-      </thead>
-      <tbody>
-         {% if not submissions %}
-         <td class="text-center text-muted fst-italic" colspan="6">No one has submitted yet</th>
-            {% else %}
-            {% for submission in submissions %}
-         <tr>
-            <td class="text-center">{{ forloop.counter }}</th>
-            <td class="text-center">{{ submission.student_id }}</th>
-            <td class="text-center">{{submission.student.name}}</td>
-            <td class="text-center"><a
-               class="fw-bold px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
-               style="text-decoration: none; font-size: smaller !important" download
-               href="{{submission.file.url}}">Download</a></td>
-            <td class="text-center">{{submission.submission_date}}</td>
-            {% if submission %}
-            <td class="text-center">
+   <div class="table-responsive">
+      <table class="table shadow rounded" style="white-space: nowrap;">
+         <thead class="table-dark">
+            <tr>
+               <th class="text-center" scope="col">SL</th>
+               <th class="text-center" scope="col">Student ID</th>
+               <th class="text-center" scope="col">Student name</th>
+               <th class="text-center" scope="col">Submitted file</th>
+               <th class="text-center" scope="col">Submitted on</th>
+               <th class="text-center" style="width:15%" scope="col">Grade</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% if not submissions %}
+            <td class="text-center text-muted fst-italic" colspan="6">No one has submitted yet</th>
+               {% else %}
+               {% for submission in submissions %}
+            <tr>
+               <td class="text-center">{{ forloop.counter }}</th>
+               <td class="text-center">{{ submission.student_id }}</th>
+               <td class="text-center">{{submission.student.name}}</td>
+               <td class="text-center"><a
+                  class="fw-bold px-2 py-1 text-primary bg-primary bg-opacity-10 border border-priamry border-opacity-10 rounded-2"
+                  style="text-decoration: none; font-size: smaller !important" download
+                  href="{{submission.file.url}}">Download</a></td>
+               <td class="text-center">{{submission.submission_date}}</td>
+               {% if submission %}
+               <td class="text-center">
+                  <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
+                     method="post">
+                     {% csrf_token %}
+                     <div class="d-flex justify-content-center">
+                        <div class="form-group">
+                           <input class="form-control text-center" type="number" placeholder="Marks" name="marks" id="marks"
+                              max="{{ assignment.marks}}" step=".1" min="0" value="{{submission.marks}}" required>
+                        </div>
+                        <button
+                           type="submit" class="btn btn-sm ms-2 rounded-2"><img
+                           src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>
+                     </div>
+               </td>
+               {% else %}
+               <td class="text-center">
                <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
                   method="post">
-                  {% csrf_token %}
-                  <input class="text-center rounded-2" type="number" step=".01" name="marks" id="marks"
-                     value="{{submission.marks}}" max="{{ assignment.marks}}" min="0" required><button
-                     type="submit" class="btn btn-sm ms-2 rounded-2"><img
-                     src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>
-            </td>
-            {% else %}
-            <td class="text-center">
-            <form action="{% url 'gradeSubmission' course.code assignment.id submission.id %}"
-               method="post">
-            {% csrf_token %}
-            <input class="text-center" type="number" step=".01" name="marks" id="marks"
-               max="{{ assignment.marks}}" min="0" required><button type="submit"
-               class="btn btn-outline-primary btn-sm ms-2"><img
-               src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>
-            </td>
+               {% csrf_token %}
+               <div class="d-flex justify-content-center">
+               <div class="form-group">
+               <input class="form-control text-center" type="number" placeholder="Marks" name="marks" id="marks"
+                  max="{{ assignment.marks}}" step=".1" min="0" required value="{{submission.marks}}"></div><button type="submit"
+                  class="btn btn-outline-primary btn-sm ms-2"><img
+                  src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>
+               </div>
+               </td>
+               {% endif %}
+               </form>
+            </tr>
+            {% endfor %}
             {% endif %}
-            </form>
-         </tr>
-         {% endfor %}
-         {% endif %}
-      </tbody>
-   </table>
+         </tbody>
+      </table>
+   </div>
 </div>
 <script>
    let assignment = document.querySelectorAll('.assignment-info');
@@ -117,7 +127,7 @@
          return i * 250;
       }
    });
-
+   
    var time = new Date('{{ assignment.deadline|date:"D, d M Y H:i:s"}}').getTime();
    var rand = setInterval(function () {
        var now = new Date().getTime();

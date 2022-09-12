@@ -23,7 +23,6 @@
 {% endfor %}
 {% endif %}
 {% comment %} alert ends {% endcomment %}
-
 <!-- navigation links -->
 <div class="container shadow-sm">
    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -38,27 +37,28 @@
    </nav>
 </div>
 <!-- navigation links end -->
-
-<div class="container shadow-sm rounded">
-   <div class="py-3 m-2 rounded d-flex flex-row justify-content-between">
-      <div class="fw-bold fs-5">Quiz -  {{ course.name}}</div>
+<div class="container rounded shadow-sm">
+   <div class="py-3 m-2 rounded d-flex justify-content-between flex-wrap">
+      <span></span>
+      <h5 class="fw-bold text-center">Quizzes -  {{ course.name}}</h5>
       <div>
-      <a class="btn btn-sm btn-success px-3" href="{% url 'quiz' course.code %}"> New</a>
+         <a class="btn btn-sm btn-success px-3" href="{% url 'quiz' course.code %}">New</a>
+      </div>
    </div>
-   </div>
-
+</div>
+<div class="container rounded">
    {% if quizzes %}
-  <div class="table-responsive">
+   <div class="table-responsive">
       <table class="table my-3 text-center" style="white-space: nowrap;">
          <thead class="table-dark">
-               <tr>
-                  <th scope="col">SL</th>
-                  <th scope="col">Quiz</th>
-                  <th scope="col">Starts</th>
-                  <th scope="col">Ends</th>
-                  <th scope="col">Questions</th>
-                  <th scope="col">Action</th>
-               </tr>
+            <tr>
+               <th scope="col">SL</th>
+               <th scope="col">Quiz</th>
+               <th scope="col">Starts</th>
+               <th scope="col">Ends</th>
+               <th scope="col">Questions</th>
+               <th scope="col">Action</th>
+            </tr>
          </thead>
          <tbody class="table-group-divider">
             {% for quiz in quizzes %}
@@ -72,7 +72,7 @@
                <td>{{ quiz.total_questions}}</td>
                <td>
                   {% if quiz.started == 0 %}
-                     <a class="btn btn-sm btn-primary" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
+                  <a class="btn btn-sm btn-primary" href="{% url 'addQuestion' course.code quiz.id %}">Add question</a>
                   {% else %}
                   <button disabled class="btn btn-sm btn-primary" style="text-decoration: line-through;">Add question</button>
                   {% endif %}
