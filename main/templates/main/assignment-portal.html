@@ -47,7 +47,7 @@
       {% endif %}
       {% if submission.status %}
       <label class="p-2 fw-bold" for="">Status: </label>
-      <span style="color: #32CD32;" class="p-2 fw-bold">{{submission.status}} {{submission.time_difference}} early!</span><br>
+      <span class="p-2 fw-bold text-success">{{submission.status}} {{submission.time_difference}} early!</span><br>
       {% else %}
       <label class="p-2 fw-bold" for="">Status: </label>
       <span style="color: red;" class="p-2 fw-bold">Pending!</span><br>
