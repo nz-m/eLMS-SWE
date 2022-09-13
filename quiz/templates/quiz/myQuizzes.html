@@ -30,7 +30,8 @@
    <!-- navigation links end -->
    <div class="container">
       <h6 class="fw-bold"> Active Quizzes </h6>
-      <table class="table text-center shadow">
+      <div class="table-responsive">
+      <table class="table text-center shadow" style="white-space: nowrap;">
          {% if active_quizzes %}
          <thead class="bg-dark text-light">
             <tr>
@@ -65,8 +66,11 @@
             {% endif %}
          </tbody>
       </table>
+   </div>
       <h6 class="fw-bold"> Previous Quizzes </h6>
-      <table class="table text-center shadow">
+      <div class="table-responsive">
+
+      <table class="table text-center shadow" style="white-space: nowrap;">
          {% if previous_quizzes %}
          <thead class="bg-dark text-light">
             <tr>
@@ -118,6 +122,8 @@
             {% endif %}
          </tbody>
       </table>
+   </div>
+
    </div>
 </div>
 <script>

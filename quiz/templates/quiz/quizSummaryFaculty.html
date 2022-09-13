@@ -90,8 +90,8 @@
    <div class="fw-bold">Marks of students</div>
    {% if quiz.attempted_students %}
 <div class="table-responsive">
-   <table class="table text-center" style="white-space: nowrap;">
-      <thead>
+   <table class="table text-center table-borderless" style="white-space: nowrap;">
+      <thead class="border-bottom">
          <tr>
             <th scope="col">SL</th>
             <th scope="col" colspan="2">Student</th>
@@ -104,9 +104,9 @@
          {% for student in students %}
          <tr>
             <td>{{forloop.counter}}</td>
-            <td><img class="rounded-circle" src="/media/{{student.photo}}" alt="image"
+            <td class="text-end"><img class="rounded-circle" src="/media/{{student.photo}}" alt="image"
                style="height: 2.5rem;"></td>
-            <td class="fw-bold">{{student.name}}</td>
+            <td class="fw-bold text-start">{{student.name}}</td>
             <td>{{student.student_id}}</td>
             {% if student.attempted %}
             <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>

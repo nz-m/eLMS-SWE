@@ -6,12 +6,16 @@
   box-sizing: border-box;
 }
 
-.timer {
-  font-family: "IBM Plex Sans", sans-serif;
+body {
+  margin: 0;
+  padding: 0;
 }
-
 html {
   scroll-behavior: smooth;
+}
+
+.timer {
+  font-family: "IBM Plex Sans", sans-serif;
 }
 
 .btn {
@@ -28,11 +32,6 @@ html {
 .btn-primary:visited {
   background-color: #0e5ea0 !important;
   border-color: #0e5ea0 !important;
-}
-
-body {
-  margin: 0;
-  padding: 0;
 }
 
 .navbar-mod {
@@ -123,7 +122,8 @@ a {
   border-radius: 3px;
   border: none !important;
 }
-td,th {
+td,
+th {
   vertical-align: middle !important;
 }
 .searchbar:focus {
