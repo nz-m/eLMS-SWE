@@ -134,6 +134,8 @@
          <div class="fs-6 text-break opacity-75" id="annDescription{{announcement.id}}">{{announcement.description}}</div>
          {% if announcement.file %}
          <div id="annUrl{{announcement.id}}">{{announcement.file.url}}</div>
+         {% else %}
+         <div id="annUrl{{announcement.id}}">No files</div>
          {% endif %}
          <div class="d-flex justify-content-between">
             <span></span>
@@ -254,15 +256,16 @@
       let annUrl = []
       {% for announcement in announcements %}
       annDescription.push(document.getElementById(`annDescription{{announcement.id}}`))
-      {% if announcement.file %}
       annUrl.push(document.getElementById(`annUrl{{announcement.id}}`))
-      {% endif %}
      {% endfor %}
+     // link
       annDescription.forEach(function (element) {
          if (element.innerHTML.includes("https://") || element.innerHTML.includes("http://")) {
             element.innerHTML = element.innerHTML.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
          }
       })
+
+      // file
       annDescription.forEach(function (element,index) {
          if (element.innerHTML.includes("{file}")) {
             //remove folder name from url
@@ -270,6 +273,10 @@
             let urlArr = url.split("/")
             let fileName = urlArr[urlArr.length-1]
             element.innerHTML = element.innerHTML.replace("{file}", `<a href="${url}" target="_blank">${fileName}</a>`);
+            annUrl[index].style.display = "none"
+         }
+         else
+         {
             annUrl[index].style.display = "none"
          }
       })
