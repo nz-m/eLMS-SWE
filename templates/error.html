@@ -16,11 +16,11 @@
    <body>
       <div class="container d-flex justify-content-center align-items-center flex-column" style="min-height: 90vh;">
          <div>
-            <h2 style="display:inline; color: rgb(10, 10, 48);">oops! an </h2>
-            <h1 style="display: inline;color:rgb(226, 6, 6);font-size: 8vw; font-weight: bold;"> ERROR</h1>
-            <h2 style="display:inline;color:rgb(10, 10, 48)"> occured</h2>
+            <h2 class="d-inline">oops! an </h2>
+            <h1 class="d-inline fw-bold" style="font-size: 8vw;color:red"> ERROR</h1>
+            <h2 class="d-inline"> occured</h2>
          </div>
-         <a style=" text-decoration: none;" href=" {% url 'std_logout' %} ">Please log in again from here</a>
+         <a style="text-decoration: none;" href=" {% url 'std_logout' %} ">Please log in again from here</a>
          <div>
             <h2 style="color: rgb(10, 10, 48); font-size: 1rem;">
                If problem persists try clearing the cookies of you browser and restart
