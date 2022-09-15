@@ -1,4 +1,3 @@
-from enum import unique
 from django.db import models
 # Create your models here.
 
@@ -24,8 +23,6 @@ class Student(models.Model):
 
     class Meta:
         verbose_name_plural = 'Students'
-        unique_together = ('student_id', 'name')
-
 
     def __str__(self):
         return self.name
@@ -50,7 +47,6 @@ class Faculty(models.Model):
 
     class Meta:
         verbose_name_plural = 'Faculty'
-        unique_together = ('faculty_id', 'name')
 
     def __str__(self):
         return self.name
