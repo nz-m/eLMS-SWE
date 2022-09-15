@@ -121,7 +121,7 @@
                      </div>
                   </div>
                </div>
-               <a class="btn btn-sm btn-outline-primary" style="border:none"
+               <a class="btn btn-sm btn-outline-success" style="border:none"
                   href="{% url 'editAnnouncement' course.code announcement.id %}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -131,13 +131,17 @@
                </a>
             </div>
          </div>
-         <div class="fs-6 text-break opacity-75">{{announcement.description}}</div>
-         <div class="d-flex justify-content-between mb-2">
+         <div class="fs-6 text-break opacity-75" id="annDescription{{announcement.id}}">{{announcement.description}}</div>
+         {% if announcement.file %}
+         <div id="annUrl{{announcement.id}}">{{announcement.file.url}}</div>
+         {% endif %}
+         <div class="d-flex justify-content-between">
             <span></span>
             <div class="add-announcement" style="color:grey;">
                {{announcement.post_date}}
             </div>
          </div>
+         <hr>
          <!-- individual announcement ends-->
          {% empty %}
          <p class="fs-6 text-center text-muted">No announcement has been posted</p>
@@ -221,7 +225,7 @@
          </div>
          <div class="d-flex flex-row justify-content-between">
             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-               data-bs-target="#materialDel{{material.id}}">
+               data-bs-target="#materialDel{{material.id}}" style="border:none">
                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -246,5 +250,28 @@
         $(".alert").alert('close');
       },4500);
     });
-</script>
+      let annDescription = []
+      let annUrl = []
+      {% for announcement in announcements %}
+      annDescription.push(document.getElementById(`annDescription{{announcement.id}}`))
+      {% if announcement.file %}
+      annUrl.push(document.getElementById(`annUrl{{announcement.id}}`))
+      {% endif %}
+     {% endfor %}
+      annDescription.forEach(function (element) {
+         if (element.innerHTML.includes("https://") || element.innerHTML.includes("http://")) {
+            element.innerHTML = element.innerHTML.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+         }
+      })
+      annDescription.forEach(function (element,index) {
+         if (element.innerHTML.includes("{file}")) {
+            //remove folder name from url
+            let url = annUrl[index].innerHTML
+            let urlArr = url.split("/")
+            let fileName = urlArr[urlArr.length-1]
+            element.innerHTML = element.innerHTML.replace("{file}", `<a href="${url}" target="_blank">${fileName}</a>`);
+            annUrl[index].style.display = "none"
+         }
+      })
+</script> 
 {% endblock %}

@@ -35,7 +35,7 @@
             <div class="card-body p-4">
                <div class="text-center">
                   <div class="fw-bold mb-3 text-start">Post Announcement</div>
-                  <form method="post">
+                  <form method="post" enctype="multipart/form-data">
                      {% csrf_token %}
                      <!-- title Input -->
                      <div class="mb-3">
@@ -45,14 +45,19 @@
                      </div>
                      <!-- description Input -->
                      <div class="mb-3">
-                        <textarea class="form-control" id="content" name="content" type="text"
+                        <textarea class="form-control" id="description" name="description" type="text"
                            placeholder="Details" style="height: 10rem;" maxlength="2000"
                            required></textarea>
-                        <label for="content"></label>
+                        <label for="description"></label>
+                     </div>
+                     <!-- file Input -->
+                     <div class="mb-3">
+                        <input class="form-control" id="file" name="file" type="file" />
+                        <label for="file" class="mt-2"><span class="text-muted">A single file allowed per post. Add "{file}" tag to specify the file position</span></label>
                      </div>
                      <!-- submit button -->
                      <div class="d-grid col-12 mx-auto">
-                        <button class="btn btn-primary" type="submit">Post</button>
+                        <button class="btn btn-primary" type="submit" id="submit">Post</button>
                      </div>
                   </form>
                   <!-- end of form -->
@@ -62,4 +67,17 @@
       </div>
    </div>
 </div>
+
+<script>
+   document.getElementById('file').addEventListener('change', function () {
+      if (document.getElementById('description').value.indexOf('{file}') == -1) {
+         document.getElementById('description').value += '{file}';
+      }
+      var file = document.getElementById('file').files[0];
+      if (file.size > 30000000) {
+         alert('File size is too large. Maximum file size is 30MB');
+         document.getElementById('file').value = '';
+      }
+   });
+</script>
 {% endblock %}

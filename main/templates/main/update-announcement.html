@@ -28,7 +28,7 @@
             <div class="card-body p-4">
                <div class="text-center">
                   <div class="fw-bold text-start mb-3">Update Announcement</div>
-                  <form action="{% url 'updateAnnouncement' course.code announcement.id %}" method="post">
+                  <form action="{% url 'updateAnnouncement' course.code announcement.id %}" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
                      <!-- Title Input -->
                      <div class="mb-3">
@@ -38,13 +38,24 @@
                      </div>
                      <!-- Description Input -->
                      <div class="mb-3">
-                        <textarea class="form-control" id="content" name="content" type="text"
+                        <textarea class="form-control" id="description" name="description" type="text"
                            placeholder="Description" style="height: 10rem;" maxlength="2000"
                            required>{{ announcement.description}}</textarea>
-                        <label for="content"></label>
+                        <label for="description"></label>
                      </div>
+                     <!-- File Input -->
+                     <div class="mb-3">
+                        <input class="form-control" id="file" name="file" type="file" />
+                        <label for="file" class="mt-2"><span class="text-muted">A single file allowed per post. Add "{file}" tag to specify the file position</span></label>
+                     </div>
+                     {% if announcement.file %}
+                     <!--Previous file -->
+                     <div class="mb-3" id="oldFIle">
+                        <a href="{{announcement.file.url}}">{{announcement.file}}</a>
+                     </div>
+                     {% endif %}
                      <div class="d-grid col-12 mx-auto">
-                        <button class="btn btn-primary" type="submit">Update</button>
+                        <button class="btn btn-primary" type="submit" id="submit">Update</button>
                      </div>
                   </form>
                   <!-- End of form -->
@@ -55,4 +66,33 @@
    </div>
 </div>
 {% endif %}
+
+<script>
+   var oldFile = document.getElementById("oldFIle");
+   var oldFileLink = oldFile.getElementsByTagName("a")[0];
+   var oldFileLinkText = oldFileLink.innerHTML;
+   var oldFileLinkTextArray = oldFileLinkText.split("/");
+
+   oldFileLink.innerHTML = oldFileLinkTextArray[oldFileLinkTextArray.length - 1];
+
+   var fileInput = document.getElementById("file");
+   fileInput.addEventListener("change", function () {
+      if (fileInput.files[0].size > 31457280) {
+         alert("File size is too large. Maximum file size is 30MB.");
+         fileInput.value = "";
+      }
+   });
+   fileInput.addEventListener("change", function () {
+      if (fileInput.files.length > 0) {
+         oldFile.style.display = "none";
+      }
+   });
+
+   var description = document.getElementById("description");
+   description.addEventListener("change", function () {
+      if (oldFile.value != "" && description.value.indexOf("{file}") == -1) {
+         description.value += " {file}";
+      }
+   });
+</script>
 {% endblock %}

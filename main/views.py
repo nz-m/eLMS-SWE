@@ -229,13 +229,22 @@ def profile(request, id):
 
 def addAnnouncement(request, code):
     if is_faculty_authorised(request, code):
-        if request.method == 'POST' and request.POST['title'] and request.POST['content']:
+        if request.method == 'POST' and request.POST['title'] and request.POST['description']:
+            if request.FILES.get('file'):
+                Announcement.objects.create(
+                    course_code=Course.objects.get(code=code),
+                    title=request.POST['title'],
+                    description=request.POST['description'],
+                    file=request.FILES['file']
+                )
+            else:
+                Announcement.objects.create(
+                    course_code=Course.objects.get(code=code),
+                    title=request.POST['title'],
+                    description=request.POST['description']
+                )
 
-            course = Course.objects.get(code=code)
-            announcement = Announcement(course_code=course, title=request.POST['title'],
-                                        description=request.POST['content'])
-            announcement.save()
-            messages.success(request, 'Announcement posted.')
+            messages.success(request, 'Announcement posted successfully.')
             return redirect('/faculty/' + str(code))
         else:
             return render(request, 'main/announcement.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
@@ -274,7 +283,9 @@ def updateAnnouncement(request, code, id):
         try:
             announcement = Announcement.objects.get(course_code_id=code, id=id)
             announcement.title = request.POST['title']
-            announcement.description = request.POST['content']
+            announcement.description = request.POST['description']
+            if request.FILES.get('file'):
+                announcement.file = request.FILES['file']
             announcement.save()
             messages.info(request, 'Announcement updated successfully.')
             return redirect('/faculty/' + str(code))

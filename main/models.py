@@ -97,6 +97,7 @@ class Announcement(models.Model):
     title = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=2000, null=False)
     datetime = models.DateTimeField(auto_now_add=True, null=False)
+    file = models.FileField(upload_to='announcement_files', blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Announcements"
