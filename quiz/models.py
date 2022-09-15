@@ -25,7 +25,8 @@ class Quiz(models.Model):
         return self.title
 
     def duration(self):
-        return self.end - self.start
+        time = self.end - self.start
+        return f"{time.seconds // 3600:02d}:{(time.seconds // 60) % 60:02d}:{time.seconds % 60:02d}"
 
     def duration_in_seconds(self):
         return (self.end - self.start).total_seconds()

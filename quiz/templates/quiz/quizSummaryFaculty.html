@@ -67,7 +67,7 @@
          {% endif %}
          <p><span class="material-symbols-outlined inline-icons me-2">
             timelapse
-            </span>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }} Hours</span>
+            </span>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }}</span>
          </p>
       </div>
    </div>
@@ -79,7 +79,7 @@
 {% else %}
 <div class="d-flex justify-content-center my-3">
    <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Marks</span> </button>
+      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish marks</span> </button>
    </form>
 </div>
 {% endif %}
@@ -121,7 +121,7 @@
    </table>
 </div>
    {% else %}
-   <div class="text-center">No students have attempted this quiz</div>
+   <div class="text-center">No students have attempted this quiz yet</div>
    {% endif %}
 </div>
 <div class="container">
@@ -141,18 +141,18 @@
             <p>D : {{question.option4}}</p>
             <div class="row">
                <div class="col-6">
-                  <p style="font-size: 15px;" class="text-success fw-bold margin-p-bottom">Correct answers : {{ question.total_correct_answers }} </p>
-               </div>
-               <div class="col-6">
-                  <p style="font-size: 15px;" class="text-danger fw-bold margin-p-bottom">Wrong answers  : {{ question.total_wrong_answers }} </p>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-6">
                   <p style="font-size: 15px;" class="margin-p-bottom">Answer : <span class="fw-bold">{{question.answer}}</span></p>
                </div>
                <div class="col-6">
                   <p style="font-size: 15px;" class="margin-p-bottom">Marks : <span class="fw-bold">{{question.marks}}</span></p>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-6">
+                  <p style="font-size: 15px;" class="fw-bold margin-p-bottom"><span class="bg-success rounded-circle px-1 text-center" style="color:white">{{ question.total_correct_answers }}</span> Correct answers</p>
+               </div>
+               <div class="col-6">
+                  <p style="font-size: 15px;" class="fw-bold margin-p-bottom"><span class="bg-danger rounded-circle px-1 text-center" style="color:white">{{ question.total_wrong_answers }}</span> Wrong answers</p>
                </div>
             </div>
             {% if question.explanation %}

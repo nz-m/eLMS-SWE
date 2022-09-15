@@ -34,7 +34,7 @@
    <div class="shadow rounded p-3 assignment-info">
       <p class="px-2 fw-bold fs-5">{{assignment.title}}</p>
       <div class="p-2 text-break">{{assignment.description}}</div>
-      <h6 class="p-2 fw-bold">Deadline: <span class="px-2 text-danger"> {{assignment.deadline}} </span></h6>
+      <h6 class="p-2 fw-bold">Deadline: <span class="px-2" style="color:red"> {{assignment.due_date}} </span></h6>
       {% if assignment.file %}
       <label class="p-2 fw-bold" for="">Attachment: &nbsp <a
          class="px-2 py-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2"
