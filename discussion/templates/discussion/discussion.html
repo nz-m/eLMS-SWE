@@ -50,7 +50,8 @@
          <form action="{% url 'send_fac' course.code faculty.faculty_id %}" method="POST">
             {% csrf_token %}
             <div class="input-group mb-3 p-3">
-               <input type="text" class="form-control" placeholder="Write message..." name="content" required>
+               {% comment %} <input type="text" class="form-control" placeholder="Write message..." name="content" required> {% endcomment %}
+               {{ form.content }}
                <button class="btn btn-primary mx-2 rounded" type="submit">Send</button>
             </div>
          </form>
@@ -58,7 +59,8 @@
          <form action="{% url 'send' course.code student.student_id %}" method="POST">
             {% csrf_token %}
             <div class="input-group mb-3 p-3">
-               <input type="text" class="form-control" placeholder="Write message..." name="content" required>
+               {% comment %} <input type="text" class="form-control" placeholder="Write message..." name="content" required> {% endcomment %}
+               {{ form.content }}
                <button class="btn btn-primary mx-2 rounded" type="submit" id="button">Send</button>
             </div>
          </form>
