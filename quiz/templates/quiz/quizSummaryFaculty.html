@@ -31,7 +31,7 @@
    </nav>
 </div>
 <!-- navigation links end -->
-<div class="container shadow-sm rounded border p-3 liner-gradient-sky text-light animate__animated animate__zoomIn">
+<div class="container shadow-sm rounded border p-3 liner-gradient-sky text-light animate__animated animate__zoomInUp">
    {% if quiz.start < time %}
    <div class="row">
       <div class="col-6">
@@ -129,7 +129,7 @@
    {% for question in questions %}
    <div class="d-grid gap-2 mt-2">
       <button class="bt btn-sm liner-gradient-margo mb-2 border rounded py-3" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
-      <span class="fw-bold">{{forloop.counter}}. {{question.question}}</span> 
+      <span class="fw-boldz">{{forloop.counter}}. {{question.question}}</span> 
       </button>
    </div>
    <div class="collapse" id="question{{question.id}}">

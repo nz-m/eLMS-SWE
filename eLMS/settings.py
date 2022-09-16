@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'attendance.apps.AttendanceConfig',
     'quiz.apps.QuizConfig',
     'django_cleanup.apps.CleanupConfig',
-
+    'froala_editor',
 ]
 
 MIDDLEWARE = [

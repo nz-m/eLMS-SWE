@@ -1,4 +1,5 @@
 from django.db import models
+from froala_editor.fields import FroalaField
 # Create your models here.
 
 
@@ -94,10 +95,8 @@ class Course(models.Model):
 class Announcement(models.Model):
     course_code = models.ForeignKey(
         Course, on_delete=models.CASCADE, null=False)
-    title = models.CharField(max_length=255, null=False)
-    description = models.TextField(max_length=2000, null=False)
     datetime = models.DateTimeField(auto_now_add=True, null=False)
-    file = models.FileField(upload_to='announcement_files', blank=True, null=True)
+    description = FroalaField()
 
     class Meta:
         verbose_name_plural = "Announcements"
@@ -114,7 +113,7 @@ class Assignment(models.Model):
     course_code = models.ForeignKey(
         Course, on_delete=models.CASCADE, null=False)
     title = models.CharField(max_length=255, null=False)
-    description = models.TextField(max_length=2000, null=False)
+    description = models.TextField(null=False)
     datetime = models.DateTimeField(auto_now_add=True, null=False)
     deadline = models.DateTimeField(null=False)
     file = models.FileField(upload_to='assignments/', null=True, blank=True)
@@ -188,7 +187,6 @@ class Submission(models.Model):
 class Material(models.Model):
     course_code = models.ForeignKey(
         Course, on_delete=models.CASCADE, null=False)
-    title = models.CharField(max_length=255, null=False)
     description = models.TextField(max_length=2000, null=False)
     datetime = models.DateTimeField(auto_now_add=True, null=False)
     file = models.FileField(upload_to='materials/', null=True, blank=True)

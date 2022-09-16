@@ -5,6 +5,7 @@ from main.models import Student, Faculty, Course
 from main.views import is_faculty_authorised, is_student_authorised
 from itertools import chain
 
+
 # Create your views here.
 
 

@@ -5,6 +5,7 @@ from .models import Student, Course, Announcement, Assignment, Submission, Mater
 from django.template.defaulttags import register
 from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
+from .forms import AnnouncementForm, AssignmentForm, MaterialForm
 
 
 def is_student_authorised(request, code):
@@ -229,25 +230,15 @@ def profile(request, id):
 
 def addAnnouncement(request, code):
     if is_faculty_authorised(request, code):
-        if request.method == 'POST' and request.POST['title'] and request.POST['description']:
-            if request.FILES.get('file'):
-                Announcement.objects.create(
-                    course_code=Course.objects.get(code=code),
-                    title=request.POST['title'],
-                    description=request.POST['description'],
-                    file=request.FILES['file']
-                )
-            else:
-                Announcement.objects.create(
-                    course_code=Course.objects.get(code=code),
-                    title=request.POST['title'],
-                    description=request.POST['description']
-                )
-
-            messages.success(request, 'Announcement posted successfully.')
-            return redirect('/faculty/' + str(code))
+        if request.method == 'POST':
+            form = AnnouncementForm(request.POST)
+            form.instance.course_code = Course.objects.get(code=code)
+            if form.is_valid():
+                form.save()
+                return redirect('/faculty/' + str(code))
         else:
-            return render(request, 'main/announcement.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
+            form = AnnouncementForm()
+        return render(request, 'main/announcement.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']), 'form': form})
     else:
         return redirect('std_login')
 
@@ -268,10 +259,12 @@ def deleteAnnouncement(request, code, id):
 def editAnnouncement(request, code, id):
     if is_faculty_authorised(request, code):
         announcement = Announcement.objects.get(course_code_id=code, id=id)
+        form = AnnouncementForm(instance=announcement)
         context = {
             'announcement': announcement,
             'course': Course.objects.get(code=code),
-            'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])
+            'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']),
+            'form': form
         }
         return render(request, 'main/update-announcement.html', context)
     else:
@@ -282,13 +275,10 @@ def updateAnnouncement(request, code, id):
     if is_faculty_authorised(request, code):
         try:
             announcement = Announcement.objects.get(course_code_id=code, id=id)
-            announcement.title = request.POST['title']
-            announcement.description = request.POST['description']
-            if request.FILES.get('file'):
-                announcement.file = request.FILES['file']
-            announcement.save()
-            messages.info(request, 'Announcement updated successfully.')
-            return redirect('/faculty/' + str(code))
+            form = AnnouncementForm(request.POST, instance=announcement)
+            if form.is_valid():
+                form.save()
+                return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
 
@@ -298,28 +288,16 @@ def updateAnnouncement(request, code, id):
 
 def addAssignment(request, code):
     if is_faculty_authorised(request, code):
-        if request.method == 'POST' and request.POST['title'] and request.POST['content']:
-            try:
-                course = Course.objects.get(code=code)
-                course_code = course
-                title = request.POST['title']
-                description = request.POST['content']
-                deadline = request.POST['datetime']
-                marks = request.POST['marks']
-                file = request.FILES['file']
-                assignment = Assignment(course_code=course_code, title=title,
-                                        description=description, deadline=deadline, marks=marks, file=file)
-
-                assignment.save()
-                messages.success(request, 'Assignment ' +
-                                 assignment.title + ' posted successfully.')
+        if request.method == 'POST':
+            form = AssignmentForm(request.POST, request.FILES)
+            form.instance.course_code = Course.objects.get(code=code)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Assignment added successfully.')
                 return redirect('/faculty/' + str(code))
-            except:
-
-                return render(request, 'main/assignment.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
-
         else:
-            return render(request, 'main/assignment.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
+            form = AssignmentForm()
+        return render(request, 'main/assignment.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']), 'form': form})
     else:
         return redirect('std_login')
 
@@ -500,18 +478,18 @@ def gradeSubmission(request, code, id, sub_id):
 
 def addCourseMaterial(request, code):
     if is_faculty_authorised(request, code):
-        if request.method == 'POST' and request.POST['title'] and request.POST['content']:
-            try:
-                course = Course.objects.get(code=code)
-                course_material = Material(course_code=course, title=request.POST['title'],
-                                           description=request.POST['content'], file=request.FILES['file'])
-                course_material.save()
+        if request.method == 'POST':
+            form = MaterialForm(request.POST, request.FILES)
+            form.instance.course_code = Course.objects.get(code=code)
+            if form.is_valid():
+                form.save()
                 messages.success(request, 'New course material added')
                 return redirect('/faculty/' + str(code))
-            except:
-                return render(request, 'main/course-material.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
+            else:
+                return render(request, 'main/course-material.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']), 'form': form})
         else:
-            return render(request, 'main/course-material.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id'])})
+            form = MaterialForm()
+            return render(request, 'main/course-material.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']), 'form': form})
     else:
         return redirect('std_login')
 

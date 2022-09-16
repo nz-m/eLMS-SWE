@@ -67,18 +67,7 @@
          <div>
             {% for announcement in announcements %}
             <!-- individual announcement starts -->
-            <h6 class="fw-bold">{{announcement.title}}</h6>
-            <div class="fs-6 text-break opacity-75" id="annDescription{{announcement.id}}">{{announcement.description}}</div>
-            {% if announcement.file %}
-            <div id="annUrl{{announcement.id}}">{{announcement.file.url}}</div>
-            {% else %}
-            <div id="annUrl{{announcement.id}}">No files</div>
-            {% endif %}
-            <div class="d-flex flex-row-reverse">
-               <div  style="color:grey;">
-                  {{announcement.post_date}}
-               </div>
-            </div>
+            <div class="fs-6" id="annDescription{{announcement.id}}">{% autoescape off %}{{announcement.description}}{% endautoescape %}</div>
             <!-- individual announcement ends-->
             {% empty %}
             <p class="fs-6 text-center text-muted">No announcement has been posted</p>
@@ -125,10 +114,12 @@
          <div>
             {% for material in materials  %}
             <!-- individual material starts -->
-            <a  href="{{ material.file.url }}">{{material.title}}</a><br>
+            <p>{% autoescape off %}{{ material.description }}{% endautoescape %}</p>
             <div class="d-flex justify-content-between text-break">
-               <p>{{ material.description }}</p>
-               <div  style="color:grey;">
+               {% if material.file %}
+               <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">File : {{material.file.name}}</span></a><br>
+               {% endif %}
+               <div class="text-muted">
                   {{material.post_date}}
                </div>
             </div>
@@ -141,34 +132,9 @@
       <!-- course material section ends -->
    </div>
 </div>
-
 <script>
-   let annDescription = []
-   let annUrl = []
-   {% for announcement in announcements %}
-   annDescription.push(document.getElementById(`annDescription{{announcement.id}}`))
-   {% if announcement.file %}
-   annUrl.push(document.getElementById(`annUrl{{announcement.id}}`))
-   {% endif %}
-  {% endfor %}
-   annDescription.forEach(function (element) {
-      if (element.innerHTML.includes("https://") || element.innerHTML.includes("http://")) {
-         element.innerHTML = element.innerHTML.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-      }
-   })
-   annDescription.forEach(function (element,index) {
-      if (element.innerHTML.includes("{file}")) {
-         //remove folder name from url
-         let url = annUrl[index].innerHTML
-         let urlArr = url.split("/")
-         let fileName = urlArr[urlArr.length-1]
-         element.innerHTML = element.innerHTML.replace("{file}", `<a href="${url}" target="_blank">${fileName}</a>`);
-         annUrl[index].style.display = "none"
-      }
-      else
-         {
-         annUrl[index].style.display = "none"
-         }
-   })
+   var materialName = document.getElementById("materialName").innerHTML;
+   var materialName = materialName.replace("materials/", "");
+   document.getElementById("materialName").innerHTML = materialName;
 </script>
 {% endblock %}

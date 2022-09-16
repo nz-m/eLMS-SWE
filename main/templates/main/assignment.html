@@ -29,38 +29,26 @@
 </div>
 <!-- navigation links end -->
 <div class="container container-announcement p-4 rounded shadow-sm">
+<div class="form-group">
    <form action="" method="POST" enctype="multipart/form-data">
       <div class="fw-bold text-start mb-3">
          Create Assignment
       </div>
       {% csrf_token %}
+      {% for field in form %}
       <div class="mb-3">
-         <label for="title" class="form-label">Title:</label>
-         <input type="text" class="form-control rounded" id="title" name="title" maxlength="255" required>
+         {{ field.label_tag }}
+         {{ field }}
+         <span style="color:red">{{ field.errors }}</span>
       </div>
+      {% endfor %}
       <div class="mb-3">
-         <label for="content" class="form-label">Details:</label>
-         <textarea class="form-control rounded" id="content" rows="3" name="content" maxlength="2000"
-            required></textarea>
-      </div>
-      <div class="mb-3">
-         <label for="marks" class="form-label">Marks:</label>
-         <input type="number" class="form-control rounded" id="marks" rows="3" name="marks" min="0" max="100"
-            required>
-      </div>
-      <div class="input-group mb-3">
-         <input type="file" class="form-control rounded" id="file" aria-describedby="file" aria-label="Upload"
-            name="file" required>
-      </div>
          <p class="text-center" id="fileError"></p>
-      <div class="mb-3">
-         <label class="form-label">Submission Ends:</label>
-         <input class="rounded" type="datetime-local" id="datetime" name="datetime" required>
-      </div>
-      <div class="d-grid gap-2">
-         <button class="btn btn-primary my-2" type="submit">Post</button>
-      </div>
+         <div class="d-grid gap-2">
+            <button class="btn btn-primary my-2" type="submit">Post</button>
+         </div>
    </form>
+   </div>
 </div>
 <script>
    let fileError = document.getElementById('fileError');

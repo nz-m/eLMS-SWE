@@ -33,7 +33,7 @@
 <div class="container">
    <div class="shadow rounded p-3 assignment-info">
       <p class="px-2 fw-bold fs-5">{{assignment.title}}</p>
-      <div class="p-2 text-break">{{assignment.description}}</div>
+      <div class="p-2 text-break">{% autoescape off %}{{assignment.description}}{% endautoescape %}</div>
       <h6 class="p-2 fw-bold">Deadline: <span class="px-2" style="color:red"> {{assignment.due_date}} </span></h6>
       {% if assignment.file %}
       <label class="p-2 fw-bold" for="">Attachment: &nbsp <a

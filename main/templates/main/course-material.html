@@ -34,38 +34,29 @@
             <div class="card-body p-4">
                <div class="text-center">
                   <div class="fw-bold text-start mb-3">Add course material</div>
-                  <form action="" method="POST" enctype="multipart/form-data">
-                     {% csrf_token %}
-                     <!-- title Input -->
-                     <div class="mb-2">
-                        <input class="form-control" id="title" name="title" maxlength="255" type="text"
-                           placeholder="Title" required />
-                        <label for="title"></label>
-                     </div>
-                     <!-- description Input -->
-                     <div class="mb-2">
-                        <textarea class="form-control" id="content" name="content" type="text"
-                           placeholder="Description" style="height: 10rem;" maxlength="2000"
-                           required></textarea>
-                        <label for="content"></label>
-                     </div>
-                     <!-- file input -->
-                     <div class="mb-3">
-                        <input class="form-control" id="file" type="file" name="file" required>
-                     </div>
-                     <p class="fw-bold" id="fileError"></p>
-                     <!-- submit button -->
-                     <div class="d-grid col-12 mx-auto">
-                        <button class="btn btn-primary" type="submit">Post</button>
-                     </div>
-                  </form>
+                  <div class="form-group">
+                     <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="mb-3">
+                           {{ field.label_tag }}
+                           {{ field }}
+                           <span style="color:red">{{ field.errors }}</span>
+                        </div>
+                        {% endfor %}
+                        <p class="fw-bold" id="fileError"></p>
+                        <!-- submit button -->
+                        <div class="d-grid col-12 mx-auto">
+                           <button class="btn btn-primary" type="submit">Post</button>
+                        </div>
+                     </form>
+                  </div>
                </div>
             </div>
          </div>
       </div>
    </div>
 </div>
-
 <script>
    // File size validation
    let fileError = document.getElementById('fileError');
