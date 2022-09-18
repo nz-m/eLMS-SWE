@@ -22,8 +22,7 @@ class AssignmentForm(forms.ModelForm):
         super(AssignmentForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.required = True
-
-        self.fields['description'].label = ""
+            field.label = ''
         self.fields['file'].required = False
 
     class Meta:
@@ -31,9 +30,9 @@ class AssignmentForm(forms.ModelForm):
         fields = ('title', 'description', 'deadline', 'marks', 'file')
         widgets = {
             'description': FroalaEditor(),
-            'title': forms.TextInput(attrs={'class': 'form-control mt-1', 'id': 'title', 'name': 'title'}),
+            'title': forms.TextInput(attrs={'class': 'form-control mt-1', 'id': 'title', 'name': 'title', 'placeholder': 'Title'}),
             'deadline': forms.DateTimeInput(attrs={'class': 'form-control mt-1', 'id': 'deadline', 'name': 'deadline', 'type': 'datetime-local'}),
-            'marks': forms.NumberInput(attrs={'class': 'form-control mt-1', 'id': 'marks', 'name': 'marks'}),
+            'marks': forms.NumberInput(attrs={'class': 'form-control mt-1', 'id': 'marks', 'name': 'marks', 'placeholder': 'Marks'}),
             'file': forms.FileInput(attrs={'class': 'form-control mt-1', 'id': 'file', 'name': 'file', 'aria-describedby': 'file', 'aria-label': 'Upload'}),
         }
 

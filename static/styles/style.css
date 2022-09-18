@@ -113,7 +113,10 @@ a {
 .shadow-sm {
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px !important;
 }
-
+.shadow-lg {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+}
 .login-shadow {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }

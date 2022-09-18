@@ -103,7 +103,7 @@ class Announcement(models.Model):
         ordering = ['-datetime']
 
     def __str__(self):
-        return self.title
+        return self.datetime.strftime("%d-%b-%y, %I:%M %p")
 
     def post_date(self):
         return self.datetime.strftime("%d-%b-%y, %I:%M %p")
