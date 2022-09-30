@@ -268,7 +268,6 @@ def editAnnouncement(request, code, id):
             'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']),
             'form': form
         }
-        messages.info(request, 'Announcement updated successfully.')
         return render(request, 'main/update-announcement.html', context)
     else:
         return redirect('std_login')
@@ -281,6 +280,7 @@ def updateAnnouncement(request, code, id):
             form = AnnouncementForm(request.POST, instance=announcement)
             if form.is_valid():
                 form.save()
+                messages.info(request, 'Announcement updated successfully.')
                 return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
