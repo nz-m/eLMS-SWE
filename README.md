@@ -23,7 +23,7 @@ A learning management and online assessment system for academic education.
 5. Chart.js v3.9.1
 4. Animate.css 4.1.1
 
-##UI
+## UI
 ![Screenshot (65)](https://user-images.githubusercontent.com/87283264/194387627-47bc4506-5acb-46da-8ae0-70ea1e7e4eb8.png)
 ![Screenshot (70)](https://user-images.githubusercontent.com/87283264/194387776-552bdd11-9252-4be2-8139-10e0f270c09f.png)
 ![Screenshot (67)](https://user-images.githubusercontent.com/87283264/194387798-77c6ba2c-9089-4469-88e0-282191535211.png)
