@@ -68,6 +68,11 @@
             {% for announcement in announcements %}
             <!-- individual announcement starts -->
             <div class="fs-6" id="annDescription{{announcement.id}}">{% autoescape off %}{{announcement.description}}{% endautoescape %}</div>
+            <div class="d-flex flex-row-reverse border-bottom border-1">
+               <div style="color:grey;" class="mb-1">
+                  {{announcement.post_date}}
+               </div>
+            </div>
             <!-- individual announcement ends-->
             {% empty %}
             <p class="fs-6 text-center text-muted">No announcement has been posted</p>

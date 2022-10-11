@@ -22,22 +22,19 @@
 <!-- navigation links end -->
 <div class="container">
    <div class="row justify-content-center">
-      <div class="col-sm-12 col-lg-8">
-         <div class="card border-0 rounded-2 shadow">
-            <div class="card-body p-4">
-               <div class="text-center">
-                  <div class="fw-bold text-start mb-3">Update Announcement</div>
-                  <div class="from-group">
-                     <form action="{% url 'updateAnnouncement' course.code announcement.id %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="d-grid col-12 mx-auto">
-                           <button class="btn btn-primary" type="submit" id="submit">Update</button>
-                        </div>
-                     </form>
+      <div class="col-md-8 shadow-lg p-3 rounded">
+         <div class="text-center">
+            <div class="fw-bold mb-3 text-start">Edit Announcement</div>
+            <div class="from-group">
+               <form action="{% url 'updateAnnouncement' course.code announcement.id %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <!-- submit button -->
+                  <div class="d-flex justify-content-end bg-light border p-2 rounded">
+                     <a class="btn btn-sm btn-outline-danger mx-2" href="{% url 'faculty' course.code %}">Cancel</a>
+                     <button class="btn btn-sm btn-primary" type="submit" id="submit"> <span class="mx-2">Update</span></button>
                   </div>
-                  <!-- End of form -->
-               </div>
+               </form>
             </div>
          </div>
       </div>

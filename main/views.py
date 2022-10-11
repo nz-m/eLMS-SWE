@@ -235,6 +235,8 @@ def addAnnouncement(request, code):
             form.instance.course_code = Course.objects.get(code=code)
             if form.is_valid():
                 form.save()
+                messages.success(
+                    request, 'Announcement added successfully.')
                 return redirect('/faculty/' + str(code))
         else:
             form = AnnouncementForm()
@@ -278,6 +280,7 @@ def updateAnnouncement(request, code, id):
             form = AnnouncementForm(request.POST, instance=announcement)
             if form.is_valid():
                 form.save()
+                messages.info(request, 'Announcement updated successfully.')
                 return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
