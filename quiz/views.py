@@ -1,9 +1,12 @@
 import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Quiz, Question, StudentAnswer
 from main.models import Student, Course, Faculty
 from main.views import is_faculty_authorised, is_student_authorised
 from django.contrib import messages
+from django.utils import timezone
+from django.db.models import Count, Sum, F, FloatField, Q, Prefetch
+from django.db.models.functions import Cast
 
 
 def quiz(request, code):
@@ -74,60 +77,49 @@ def allQuizzes(request, code):
         return redirect('std_login')
 
 
-# REFACTOR THIS
 def myQuizzes(request, code):
     if is_student_authorised(request, code):
         course = Course.objects.get(code=code)
         quizzes = Quiz.objects.filter(course=course)
         student = Student.objects.get(student_id=request.session['student_id'])
-        # check if that student has already attempted this quiz
-        for quiz in quizzes:
-            student_answers = StudentAnswer.objects.filter(
-                student=student, quiz=quiz)
-            if student_answers.count() > 0:
-                quiz.attempted = True
-            else:
-                quiz.attempted = False
 
+        # Determine which quizzes are active and which are previous
         active_quizzes = []
         previous_quizzes = []
-
         for quiz in quizzes:
-            student_answers = StudentAnswer.objects.filter(
-                student=student, quiz=quiz)
-            if quiz.end < datetime.datetime.now() or student_answers.count() > 0:
+            if quiz.end < timezone.now() or quiz.studentanswer_set.filter(student=student).exists():
                 previous_quizzes.append(quiz)
             else:
                 active_quizzes.append(quiz)
 
-        for previousQuiz in previous_quizzes:
-            total_marks_obtained = 0
-            student_answers = StudentAnswer.objects.filter(
-                student=student, quiz=previousQuiz)
+        # Add attempted flag to quizzes
+        for quiz in quizzes:
+            quiz.attempted = quiz.studentanswer_set.filter(
+                student=student).exists()
 
-            for student_answer in student_answers:
-                total_marks_obtained += student_answer.question.marks if student_answer.answer == student_answer.question.answer else 0
-            previousQuiz.total_marks_obtained = total_marks_obtained
+        # Add total marks obtained, percentage, and total questions for previous quizzes
+        for quiz in previous_quizzes:
+            student_answers = quiz.studentanswer_set.filter(student=student)
+            total_marks_obtained = sum([student_answer.question.marks if student_answer.answer ==
+                                       student_answer.question.answer else 0 for student_answer in student_answers])
+            quiz.total_marks_obtained = total_marks_obtained
+            quiz.total_marks = sum(
+                [question.marks for question in quiz.question_set.all()])
+            quiz.percentage = round(
+                total_marks_obtained / quiz.total_marks * 100, 2) if quiz.total_marks != 0 else 0
+            quiz.total_questions = quiz.question_set.count()
 
-            previousQuiz.total_marks = 0
-            for question in previousQuiz.question_set.all():
-                previousQuiz.total_marks += question.marks
+        # Add total questions for active quizzes
+        for quiz in active_quizzes:
+            quiz.total_questions = quiz.question_set.count()
 
-            try:
-                previousQuiz.percentage = (
-                    total_marks_obtained / previousQuiz.total_marks) * 100
-                previousQuiz.percentage = round(previousQuiz.percentage, 2)
-            except ZeroDivisionError:
-                previousQuiz.percentage = 0
-
-        for previousQuiz in previous_quizzes:
-            previousQuiz.total_questions = Question.objects.filter(
-                quiz=previousQuiz).count()
-        for activeQuiz in active_quizzes:
-            activeQuiz.total_questions = Question.objects.filter(
-                quiz=activeQuiz).count()
-
-        return render(request, 'quiz/myQuizzes.html', {'course': course, 'quizzes': quizzes, 'active_quizzes': active_quizzes, 'previous_quizzes': previous_quizzes, 'student': student})
+        return render(request, 'quiz/myQuizzes.html', {
+            'course': course,
+            'quizzes': quizzes,
+            'active_quizzes': active_quizzes,
+            'previous_quizzes': previous_quizzes,
+            'student': student,
+        })
     else:
         return redirect('std_login')
 
@@ -212,7 +204,6 @@ def quizResult(request, code, quiz_id):
         return redirect('std_login')
 
 
-# REFACTOR THIS
 def quizSummary(request, code, quiz_id):
     if is_faculty_authorised(request, code):
         course = Course.objects.get(code=code)
@@ -263,3 +254,5 @@ def quizSummary(request, code, quiz_id):
 
     else:
         return redirect('std_login')
+
+
