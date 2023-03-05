@@ -6,6 +6,17 @@ from django.template.defaulttags import register
 from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
 from .forms import AnnouncementForm, AssignmentForm, MaterialForm
+from django import forms
+from django.core import validators
+
+
+from django import forms
+
+
+class LoginForm(forms.Form):
+    id = forms.CharField(label='ID', max_length=10, validators=[
+                         validators.RegexValidator(r'^\d+$', 'Please enter a valid number.')])
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
 def is_student_authorised(request, code):
@@ -23,64 +34,41 @@ def is_faculty_authorised(request, code):
         return False
 
 
-# Login page for both student and faculty
+# Custom Login page for both student and faculty
 def std_login(request):
-    try:
-        # If the user is already logged in, redirect to the course page
-        if request.session.get('student_id'):
-            return redirect('/my/')
-        elif request.session.get('faculty_id'):
-            return redirect('/facultyCourses/')
-        else:
-            # If the user is not logged in, display the login page
-            if request.method == 'POST':
-                id = request.POST["id"]
-                password = (request.POST["password"])
-                try:
-                    # Checks if id matches any student, if no match found, checks if id matches any faculty
-                    if Student.objects.filter(student_id=id).exists():
-                        student = Student.objects.get(student_id=id)
-                        if str(student.student_id) == id and str(student.password) == password:
+    error_messages = []
 
-                            request.session['student_id'] = id
-                            return redirect('myCourses')
-                        else:
-                            # id matches but student password is wrong
-                            messages.error(
-                                request, 'Incorrect password. Please try again.', extra_tags='alert')
-                            return redirect('std_login')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
 
-                    else:
-                        # Checks if id matches any faculty
-                        if Faculty.objects.filter(faculty_id=id).exists():
-                            faculty = Faculty.objects.get(faculty_id=id)
-                            if str(faculty.faculty_id) == id and str(faculty.password) == password:
-                                request.session['faculty_id'] = id
-                                return redirect('facultyCourses')
+        if form.is_valid():
+            id = form.cleaned_data['id']
+            password = form.cleaned_data['password']
 
-                            else:
-                                # id matches but faculty password is wrong
-                                messages.error(
-                                    request, 'Incorrect password. Please try again.', extra_tags='alert')
-                                return redirect('std_login')
-                        else:
-                            # id does not match any student or faculty
-                            messages.error(
-                                request, 'Incorrect user id. Please try again.', extra_tags='alert')
-                            return redirect('std_login')
-                except:
-                    # id does not match any student or faculty
-                    messages.error(
-                        request, 'Invalid login credentials.', extra_tags='alert')
-                    return redirect('std_login')
-
+            if Student.objects.filter(student_id=id, password=password).exists():
+                request.session['student_id'] = id
+                return redirect('myCourses')
+            elif Faculty.objects.filter(faculty_id=id, password=password).exists():
+                request.session['faculty_id'] = id
+                return redirect('facultyCourses')
             else:
-                return render(request, 'login_page.html')
-    except:
-        return render(request, 'error.html')
+                error_messages.append('Invalid login credentials.')
+        else:
+            error_messages.append('Invalid form data.')
+    else:
+        form = LoginForm()
 
+    if 'student_id' in request.session:
+        return redirect('/my/')
+    elif 'faculty_id' in request.session:
+        return redirect('/facultyCourses/')
+
+    context = {'form': form, 'error_messages': error_messages}
+    return render(request, 'login_page.html', context)
 
 # Clears the session on logout
+
+
 def std_logout(request):
     request.session.flush()
     return redirect('std_login')

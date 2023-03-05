@@ -26,25 +26,18 @@
                   <div class="signin-form">
                      <h2 class="form-title">Sign in to eLMS</h2>
                      <form method="POST" class="register-form" id="login-form">
-                        {% csrf_token %}
-                        <div class="form-group">
-                           <label for="id"><span class="material-symbols-outlined" style="vertical-align:text-bottom">
-                           person
-                           </span></label>
-                           <input type="text" id="id" placeholder="Your ID" name="id"
-                              required>
-                        </div>
-                        <div class="form-group">
-                           <label for="password"><span class="material-symbols-outlined" style="vertical-align:text-bottom">
-                           lock
-                           </span></label>
-                           <input type="password" id="password" placeholder="Password"
-                              name="password" required>
-                        </div>
-                        <div class="d-grid">
-                           <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
-                              type="submit">Sign in</button>
-                        </div>
+                           {% csrf_token %}
+                           <div class="form-group">
+                              <label for="{{ form.id.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">person</span></label>
+                              {{ form.id }}
+                           </div>
+                           <div class="form-group">
+                              <label for="{{ form.password.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">lock</span></label>
+                              {{ form.password }}
+                           </div>
+                           <div class="d-grid">
+                              <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                           </div>
                      </form>
                      <div class="d-flex justify-content-around flex-wrap">
                         <div class="">
@@ -63,10 +56,10 @@
                            <a href="/admin" target="_blank">Sign in as Admin</a>
                         </div>
                      </div>
-                     {% if messages %}
+                     {% if error_messages %}
                      <!-- Error Alert -->
                      <div class="alert alert-danger alert-dismissible fade show my-2">
-                        {% for message in messages %}
+                        {% for message in error_messages %}
                         {{ message }}
                         {% endfor %}
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
